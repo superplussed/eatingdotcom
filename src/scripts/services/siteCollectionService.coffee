@@ -3,83 +3,65 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
     list: [
       name: "3rd Ward"
       dateRange: "Sept 2012 - Sept 2013"
-      technologies: [
+      tech: [
+        name: "Ruby on Rails"
         type: "backend"
-        tech: [
-          name: "Ruby on Rails"
-          rating: 4
-        ,
-          name: "MySQL"
-          rating: 3
-        ,
-          name: "Elastic Search"
-          rating: 3
-        ,
-          name: "Rspec"
-          rating: 3
-        ,
-          name: "HAML"
-          rating: 4
-        ]
       ,
+        name: "MySQL"
+        type: "backend"
+      ,
+        name: "Elastic Search"
+        type: "backend"
+      ,
+        name: "Rspec"
+        type: "backend"
+      ,
+        name: "HAML"
+        type: "backend"
+      ,
+        name: "jQuery"
         type: "frontend"
-        tech: [
-          name: "jQuery"
-          rating: 3
-        ,
-          name: "AngularJS"
-          rating: 4
-        ,
-          name: "Sass"
-          rating: 4
-        ]
       ,
+        name: "AngularJS"
+        type: "frontend"
+      ,
+        name: "Sass"
+        type: "frontend"
+      ,
+        name: "Amazon Web Services"
         type: "ops"
-        tech: [
-          name: "Amazon Web Services"
-          rating: 3
-        ]
       ]
       role: 'CTO, Lead Developer & Designer'
     ,
       name: "Eat The Web"
       dateRange: "Sept 2013 - Present"
-      technologies: [
+      tech: [
+        name: "Node.js"
         type: "backend"
-        tech: [
-          name: "Node.js"
-          rating: 2
-        ,
-          name: "Sails"
-          rating: 2
-        ,
-          name: "MongoDB"
-          rating: 3
-        ,
-          name: "Ruby"
-          rating: 4
-        ]
       ,
+        name: "Sails"
+        type: "backend"
+      ,
+        name: "MongoDB"
+        type: "backend"
+      ,
+        name: "Ruby"
+        type: "backend"
+      ,
+        name: "Angular.js"
         type: "frontend"
-        tech: [
-          name: "Angular.js"
-          rating: 3
-        ,
-          name: "Coffeescript"
-          rating: 3
-        ,
-          name: "Jade"
-          rating: 4
-        ,
-          name: "Sass"
-          rating: 4
-        ]
       ,
+        name: "Coffeescript"
+        type: "frontend"
+      ,
+        name: "Jade"
+        type: "frontend"
+      ,
+        name: "Sass"
+        type: "frontend"
+      ,
+        name: "Grunt"
         type: "ops"
-        tech: [
-          name: "Grunt"
-          rating: 2
-        ]
       ]
       role: 'Project Creator'
     ,
@@ -87,119 +69,101 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       dateRange: "2011-2012"
       role: 'Project Creator'
       technologies: [
+        name: "Ruby"
         type: "backend"
-        tech: [
-          name: "Ruby"
-          rating: 4
-        ,
-          name: "Sinatra"
-          rating: 2
-        ,
-          name: "MongoDB"
-          rating: 3
-        ,
-          name: "Elastic Search"
-          rating: 3
-        ,
-          name: "Redis"
-          rating: 2
-        ,
-          name: "Cucumber"
-          rating: 3
-        ,
-          name: "Rspec"
-          rating: 3
-        ,
-          name: "HAML"
-          rating: 4
-        ]
       ,
+        name: "Sinatra"
+        type: "backend"
+      ,
+        name: "MongoDB"
+        type: "backend"
+      ,
+        name: "Elastic Search"
+        type: "backend"
+      ,
+        name: "Redis"
+        type: "backend"
+      ,
+        name: "Cucumber"
+        type: "backend"
+      ,
+        name: "Rspec"
+        type: "backend"
+      ,
+        name: "HAML"
+        type: "backend"
+      ,
+        name: "Knockout.js"
         type: "frontend"
-        tech: [
-          name: "Knockout.js"
-          rating: 3
-        ,
-          name: "jQuery"
-          rating: 3
-        ,
-          name: "D3.js"
-          rating: 2
-        ,
-          name: "SVG"
-          rating: 2
-        ,
-          name: "Sass"
-          rating: 4
-        ]
+      ,
+        name: "jQuery"
+        type: "frontend"
+      ,
+        name: "D3.js"
+        type: "frontend"
+      ,
+        name: "SVG"
+        type: "frontend"
+      ,
+        name: "Sass"
+        type: "frontend"
       ]
     ,
       name: "Dropchart"
       dateRange: "2012"
       description: "A single page and open source project for creating drop-in charts built for maximum flexibility and minimum fuss."
       role: 'Project Creator'
-      technologies: [
+      tech: [
+        name: "Javascript"
         type: "frontend"
-        tech: [
-          name: "Javascript"
-          rating: 4
-        ,
-          name: "Knockout.js"
-          rating: 3
-        ,
-          name: "jQuery"
-          rating: 3
-        ,
-          name: "Require.js"
-          rating: 3
-        ,
-          name: "Mocha"
-          rating: 3
-        ,
-          name: "SVG"
-          rating: 2
-        ,
-          name: "HAML"
-          rating: 4
-        ]
       ,
+        name: "Knockout.js"
+        type: "frontend"
+      ,
+        name: "jQuery"
+        type: "frontend"
+      ,
+        name: "Require.js"
+        type: "frontend"
+      ,
+        name: "Mocha"
+        type: "frontend"
+      ,
+        name: "SVG"
+        type: "frontend"
+      ,
+        name: "HAML"
+        type: "frontend"
+      ,
+        name: "Deployed to AWS - S3"
         type: "ops"
-        tech: [
-          name: "Deployed to AWS - S3"
-          rating: 3
-        ]
       ]
     ,
       name: "Xpert Sports"
       dateRange: "2003-2008, Sold in 2007 to Bodog Sports"
       description: "Xpert Sports was fantasy football league management software."
       role: 'Sole Founder, Developer & Designer'
-      technologies: [
+      tech: [
+        name: "PHP"
         type: "backend"
-        tech: [
-          name: "PHP"
-          rating: 3
-        ,
-          name: "MySQL"
-          rating: 3
-        ,
-          name: "Postgres"
-          rating: 3
-        ]
       ,
+        name: "MySQL"
+        type: "backend"
+      ,
+        name: "Postgres"
+        type: "backend"
+      ,
+        name: "Javascript"
         type: "frontend"
-        tech: [
-          name: "Javascript"
-          rating: 4
-        ,
-          name: "Flash"
-          rating: 3
-        ,
-          name: "HTML"
-          rating: 4
-        ,
-          name: "CSS"
-          rating: 4
-        ]
+      ,
+        name: "Flash"
+        type: "frontend"
+      ,
+        name: "HTML"
+        type: "frontend"
+      ,
+        name: "CSS"
+        type: "frontend"
       ]
     ]
     active: {}

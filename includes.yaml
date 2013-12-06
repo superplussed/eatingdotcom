@@ -26,6 +26,7 @@ dev:
     - 'services/siteCollectionService'
   scss:
     - 'app'
+    - 'primary-image'
     - 'header'
     - 'site'
     - 'tech-box'

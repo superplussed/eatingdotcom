@@ -1,10 +1,20 @@
 .grid-block
+  figure
+    .info
+      .site-name {{site.name}}
+      .role {{site.role}}
+      .date-range {{site.dateRange}}
+
+.grid-block
+  figure.detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+
+.grid-block
   figure(ng-include="'templates/tech_box.html'")
 
 .grid-block(last-block="true")
-    figure
-      a.fancybox(rel="Xpert Sports", href="/images/xpert_sports_1.jpg")
-        img(ng-src="/images/xpert_sports_1.jpg")
-      figcaption
-        .title The home page (rescued from archive.org).
-        .description Sadly, I don't have any code or screenshots from this project and had to rely on the "Wayback Machine" for a screenshot.  It's a little broken and dated looking but an accurate representation of the state of design in the early 2000s :)
+  figure
+    a.fancybox(rel="Xpert Sports", href="/images/xpert_sports_1.jpg")
+      img(ng-src="/images/xpert_sports_1.jpg")
+    figcaption
+      .title The home page (rescued from archive.org).
+      .description Sadly, I don't have any code or screenshots from this project and had to rely on the "Wayback Machine" for a screenshot.  It's a little broken and dated looking but an accurate representation of the state of design in the early 2000s :)

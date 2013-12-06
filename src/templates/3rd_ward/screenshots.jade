@@ -1,4 +1,14 @@
 .grid-block
+  figure
+    .info
+      .site-name {{site.name}}
+      .role {{site.role}}
+      .date-range {{site.dateRange}}
+
+.grid-block
+  figure.detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+
+.grid-block
   figure(ng-include="'templates/tech_box.html'")
 
 .grid-block

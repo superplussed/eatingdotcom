@@ -4,14 +4,13 @@ nav(ng-show="!state.is('main')")
 
 section#primary-images(
   grid="",
-  block-ratio="0.67"
+  ng-if="state.is('main')"
 )
     .primary-image(
       ng-repeat="site in siteCollection.list",
       grid-block="",
-      ng-class="{active: siteCollection.getActive().name == site.name}",
       ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}",
-      ng-show="state.is('main') || siteCollection.getActive().name == site.name"
+      ng-show="state.is('main')"
 
     )
       a(ng-href="#/{{site.nameUnderscore}}")

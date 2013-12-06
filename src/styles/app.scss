@@ -41,7 +41,7 @@ body {
   font-size: 24px;
   color: $black;
 
-  #site-wrapper {
+  #app {
     display: inline-block;
     padding: 50px 100px;
     width: 1120px;
@@ -50,9 +50,11 @@ body {
     margin: 0 auto;
     min-width: 400px;
     
-    article {
-      font-size: 24px;
-      line-height: 28px;
+    .detail {
+      background: #CCC;
+      padding: 0 10px;
+      font-size: 18px;
+      line-height: 22px;
     }
     a {
       text-transform: none;
@@ -75,79 +77,6 @@ body {
       }
       .next {
         float: right;
-      }
-    }
-    #primary-images {
-      padding-top: 30px;
-      .primary-image:hover, .primary-image.active {
-        .overlay {
-          background: rgba(0, 0, 0, 1);
-        }
-      }
-      .primary-image.active {
-        cursor: default;
-        a {
-          cursor: default;
-        }
-      }
-      .primary-image {
-        position: relative;
-        background: no-repeat center center;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        float: left;
-        border: 20px solid black;
-        margin-bottom: 2px;
-        cursor: pointer;
-        a {
-          text-decoration: none;
-        }
-        img {
-          width: 100%;
-        }
-        .info, .overlay {
-          position: absolute;
-          height: 100%;
-          width: 100%;
-        }
-        .background {
-          position: absolute;
-          width: 100%;
-          height: 0px;
-          background: #333;
-        }
-        .overlay {
-          @include transition (all 0.5s ease-in);
-          @include transition (all 0.5s ease-out);
-          pointer: cursor;
-          top: 0;
-          left: 0;
-          background: rgba(0, 0, 0, 0.7);
-        }
-        .info {
-          position: relative;
-          top: 5px;
-          left: 5px;
-          color: white;
-          pointer-events: none;
-          .site-name {
-            font-weight: bold;
-            font-size: 32px;
-            line-height: 32px;
-          }
-          .role {
-            font-size: 20px;
-            line-height: 20px;
-          }
-          .date-range {
-            color: #C0BDBD;
-            font-size: 18px;
-            line-height: 18px;
-            font-style: italic;
-          }
-        }
       }
     }
   }
