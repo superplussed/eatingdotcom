@@ -1,0 +1,46 @@
+@import "globals";
+@import "bourbon/addons/prefixer";
+@import "bourbon/css3/transition";
+
+#site {
+  width: 100%;
+  article {
+    display: inline-block;
+    width: 100%;
+    margin: 20px 0;
+    ul {
+      margin-left: 20px!important;
+      li {
+        list-style-type: disc!important;
+      }
+    }
+  }
+  figure {
+    @include transition (all 0.2s ease-in-out);
+    border: 20px solid black;
+    figcaption {
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+      background: #CCC;
+      .title {
+        font-weight: bold;
+      }
+      .description {
+        font-style: italic;
+      }
+      .key, .text, .legend {
+        display: inline-block;
+      }
+      a {
+        font-weight: bold;
+        color: $black;
+      }
+    }
+    img {
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+}

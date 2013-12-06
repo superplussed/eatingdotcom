@@ -1,0 +1,36 @@
+.grid-block
+  figure(ng-include="'templates/tech_box.html'")
+
+.grid-block
+  figure
+    a.fancybox(rel="Dropchart", href="/images/dropchart_3.png" )
+      img(ng-src="/images/dropchart_3.png")
+    figcaption
+      .title The tests page of the project website.
+      .description End-to-end and unit tests were built using the Mocha testing framework, and results could be run in real-time on the website.
+
+.grid-block
+  figure
+    a.fancybox(rel="Dropchart", href="/images/dropchart_1.png" )
+      img(ng-src="/images/dropchart_1.png")
+    figcaption
+      .title The graph configuration page.
+      .description Allowed for real-time updating of all of the graph's API options.  This was mirrored by updates to the graph to show how the configuration changes were being received.
+
+.grid-block
+  figure
+    a.fancybox(rel="Dropchart", href="/images/dropchart_2.png" )
+      img(ng-src="/images/dropchart_2.png")
+    figcaption
+      .title The data editing page.
+      .description Allowed ad-hoc data to be entered so that the demo graph could be customized.
+
+.grid-block(last-block="true")
+  figure
+    a.fancybox(rel="Dropchart", href="/images/dropchart_code.png" )
+      img(ng-src="/images/dropchart_code.png")
+    figcaption
+      .title A sampling of code from dropchart.js
+      .description
+        :markdown
+          The library was build in modular fashion using require.js.  The project can be viewed on Github.  [Github link](https://github.com/superplussed/dropchart)

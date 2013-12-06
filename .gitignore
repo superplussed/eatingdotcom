@@ -1,0 +1,14 @@
+node_modules
+.tmp
+.sass-cache
+src/components
+*.map
+src/styles/*.css
+src/scripts/*.js
+src/views/*.html
+src/*.html
+src/scripts/components
+.DS_STORE
+dev
+prod
+.secret

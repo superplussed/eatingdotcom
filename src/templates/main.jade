@@ -1,0 +1,24 @@
+nav(ng-show="!state.is('main')")
+  a.prev(ng-href="#/{{siteCollection.prevProject()}}") Previous Project
+  a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
+
+section#primary-images(
+  grid="",
+  block-ratio="0.67"
+)
+    .primary-image(
+      ng-repeat="site in siteCollection.list",
+      grid-block="",
+      ng-class="{active: siteCollection.getActive().name == site.name}",
+      ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}",
+      ng-show="state.is('main') || siteCollection.getActive().name == site.name"
+
+    )
+      a(ng-href="#/{{site.nameUnderscore}}")
+        .overlay
+        .info
+          .site-name {{site.name}}
+          .role {{site.role}}
+          .date-range {{site.dateRange}}
+
+section(ui-view="")

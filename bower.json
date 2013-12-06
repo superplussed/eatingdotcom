@@ -1,0 +1,8 @@
+{
+  "name": "eating-the-dot-com",
+  "version": "0.0.1",
+  "dependencies": {
+    "fancybox": "~2.1.5"
+  },
+  "devDependencies": {}
+}

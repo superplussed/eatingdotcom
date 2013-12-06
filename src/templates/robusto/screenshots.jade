@@ -1,0 +1,28 @@
+.grid-block
+  figure(ng-include="'templates/tech_box.html'")
+
+.grid-block
+  figure
+    a.fancybox(rel="Robusto", href="/images/robusto_parser.png")
+      img(ng-src="/images/robusto_parser.png")
+    figcaption
+      .title A sampling of code from the hand history parser.
+      .description
+        :markdown
+          This was extracted and open-sourced as a gem called "Parsley". [Github link](https://github.com/superplussed/parsley)
+
+.grid-block
+  figure
+    a.fancybox(rel="Robusto", href="/images/robusto_1_1000w.png")
+      img(ng-src="/images/robusto_1_1000w.png")
+    figcaption
+      .title The hand-filter view.
+      .description Hands could be filtered by a number of criteria, such as player name, booleans on stat fields and date ranges.
+
+.grid-block(last-block="true")
+  figure
+    a.fancybox(rel="Robusto", href="/images/robusto_2_1000w.png")
+      img(ng-src="/images/robusto_2_1000w.png")
+    figcaption
+      .title The data visualization view.
+      .description Several graphing options were offered, including building a date filter widget that doubled as a histogram of resutls.

@@ -1,0 +1,10 @@
+.grid-block
+  figure(ng-include="'templates/tech_box.html'")
+
+.grid-block(last-block="true")
+  figure
+    a.fancybox(rel="Eat The Web", href="/images/eat_the_web_1_1000w.png")
+      img(ng-src="/images/eat_the_web_1_1000w.png")
+    figcaption
+      .title The DOM Mapper.
+      .description Data attributes can be mapped to DOM nodes on this page.

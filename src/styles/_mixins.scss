@@ -1,0 +1,9 @@
+@mixin standard-ul-display {
+  ul {
+    margin-left: 10px;
+    li {
+      list-style-type: disc;
+      margin: 0 0 10px 10px;
+    }
+  }
+}
