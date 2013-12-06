@@ -1,8 +1,11 @@
 {
   "name": "eating-the-dot-com",
   "version": "0.0.1",
-  "dependencies": {
-    "fancybox": "~2.1.5"
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "fancybox": "~2.1.5",
+    "jquery": "~2.0.3",
+    "lodash": "~2.4.1",
+    "angular-ui-router": "angular-ui/ui-router#0.2.0",
+    "angular": "1.2.0-rc.2"
+  }
 }

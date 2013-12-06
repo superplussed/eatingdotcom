@@ -17,7 +17,11 @@ head
   - each cssFile in cssFiles
     link(rel='stylesheet', href='#{cssFile}.css')
 
-body.flash-protect(ng-app='App', ng-controller='AppCtrl')
+body(
+  ng-app='App', 
+  ng-controller='AppCtrl',
+  ng-class="{'flash-protect': !offlineMode}"
+)
 
   #app
     header(ng-include="'/templates/header.html'")

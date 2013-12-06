@@ -2,6 +2,7 @@
 
 LIVERELOAD_PORT = 35729
 SERVER_PORT = 9000
+OFFLINE_MODE = true
 
 _ = require('underscore')
 lrSnippet = require("connect-livereload")(port: LIVERELOAD_PORT)
@@ -9,11 +10,6 @@ mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
 module.exports = (grunt) ->
-
-  # grunt.utils.hooker.hook grunt.fail, "warn", (opt) ->
-  #   require("growl") opt.name,
-  #     title: opt.message
-  #     image: "Console"
 
   includes = grunt.file.readYAML('includes.yaml')
   secret = grunt.file.readYAML('secret.yaml')
@@ -25,10 +21,17 @@ module.exports = (grunt) ->
   componentCssFiles = _.map(includes.components.css, (file) -> "#{file}.css")
   componentJsFiles = _.map(includes.components.js, (file) -> "#{file}.js")
 
-  devCssFiles = _.compact [].concat(includes.shared.css, includes.vendor.css, includes.components.css, devScssFiles)
-  devJsFiles = _.compact [].concat(includes.shared.js, includes.vendor.js, includes.components.js, devCoffeeFiles)
-  prodCssFiles = _.compact [].concat(includes.shared.css, includes.prod.css)
-  prodJsFiles = _.compact [].concat(includes.shared.js, includes.prod.js)
+  if OFFLINE_MODE
+    remoteOrLocalCdnCss = includes.localCdn.css
+    remoteOrLocalCdnJs = includes.localCdn.js
+  else
+    remoteOrLocalCdnCss = includes.cdn.css
+    remoteOrLocalCdnJs = includes.cdn.js
+
+  devCssFiles = _.compact [].concat(remoteOrLocalCdnCss, includes.vendor.css, includes.components.css, devScssFiles)
+  devJsFiles = _.compact [].concat(remoteOrLocalCdnJs, includes.vendor.js, includes.components.js, devCoffeeFiles)
+  prodCssFiles = _.compact [].concat(includes.cdn.css, includes.prod.css)
+  prodJsFiles = _.compact [].concat(includes.cdn.js, includes.prod.js)
 
   
   grunt.initConfig

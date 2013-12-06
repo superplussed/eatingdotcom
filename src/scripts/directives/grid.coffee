@@ -102,7 +102,15 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
 
     $scope
 
+# ------------------------------------------------
+App.directive "gridColumn", ($timeout) ->
+  restrict: "AC"
+  require: "^grid"
 
+  link: (scope, element, attrs) ->
+  
+  controller: ($scope) ->
+    scope.blocks = []
 
 
 # ------------------------------------------------
@@ -110,16 +118,13 @@ App.directive "gridBlock", ($timeout) ->
   restrict: "AC"
   require: "^grid"
 
-
-
-
   link: (scope, element, attrs, gridCtrl) ->
     angular.element(element).css("position", "relative")
     gridCtrl.registerBlock
       element: element
       scope: scope
 
-    $timeout( ->
-      if scope.$last || attrs.lastBlock
-        gridCtrl.resizeGrid()
-    , 500)
+    # $timeout( ->
+    #   if scope.$last || attrs.lastBlock
+    #     gridCtrl.resizeGrid()
+    # , 500)

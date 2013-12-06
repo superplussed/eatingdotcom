@@ -4,10 +4,22 @@ components:
     - 'components/fancybox/source/jquery.fancybox.pack'
   css: 
     - 'components/fancybox/source/jquery.fancybox'
+
 vendor: 
   js: 
   css: 
-shared:
+
+localCdn: 
+  css:
+    - 'components/font-awesome/css/font-awesome.min'
+    - 'components/normalize-css/normalize'
+  js:
+    - 'components/jquery/jquery.min'
+    - 'components/lodash/dist/lodash.min'
+    - 'components/angular/angular.min'
+    - 'components/angular-ui-router/release/angular-ui-router'
+
+cdn:
   css:
     - '//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min'
     - '//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.3/normalize.min'
@@ -17,6 +29,7 @@ shared:
     - 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min'
     - '//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.0/angular-ui-router.min'
     - '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont'
+
 dev:
   coffee:
     - 'app'
@@ -30,6 +43,7 @@ dev:
     - 'header'
     - 'site'
     - 'tech-box'
+
 prod:
   js:
     - 'app.min'

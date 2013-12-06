@@ -3,6 +3,7 @@ App.controller("AppCtrl", ['$window', '$state', '$stateParams', 'SiteCollectionS
   $rootScope.siteCollection.initialize()
   $rootScope.state = $state
   $rootScope.params = $stateParams
+  $rootScope.offlineMode = true
 
   $window.onresize = ->
     $rootScope.$broadcast "resizeWindow"
@@ -10,9 +11,10 @@ App.controller("AppCtrl", ['$window', '$state', '$stateParams', 'SiteCollectionS
   $scope.goto = (name) ->
     $state.transitionTo("main.site", {site_id: name})
 
-  $ ->
-    WebFont.load
-      typekit:
-        id: "yyo6olf"
+  unless $rootScope.offlineMode
+    $ ->
+      WebFont.load
+        typekit:
+          id: "yyo6olf"
 
 ])
