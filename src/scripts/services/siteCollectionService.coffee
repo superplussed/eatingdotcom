@@ -68,7 +68,7 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       name: "Robusto"
       dateRange: "2011-2012"
       role: 'Project Creator'
-      technologies: [
+      tech: [
         name: "Ruby"
         type: "backend"
       ,
