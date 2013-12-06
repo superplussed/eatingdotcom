@@ -1,7 +1,14 @@
 @import "globals";
+@import "bourbon/addons/prefixer";
+@import "bourbon/css3/transition";
+
 $block-height: 38px;
 $block-width: 42px;
 $block-margin: 1px;
+$dark-gray: #333;
+$medium-gray: #7D7D7D;
+$light-gray: #E0E0E0;
+$red: #FB3E3E;
 
 header {
   position: relative;
@@ -9,6 +16,10 @@ header {
   width: 100%;
   height: 135px;
   border-bottom: 2px solid #333;
+
+  .nav-link, .social-link, .dot, .the, .com, .eat, .ing {
+    @include transition (all 0.2s ease-in-out);
+  }
 
   .block {
     display: block;
@@ -36,30 +47,22 @@ header {
     left: $block-width + $block-margin;
   }
 
-  #social-links-wrapper {
-    position: absolute;
-    top: 0;
-    left: 90px;
-    font-size: 18px;
-    line-height: 40px;
-    a {
-      color: #727070;
-      text-decoration: none;
-      text-align: center;
-    }
-    #social-links {
-      position: relative;
-      .block {
-        background: #E0E0E0;
-      }
-    }
-  }
 
   #rendered-logo-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     #rendered-logo {
+      &:hover .dot {
+        background: $dark-gray;
+      }
+      &:hover .the, &:hover .com {
+        color: $medium-gray;
+      }
+      &:hover .eat, &:hover .ing {
+        color: $medium-gray;
+      }
+
       font-family: $header;
       .the, .com {
         font-family: $header-secondary;
@@ -104,7 +107,7 @@ header {
         top: 79px;
         font-size: 25px;
         line-height: 15px;
-        color: #7D7D7D;
+        color: $medium-gray;
         &.t {
           left: 44px;
         }
@@ -118,7 +121,7 @@ header {
 
       .dot {
         top: (($block-height + $block-margin) * 2);
-        background: #FB3E3E;
+        background: $red;
       }
 
       .com {
@@ -138,6 +141,52 @@ header {
         }
       }
       
+    }
+  }
+  #social-links-wrapper {
+    position: absolute;
+    top: 0;
+    left: 90px;
+    font-size: 18px;
+    line-height: 40px;
+    a {
+      color: $medium-gray;
+      text-decoration: none;
+      text-align: center;
+    }
+    #social-links {
+      position: relative;
+      .social-link:hover {
+        background: $dark-gray;
+        color: $light-gray;
+      }
+      .block {
+        background: $light-gray;
+      }
+    }
+  }
+
+  #site-nav-wrapper {
+    font-family: $header-secondary;
+    position: absolute;
+    top: 0;
+    right: 100px;
+    nav {
+      position: relative;
+      a {
+        text-decoration: none;
+      }
+      .nav-link {
+        color: $medium-gray;
+        height: $block-height;
+        padding: 0 10px;
+        background: $light-gray;
+        width: 100px;
+      }
+      .nav-link:hover {
+        background: $dark-gray;
+        color: $light-gray;
+      }
     }
   }
 }
