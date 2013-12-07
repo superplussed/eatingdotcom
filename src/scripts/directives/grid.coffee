@@ -1,16 +1,12 @@
 App.directive "grid", ($window, $timeout, $rootScope) ->
   restrict: "EA"
   transclude: true
+  replace: true
   scope: {}
   template: """
     <div class='grid'>
-      <ul class='column' ng-repeat='column in columns'>
-        <li class='block' ng-repeat='block in column.blocks'>
-          {{block.test}}
-        </li>
-      </ul>
+      <div class='transcluded' style='display:none' ng-transclude></div>
     </div>
-    <div ng-transclude></div>
   """
   link: (scope, element, attrs) ->
     element
@@ -23,8 +19,16 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
     minBlockWidth = if $attrs.minBlockWidth? then parseFloat($attrs.minBlockWidth) else 250
     defaultNumCols = -> Math.floor($element.width()/minBlockWidth)
     numCols = -> if defaultNumCols() > maxCols then maxCols else defaultNumCols()
-    blocks = $scope.blocks = []
-    columns = $scope.columns = []
+    $scope.blocks = []
+    $scope.columns = []
+
+    addColumns = ->
+      _.each $scope.columns, (column, colIndex) ->
+        $element.append("<ul class='column'></ul>")
+        columnEl = angular.element(_.last($element.find(".column")))
+        _.each column.blocks, (block, blockIndex) ->
+          blockEl = columnEl.append("<li class='block'></li>")
+          blockEl.append(block.el)
 
     resetColumns = ->
       $scope.columns = []
@@ -32,13 +36,17 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
         $scope.columns[i] = {num: i + 1, blocks: []}
 
     @addBlock = (block) ->
-      blocks.push block
+      $scope.blocks.push block
 
     @resizeGrid = ->
       resetColumns()
-      _.each blocks, (block, i) ->
+      _.each $scope.blocks, (block, i) ->
         column = (i % numCols())
         $scope.columns[column].blocks.push(block)
+      addColumns()
+
+    @removeTransclusion = ->
+      $element.find('.transcluded').remove()
 
     
 
@@ -140,19 +148,18 @@ App.directive "gridBlock", ($timeout) ->
   require: "^grid"
   restrict: "EA"
   transclude: true
-  template: """
-    <div class="grid-block" ng-transclude>
-    </div>
-  """
+  replace: true
+  template: "<div ng-transclude></div>"
 
   link: (scope, element, attrs, gridCtrl) ->
     gridCtrl.addBlock 
       scope: scope
-      element: element
+      el: element
       test: 3
 
     $timeout( ->
       if scope.$last || attrs.lastBlock
+        gridCtrl.removeTransclusion()
         gridCtrl.resizeGrid()
     , 500)
 

@@ -5,7 +5,7 @@ nav(ng-show="!state.is('main')")
 grid#primary-images(
   ng-if="state.is('main')"
 )
-  grid-block(
+  grid-block.primary-image(
     ng-repeat="site in siteCollection.list",
     block-ratio="0.67",
     ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}"
