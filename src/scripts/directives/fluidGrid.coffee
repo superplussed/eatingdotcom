@@ -1,25 +1,53 @@
-#
+#-------------------------------------------------
 # FLUID-GRID
-#
+#-------------------------------------------------
 
 App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
   restrict: "EA"
   transclude: true
   replace: true
-  scope: 
-    minBlockWidth: "@"
-    blockMargin: "@"
-    blockRatio: "@"
-    maxCols: "@"
+  # scope: 
+    # minBlockWidth: "@"
+    # blockMargin: "@"
+    # blockRatio: "@"
+    # maxCols: "@"
+    # blocks: "="
 
   template: """
     <div class='fluid-grid' style='width:100%;display:inline-block;'>
-      <fluid-column ng-repeat="column in columns">
-        <div ng-transclude></div>
-      </fluid-column>
+      <fluid-column ng-repeat='thing in things' output='thing'></fluid-column>
+      <div ng-transclude></div>
     </div>
   """
-  compile: (cElement, attrs) ->
+  compile: (cElement, cAttrs, transclude) ->
+    (scope, iElement, iAttrs) ->
+      elements = []
+      scope.columns = []
+      scope.things = []
+      scope.$watchCollection scope.things, (thing) ->
+        if elements.length > 0
+          i = 0
+          while i < elements.length
+            elements[i].el.remove()
+            elements[i].scope.$destroy()
+            i++
+          elements = []
+
+        i = 0
+        while i < scope.things.length
+          
+          childScope = $scope.$new()
+          
+          childScope[indexString] = things[i]
+          transclude childScope, (clone) ->
+            
+            parent.append clone # add to DOM
+            thing = {}
+            thing.el = clone
+            thing.scope = childScope
+            elements.push thing
+
+          i++
 
   controller: ($scope, $element, $attrs) ->
 
@@ -30,7 +58,6 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
       maxCols: 2
 
     $scope.blocks = []
-    $scope.columns = []
         
     blockWidth = -> Math.floor(gridCtrl.width()/gridCtrl.numCols()) - (blockMargin()/gridCtrl.numCols()) - 1
     blockHeight = -> Math.floor(blockWidth() * blockRatio)
@@ -51,8 +78,9 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
         column = (i % numCols())
         $scope.columns[column].blocks.push(block)
 
-    @addBlock = (block) ->
-      $scope.blocks.push block
+    @addThing = (thing) ->
+      $scope.things.push thing
+      console.log($scope.things)
 
     $scope.resizeGrid = ->  
       if $scope.lastNumCols? && $scope.lastNumCols != numCols()
@@ -75,67 +103,71 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
       $scope.resizeGrid()
 
 
-#
+#-------------------------------------------------
 # FLUID-COLUMN
-#
+#-------------------------------------------------
 
 
 App.directive "fluidColumn", ($timeout) ->
-  require: "^grid"
+  require: "^fluidGrid"
   restrict: "EA"
+  scope: 
+    output: "="
+  # template: """
+  #   <div class='fluid-column' 
+  #     style='
+  #       display:inline-block;
+  #     ',
+  #     ng-style="{
+  #       width: gridCtrl.blockWidth(),
+  #       margin-right: gridCtrl.blockMargin()
+  #     }"
+  #   >
+  #     <div ng-repeat="block in blocks">
+  #       <fluid-block block='block'></fluid-block'>
+  #     </div>
+  #   </div>
+  # """
   template: """
-    <div class='fluid-column' 
-      style='
-        display:inline-block;
-      ',
-      ng-style="{
-        width: gridCtrl.blockWidth(),
-        margin-right: gridCtrl.blockMargin()
-      }"
-    >
-      <fluid-block ng-repeat="block in blocks">
-      </fluid-block>
-    </div>
+    <div class='fluid-column'>{{output}}</div>
 
   """
 
   link: (scope, element, attrs, gridCtrl) ->
-    gridCtrl
-
-  controller: ($scope)
+    scope.$watch 'attrs.fluid-column'
 
 
 
-#
+#-------------------------------------------------
 # FLUID-BLOCK
-#
-
+#-------------------------------------------------
 
 App.directive "fluidBlock", ($timeout) ->
-  require: "^grid"
+  require: "^fluidGrid"
   restrict: "EA"
+  transclude: 'element'
 
-  template: """
-    <div class='fluid-block' 
-      style='
-        width: 100%;
-        height: 100%; 
-        display:inline-block',
-      ng-style="{
-        height: gridCtrl.fixedHeight(),
-        margin-bottom: gridCtrl.blockMargin()
-      }"
-      >
-    </div>
-  """
+  # template: """
+  #   <div class='fluid-block' 
+  #     style='
+  #       width: 100%;
+  #       height: 100%; 
+  #       display:inline-block',
+  #     ng-style="{
+  #       height: gridCtrl.fixedHeight(),
+  #       margin-bottom: gridCtrl.blockMargin()
+  #     }"
+  #   >
+  #     <div ng-transclude></div>
+  #   </div>
+  # """
 
-  link: (scope, element, attrs, gridCtrl) ->
+  compile: (cElement, cAttrs, transclude) ->
+    (scope, iElement, iAttrs, gridCtrl) ->
+      gridCtrl.addThing(scope.$id)
+    
 
-    gridCtrl.addBlock 
-      scope: scope
-      el: element
-
-    $timeout( ->
-      if scope.$last || attrs.lastBlock
-        gridCtrl.initialize()
-    , 500)
+    # $timeout( ->
+    #   if scope.$last || attrs.lastBlock
+    #     gridCtrl.initialize()
+    # , 500)

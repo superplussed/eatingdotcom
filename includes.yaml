@@ -33,7 +33,7 @@ cdn:
 dev:
   coffee:
     - 'app'
-    - 'directives/grid'
+    - 'directives/fluidGrid'
     - 'directives/fancybox'
     - 'controllers/AppCtrl'
     - 'services/siteCollectionService'
