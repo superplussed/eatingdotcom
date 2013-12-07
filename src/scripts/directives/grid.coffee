@@ -31,17 +31,18 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
     $scope.columns = []
 
 
-    @initializeColumnArray = ->
+    $scope.initializeColumnArray = ->
       $scope.columns = []
       for i in [0..numCols() - 1]
         $scope.columns[i] = {num: i + 1, blocks: []}
 
-    @addBlocksToColumnArray = ->
+    $scope.addBlocksToColumnArray = ->
       _.each $scope.blocks, (block, i) ->
         column = (i % numCols())
         $scope.columns[column].blocks.push(block)
 
-    @addBlocksToGrid = ->
+    $scope.addBlocksToGrid = ->
+      $element.find(".column").remove()
       _.each $scope.columns, (column, colIndex) ->
         $element.append("<ul class='column'></ul>")
         columnEl = angular.element(_.last($element.find(".column")))
@@ -49,11 +50,15 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
           columnEl.append("<li class='grid-block'></li>")
           blockEl = angular.element(_.last(columnEl.find(".grid-block")))
           blockEl.append(block.el)
+      $scope.$apply()
 
     @addBlock = (block) ->
       $scope.blocks.push block
 
     $scope.resizeGrid = ->  
+      if $scope.lastNumCols? && $scope.lastNumCols != numCols()
+        $scope.changeColumnCount()
+
       $element.find(".column")
         .css("width", blockWidth)
 
@@ -64,10 +69,12 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
         $element.find(".grid-block")
           .css("height", blockHeight())
 
+      $scope.lastNumCols = numCols()
+
     @removeTransclusion = ->
       $element.find('.transcluded').remove()
 
-    @setCssDefaults = ->
+    $scope.setCssDefaults = ->
       $element.find(".column")
         .css("display", "inline-block")
 
@@ -76,15 +83,16 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
         .css("width", "100%")
         .css("margin-bottom", blockMargin())
 
-    @changeColumnCount = ->
-      @initializeColumnArray()   
-      @addBlocksToColumnArray()   
-      @addBlocksToGrid()
+    $scope.changeColumnCount = ->
+      $scope.initializeColumnArray()   
+      $scope.addBlocksToColumnArray()   
+      $scope.addBlocksToGrid()
+      $scope.setCssDefaults()
 
     @initialize = ->
-      @changeColumnCount()
+      $scope.changeColumnCount()
       @removeTransclusion()
-      @setCssDefaults()
+      $scope.setCssDefaults()
       $scope.resizeGrid()
 
     $rootScope.$on "resizeWindow", ->
