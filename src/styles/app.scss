@@ -2,6 +2,13 @@
 @import "bourbon/addons/prefixer";
 @import "bourbon/css3/transition";
 
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: top;
+}
+
 ul, li, h1, h2, h3, h4, h5  {
   margin: 0;
   padding: 0;
