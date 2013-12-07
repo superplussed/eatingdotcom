@@ -2,23 +2,19 @@ nav(ng-show="!state.is('main')")
   a.prev(ng-href="#/{{siteCollection.prevProject()}}") Previous Project
   a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
 
-section#primary-images(
-  grid="",
-  block-ratio="0.67",
+grid#primary-images(
   ng-if="state.is('main')"
 )
-    .primary-image(
-      ng-repeat="site in siteCollection.list",
-      grid-block="",
-      ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}",
-      ng-show="state.is('main')"
-
-    )
-      a(ng-href="#/{{site.nameUnderscore}}")
-        .overlay
-        .info
-          .site-name {{site.name}}
-          .role {{site.role}}
-          .date-range {{site.dateRange}}
+  grid-block(
+    ng-repeat="site in siteCollection.list",
+    block-ratio="0.67",
+    ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}"
+  )
+    a(ng-href="#/{{site.nameUnderscore}}")
+      .overlay
+      .info
+        .site-name {{site.name}}
+        .role {{site.role}}
+        .date-range {{site.dateRange}}
 
 section(ui-view="")
