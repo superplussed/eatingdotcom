@@ -47,8 +47,8 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
         $element.append("<ul class='column'></ul>")
         columnEl = angular.element(_.last($element.find(".column")))
         _.each column.blocks, (block, blockIndex) ->
-          columnEl.append("<li class='grid-block'></li>")
-          blockEl = angular.element(_.last(columnEl.find(".grid-block")))
+          columnEl.append("<li class='grid-block-wrapper'></li>")
+          blockEl = angular.element(_.last(columnEl.find(".grid-block-wrapper")))
           blockEl.append(block.el)
       $scope.$apply()
 
@@ -66,7 +66,7 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
         .css("margin-right", blockMargin())
 
       if setHeight()
-        $element.find(".grid-block")
+        $element.find(".grid-block-wrapper")
           .css("height", blockHeight())
 
       $scope.lastNumCols = numCols()
@@ -78,12 +78,13 @@ App.directive "grid", ($window, $timeout, $rootScope) ->
       $element.find(".column")
         .css("display", "inline-block")
 
-      $element.find(".grid-block")
+      $element.find(".grid-block-wrapper")
         .css("display", "inline-block")
         .css("width", "100%")
         .css("margin-bottom", blockMargin())
 
     $scope.changeColumnCount = ->
+      # unless _.isEmpty($scope.columns)
       $scope.initializeColumnArray()   
       $scope.addBlocksToColumnArray()   
       $scope.addBlocksToGrid()
@@ -104,7 +105,10 @@ App.directive "gridBlock", ($timeout) ->
   restrict: "EA"
 
   link: (scope, element, attrs, gridCtrl) ->
-    element.addClass("grid-block")
+    element
+      .addClass("grid-block")
+      .css("width", "100%")
+      .css("height", "100%")
 
     gridCtrl.addBlock 
       scope: scope

@@ -1,18 +1,17 @@
-.grid-block
-  figure
+grid
+  grid-block
     .info
       .site-name {{site.name}}
       .role {{site.role}}
       .date-range {{site.dateRange}}
 
-.grid-block
-  figure.detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+  grid-block
+    .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
 
-.grid-block
-  figure(ng-include="'templates/tech_box.html'")
+  grid-block
+    ng-include(src="'templates/tech_box.html'")
 
-.grid-block(last-block="true")
-  figure
+  grid-block(last-block="true")
     a.fancybox(rel="Xpert Sports", href="/images/xpert_sports_1.jpg")
       img(ng-src="/images/xpert_sports_1.jpg")
     figcaption

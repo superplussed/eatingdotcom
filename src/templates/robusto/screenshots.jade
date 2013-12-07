@@ -1,18 +1,17 @@
-.grid-block
-  figure
+grid
+  grid-block
     .info
       .site-name {{site.name}}
       .role {{site.role}}
       .date-range {{site.dateRange}}
 
-.grid-block
-  figure.detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+  grid-block
+    .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
 
-.grid-block
-  figure(ng-include="'templates/tech_box.html'")
+  grid-block
+    ng-include(src="'templates/tech_box.html'")
 
-.grid-block
-  figure
+  grid-block
     a.fancybox(rel="Robusto", href="/images/robusto_parser.png")
       img(ng-src="/images/robusto_parser.png")
     figcaption
@@ -21,16 +20,14 @@
         :markdown
           This was extracted and open-sourced as a gem called "Parsley". [Github link](https://github.com/superplussed/parsley)
 
-.grid-block
-  figure
+  grid-block
     a.fancybox(rel="Robusto", href="/images/robusto_1_1000w.png")
       img(ng-src="/images/robusto_1_1000w.png")
     figcaption
       .title The hand-filter view.
       .description Hands could be filtered by a number of criteria, such as player name, booleans on stat fields and date ranges.
 
-.grid-block(last-block="true")
-  figure
+  grid-block(last-block="true")
     a.fancybox(rel="Robusto", href="/images/robusto_2_1000w.png")
       img(ng-src="/images/robusto_2_1000w.png")
     figcaption

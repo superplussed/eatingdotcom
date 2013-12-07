@@ -2,6 +2,9 @@
 @import "bourbon/addons/prefixer";
 @import "bourbon/css3/transition";
 
+.grid-block-wrapper {
+  border: 20px solid black;
+}
 #site {
   width: 100%;
   article {
@@ -15,9 +18,8 @@
       }
     }
   }
-  figure {
+  .grid-block {
     @include transition (all 0.2s ease-in-out);
-    border: 20px solid black;
     figcaption {
       padding: 10px;
       font-size: 16px;

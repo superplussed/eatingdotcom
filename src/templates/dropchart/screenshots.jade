@@ -1,42 +1,38 @@
-.grid-block
-  figure
+grid
+  grid-block
     .info
       .site-name {{site.name}}
       .role {{site.role}}
       .date-range {{site.dateRange}}
 
-.grid-block
-  figure.detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+  grid-block
+    .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
 
-.grid-block
-  figure(ng-include="'templates/tech_box.html'")
+  grid-block
+    ng-include(src="'templates/tech_box.html'")
 
-.grid-block
-  figure
+  grid-block
     a.fancybox(rel="Dropchart", href="/images/dropchart_3.png" )
       img(ng-src="/images/dropchart_3.png")
     figcaption
       .title The tests page of the project website.
       .description End-to-end and unit tests were built using the Mocha testing framework, and results could be run in real-time on the website.
 
-.grid-block
-  figure
+  grid-block
     a.fancybox(rel="Dropchart", href="/images/dropchart_1.png" )
       img(ng-src="/images/dropchart_1.png")
     figcaption
       .title The graph configuration page.
       .description Allowed for real-time updating of all of the graph's API options.  This was mirrored by updates to the graph to show how the configuration changes were being received.
 
-.grid-block
-  figure
+  grid-block
     a.fancybox(rel="Dropchart", href="/images/dropchart_2.png" )
       img(ng-src="/images/dropchart_2.png")
     figcaption
       .title The data editing page.
       .description Allowed ad-hoc data to be entered so that the demo graph could be customized.
 
-.grid-block(last-block="true")
-  figure
+  grid-block(last-block="true")
     a.fancybox(rel="Dropchart", href="/images/dropchart_code.png" )
       img(ng-src="/images/dropchart_code.png")
     figcaption
