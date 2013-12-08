@@ -2,19 +2,21 @@ nav(ng-show="!state.is('main')")
   a.prev(ng-href="#/{{siteCollection.prevProject()}}") Previous Project
   a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
 
-fluid-grid#primary-images(
-  ng-if="state.is('main')",
-  block-ratio="0.67"
-)
-  fluid-block.primary-image(
-    ng-repeat="site in siteCollection.list",
-    ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}"
-  )
-    a(ng-href="#/{{site.nameUnderscore}}")
-      .overlay
-      .info
-        .site-name {{site.name}}
-        .role {{site.role}}
-        .date-range {{site.dateRange}}
+fluid-grid#main-grid
+
+  div(ng-if="state.is('main')")
+    fluid-block(
+      aspect-ratio="0.67",
+      ng-repeat="site in siteCollection.list"
+    )
+      a.primary-image(
+        ng-href="#/{{site.nameUnderscore}}",
+        ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}"
+      )
+        .overlay
+        .info
+          .site-name {{site.name}}
+          .role {{site.role}}
+          .date-range {{site.dateRange}}
 
 section(ui-view="")

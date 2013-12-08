@@ -21,7 +21,6 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
 
     $scope.minBlockWidth = -> parseFloat($attrs.minBlockWidth) || 250
     $scope.blockMargin = -> parseFloat($attrs.blockMargin) || 4
-    $scope.blockRatio = -> parseFloat($attrs.blockRatio) || 250
     $scope.maxCols = -> parseInt($attrs.maxCols, 10) || 2
         
     $scope.numCols = -> 
@@ -29,8 +28,7 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
       if cnt > $scope.maxCols() then $scope.maxCols() else cnt
 
     $scope.blockWidth = -> Math.floor($element.width()/$scope.numCols()) - ($scope.blockMargin()/$scope.numCols()) - 1
-    $scope.blockHeight = -> Math.floor($scope.blockWidth() * parseFloat($scope.blockRatio()))
-    $scope.fixedHeight = -> $scope.blockHeight() if $scope.blockRatio()?
+    $scope.blockHeight = (aspectRatio) -> Math.floor($scope.blockWidth() * parseFloat(aspectRatio))
 
     $scope.initializeColumnArray = ->
       $scope.columns = []
@@ -62,7 +60,7 @@ App.directive "fluidColumn", ($timeout, $rootScope) ->
   compile: (cElement, cAttr, transclude) ->
     (scope, iElement, iAttrs, gridCtrl) ->
 
-      scope.resize= ->
+      scope.resize = ->
         iElement.css("width", gridCtrl.blockWidth())
     
       scope.resize()
@@ -91,23 +89,25 @@ App.directive "fluidBlock", ($timeout) ->
   require: "^fluidGrid"
   restrict: "EA"
   transclude: true
+  replace: true
+  scope: 
+    "aspectRatio": "@"
 
   template: """
     <div class='fluid-block' ng-transclude></div>
   """
 
   link: (scope, element, attrs, gridCtrl) ->
-    element.css("margin-bottom", gridCtrl.blockMargin)
+    element
+      .css("margin-bottom", gridCtrl.blockMargin())
+      .css("width", "100%")
+      .css("display", "inline-block")
     
     scope.resize = ->
-      element.css("height", gridCtrl.fixedHeight())
+      if scope.aspectRatio?
+        element.css("height", gridCtrl.blockHeight(scope.aspectRatio))
 
     scope.resize()
-
-    if gridCtrl.fixedHeight()
-      element
-        .css("width", "100%")
-        .css("display", "inline-block")
 
     gridCtrl.addBlock
       scope: scope

@@ -68,6 +68,9 @@ body {
     }
   }
 
+  #main-grid {
+    margin-top: 30px;
+  }
 
   main {
     nav {
@@ -93,26 +96,6 @@ body {
   font-size: 18px;
 }
 
-.debug-wrapper {
-  font-family: arial;
-  position: absolute;
-  left: 20px;
-  top: 20px;
-  z-index: 99999999;
-  color: black;
-  ul.debug {
-    display: inline-block;
-    background: white;
-    text: black;
-    border: 1px solid darkred;
-    font-size: 14px;
-    padding: 10px;
-    li {
-      list-style-type: disc;
-      margin-left: 20px;
-    }
-  }
-}
 .typekit-badge {
   display: none!important;
 }
