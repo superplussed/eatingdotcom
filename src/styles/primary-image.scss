@@ -18,38 +18,22 @@
   font-style: italic;
 }
 
-#site {
-  .site-name, .role {
-    color: white;
-  }
-}
-#primary-images {
-  margin-top: 30px;
-  .primary-image:hover, .primary-image.active {
-    .overlay {
-      background: rgba(0, 0, 0, 1);
-    }
-  }
-  .primary-image.active {
-    cursor: default;
-    a {
-      cursor: default;
-    }
-  }
+.site-name, .role {
+  color: white;
 }
 
-.primary-image {
+
+.thumbnail {
   position: relative;
-  background: no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
   float: left;
   margin-bottom: 2px;
   width: 100%;
   height: 100%;
-  cursor: pointer;
+  &:hover, &.active {
+    .overlay {
+      background: rgba(0, 0, 0, 1);
+    }
+  }
   a {
     text-decoration: none;
   }

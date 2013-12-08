@@ -26,7 +26,7 @@ cdn:
   js:
     - 'http://code.jquery.com/jquery-1.9.1.min'
     - '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.3.0/lodash.min'
-    - 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min'
+    - 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min'
     - '//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.0/angular-ui-router.min'
     - '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont'
 
@@ -34,7 +34,7 @@ dev:
   coffee:
     - 'app'
     - 'directives/fluidGrid'
-    - 'directives/fancybox'
+    - 'directives/thumbnail'
     - 'controllers/AppCtrl'
     - 'services/siteCollectionService'
   scss:

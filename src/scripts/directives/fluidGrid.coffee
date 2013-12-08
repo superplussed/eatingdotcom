@@ -6,6 +6,8 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
   restrict: "EA"
   transclude: true
   replace: true
+  scope: 
+    normalizeColumns: "@"
 
   template: """
     <div class='fluid-grid' style='width:100%;display:inline-block;'>
@@ -113,14 +115,6 @@ App.directive "fluidBlock", ($timeout) ->
       el: element
 
   controller: ($scope, $rootScope) ->
-    $rootScope.$on "resizeWindow", ->
-      $scope.resize()
-
-
-app.directive "fluidBlockInclude", ->
-  replace: true
-  restrict: "A"
-  templateUrl: (element, attr) ->
-    attr.pfInclude
-
-    
+    if $scope.aspectRatio?
+      $rootScope.$on "resizeWindow", ->
+        $scope.resize()

@@ -8,11 +8,11 @@ div(ng-if="state.is('main')")
       aspect-ratio="0.67",
       ng-repeat="site in siteCollection.list"
     )
-      a.primary-image(
+      a(
         ng-href="#/{{site.nameUnderscore}}",
-        ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}"
+        thumbnail="/images/{{site.nameUnderscore}}_primary.png",
+        overlay="true"
       )
-        .overlay
         .info
           .site-name {{site.name}}
           .role {{site.role}}
