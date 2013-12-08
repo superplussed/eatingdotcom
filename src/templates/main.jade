@@ -3,11 +3,11 @@ nav(ng-show="!state.is('main')")
   a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
 
 fluid-grid#primary-images(
-  ng-if="state.is('main')"
+  ng-if="state.is('main')",
+  block-ratio="0.67"
 )
   fluid-block.primary-image(
     ng-repeat="site in siteCollection.list",
-    block-ratio="0.67",
     ng-style="{'background-image':'url(/images/{{site.nameUnderscore}}_primary.png)'}"
   )
     a(ng-href="#/{{site.nameUnderscore}}")

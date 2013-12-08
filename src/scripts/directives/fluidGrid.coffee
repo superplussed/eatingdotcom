@@ -6,12 +6,6 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
   restrict: "EA"
   transclude: true
   replace: true
-  scope: 
-    minBlockWidth: "@"
-    blockMargin: "@"
-    blockRatio: "@"
-    maxCols: "@"
-    # blocks: "="
 
   template: """
     <div class='fluid-grid' style='width:100%;display:inline-block;'>
@@ -20,43 +14,43 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
     </div>
   """
 
-  controller: ($scope, $element, $attrs) ->
+  # compile: (cElement, cAttr) ->
+  #   pre: (scope, iElement, iAttr) ->
 
-    _.extend $scope, 
-      minBlockWidth: 250
-      blockMargin: 4
-      blockRatio: null
-      maxCols: 2
+
+  controller: ($scope, $element, $attrs) ->
 
     $scope.blocks = []
     $scope.columns = []
+
+    $scope.minBlockWidth = -> parseFloat($attrs.minBlockWidth) || 250
+    $scope.blockMargin = -> parseFloat($attrs.blockMargin) || 4
+    $scope.blockRatio = -> parseFloat($attrs.blockRatio) || 250
+    $scope.maxCols = -> parseInt($attrs.maxCols, 10) || 250
         
-    blockWidth = -> Math.floor($element.width()/numCols()) - ($scope.blockMargin/gridCtrl.numCols()) - 1
-    blockHeight = -> Math.floor(blockWidth() * $scope.blockRatio)
-    fixedHeight = -> blockHeight() if $scope.blockRatio?
-    numCols = -> 
-      cnt = Math.floor($element.width()/$scope.minBlockWidth)
-      if cnt > $scope.maxCols then $scope.maxCols else cnt
+    $scope.numCols = -> 
+      cnt = Math.floor($element.width()/$scope.minBlockWidth())
+      if cnt > $scope.maxCols() then $scope.maxCols() else cnt
+
+    $scope.blockWidth = -> Math.floor($element.width()/$scope.numCols()) - ($scope.blockMargin()/$scope.numCols()) - 1
+    $scope.blockHeight = -> Math.floor($scope.blockWidth() * parseFloat($scope.blockRatio()))
+    $scope.fixedHeight = -> $scope.blockHeight() if $scope.blockRatio()?
 
     $scope.initializeColumnArray = ->
       $scope.columns = []
 
     $scope.initializeColumnArray()  
 
-    @addBlock = (block) ->
+    $scope.addBlock = (block) ->
       $scope.blocks.push block
-      column = ($scope.blocks.length % (numCols()))
+      column = ($scope.blocks.length % ($scope.numCols()))
       $scope.columns[column] = [] unless $scope.columns[column]
       $scope.columns[column].push(block)
       console.log('column', column, 'blocks', $scope.columns[column])
       
+    $scope
 
-    # $scope.addBlocksToColumnArray = ->
-    #   _.each $scope.blocks, (block, i) ->
-    #     column = (i % numCols())
-    #     $scope.columns[column].blocks.push(block)
-
-
+  
     # $scope.resizeGrid = ->  
     #   if $scope.lastNumCols? && $scope.lastNumCols != numCols()
     #     $scope.changeColumnCount()
@@ -88,34 +82,19 @@ App.directive "fluidColumn", ($timeout) ->
   restrict: "EA"
   scope: 
     column: "="
-  # template: """
-  #   <div class='fluid-column' 
-  #     style='
-  #       display:inline-block;
-  #     ',
-  #     ng-style="{
-  #       width: gridCtrl.blockWidth(),
-  #       margin-right: gridCtrl.blockMargin
-  #     }"
-  #   >
-  #     <div ng-repeat="block in blocks">
-  #       <fluid-block block='block'></fluid-block'>
-  #     </div>
-  #   </div>
-  # """
 
   compile: (cElement, cAttr, transclude) ->
     (scope, iElement, iAttrs, gridCtrl) ->
+      debugger
+      iElement
+        .css("width", gridCtrl.blockWidth())
+        .css("margin-right", gridCtrl.blockMargin)
+        .css("display", "inline-block")
+
       scope.$watchCollection 'column', (collection) ->        
         angular.forEach collection, (block) ->
           transclude block.scope, (clone) ->
             iElement.append block.el
-            
-      
-
-  # controller: ($scope) ->
-  #   $scope.$watch $scope.column, (newCol) ->
-  #     debugger
 
 
 #-------------------------------------------------
@@ -128,19 +107,19 @@ App.directive "fluidBlock", ($timeout) ->
   transclude: true
 
   template: """
-    <div class='fluid-block'>
-      <div ng-transclude></div>
-    </div>
+    <div class='fluid-block' ng-transclude></div>
   """
 
-  compile: (cElement, cAttrs, transclude) ->
-    (scope, iElement, iAttrs, gridCtrl) ->
-      gridCtrl.addBlock
-        scope: scope
-        el: iElement
+  link: (scope, element, attrs, gridCtrl) ->
+    element.css("margin-bottom", gridCtrl.blockMargin)
     
+    if gridCtrl.fixedHeight()
+      element
+        .css("height", gridCtrl.fixedHeight())
+        .css("width", "100%")
+        .css("display", "inline-block")
 
-    # $timeout( ->
-    #   if scope.$last || attrs.lastBlock
-    #     gridCtrl.initialize()
-    # , 500)
+    gridCtrl.addBlock
+      scope: scope
+      el: element
+    
