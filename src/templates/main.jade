@@ -4,6 +4,8 @@ nav(ng-show="!state.is('main')")
 
 div(ng-if="state.is('main')")
   fluid-grid#main-grid
+    fluid-block
+      | 3
     fluid-block(
       aspect-ratio="0.67",
       ng-repeat="site in siteCollection.list"
@@ -18,20 +20,20 @@ div(ng-if="state.is('main')")
           .role {{site.role}}
           .date-range {{site.dateRange}}
 
-//- div(ng-if="!state.is('main')")
-//-   fluid-grid
-//-     fluid-block
-//-       | foo
-//-     //-   .info
-//-     //-     .site-name {{site.name}}
-//-     //-     .role {{site.role}}
-//-     //-     .date-range {{site.dateRange}}
+div(ng-if="!state.is('main')")
+  fluid-grid
+    fluid-block
+      | foo
+    //-   .info
+    //-     .site-name {{site.name}}
+    //-     .role {{site.role}}
+    //-     .date-range {{site.dateRange}}
 
-//-     //- fluid-block
-//-     //-   .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+    //- fluid-block
+    //-   .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
           
-//-     //- fluid-block
-//-     //-   ng-include(src="'templates/tech_box.html'")
+    //- fluid-block
+    //-   ng-include(src="'templates/tech_box.html'")
 
 
-//- //- section(ui-view="")
+//- section(ui-view="")

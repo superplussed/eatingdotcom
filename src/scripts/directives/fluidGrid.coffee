@@ -37,8 +37,8 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
 
     $scope.addBlock = (block) ->
       columnIndex = $scope.blocks.length % $scope.numCols()
-      $scope.blocks.push block
       block.columnIndex = columnIndex
+      $scope.blocks.push block
       $scope.columns[columnIndex] = [] unless $scope.columns[columnIndex]
       $scope.columns[columnIndex].push(block)
 
@@ -72,8 +72,7 @@ App.directive "fluidColumn", ($timeout, $rootScope) ->
 
       scope.$watchCollection 'column', (collection) ->        
         angular.forEach collection, (block) ->
-          transclude block.scope, (clone) ->
-            iElement.append block.el
+          iElement.append(block.el)
 
   controller: ($scope, $rootScope) ->
     $rootScope.$on "resizeWindow", ->
