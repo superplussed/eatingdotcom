@@ -14,10 +14,6 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
     </div>
   """
 
-  # compile: (cElement, cAttr) ->
-  #   pre: (scope, iElement, iAttr) ->
-
-
   controller: ($scope, $element, $attrs) ->
 
     $scope.blocks = []
@@ -26,7 +22,7 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
     $scope.minBlockWidth = -> parseFloat($attrs.minBlockWidth) || 250
     $scope.blockMargin = -> parseFloat($attrs.blockMargin) || 4
     $scope.blockRatio = -> parseFloat($attrs.blockRatio) || 250
-    $scope.maxCols = -> parseInt($attrs.maxCols, 10) || 250
+    $scope.maxCols = -> parseInt($attrs.maxCols, 10) || 2
         
     $scope.numCols = -> 
       cnt = Math.floor($element.width()/$scope.minBlockWidth())
@@ -43,30 +39,12 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
 
     $scope.addBlock = (block) ->
       $scope.blocks.push block
-      column = ($scope.blocks.length % ($scope.numCols()))
-      $scope.columns[column] = [] unless $scope.columns[column]
-      $scope.columns[column].push(block)
-      console.log('column', column, 'blocks', $scope.columns[column])
+      columnIndex = $scope.blocks.length % $scope.numCols()
+      block.columnIndex = columnIndex
+      $scope.columns[columnIndex] = [] unless $scope.columns[columnIndex]
+      $scope.columns[columnIndex].push(block)
       
     $scope
-
-  
-    # $scope.resizeGrid = ->  
-    #   if $scope.lastNumCols? && $scope.lastNumCols != numCols()
-    #     $scope.changeColumnCount()
-
-    # $scope.changeColumnCount = ->
-    #   # unless _.isEmpty($scope.columns)
-    #   $scope.initializeColumnArray()   
-    #   $scope.addBlocksToColumnArray()   
-    #   $scope.addBlocksToGrid()
-    #   $scope.setCssDefaults()
-
-    # @initialize = ->
-    #   $scope.changeColumnCount()
-    #   @removeTransclusion()
-    #   $scope.setCssDefaults()
-    #   $scope.resizeGrid()
 
     # $rootScope.$on "resizeWindow", ->
     #   $scope.resizeGrid()
@@ -85,11 +63,13 @@ App.directive "fluidColumn", ($timeout) ->
 
   compile: (cElement, cAttr, transclude) ->
     (scope, iElement, iAttrs, gridCtrl) ->
-      debugger
+
       iElement
         .css("width", gridCtrl.blockWidth())
-        .css("margin-right", gridCtrl.blockMargin)
         .css("display", "inline-block")
+
+      if scope.column[0].columnIndex != gridCtrl.numCols() - 1
+        iElement.css("margin-right", gridCtrl.blockMargin)
 
       scope.$watchCollection 'column', (collection) ->        
         angular.forEach collection, (block) ->
