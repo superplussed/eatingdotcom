@@ -40,9 +40,9 @@ dev:
     - 'services/siteCollectionService'
   scss:
     - 'app'
-    - 'primary-image'
+    - 'thumbnail'
+    - 'grid'
     - 'header'
-    - 'site'
     - 'tech-box'
 
 prod:

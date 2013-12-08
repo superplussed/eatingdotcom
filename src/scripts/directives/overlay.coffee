@@ -5,10 +5,11 @@ App.directive "overlay", ->
 
     overlayColor = attrs.overlayColor|| "rgba(0, 0, 0, 0.7)"
     hoverColor = attrs.hoverColor || "rgba(0, 0, 0, 1)"
-    transitionSpeed = attrs.transitionSpeed || 0.5
+    transitionSpeed = attrs.transitionSpeed || 0.3
     defaultOpacity = attrs.defaultOpacity || 0.7
 
     $(element)
+      .css('position', 'relative')
       .children()
       .wrap("<div class='overlay'></div>") 
 
@@ -19,6 +20,9 @@ App.directive "overlay", ->
       .css('-moz-transition', "all #{transitionSpeed}s ease-in-out")
       .css('transition', "all #{transitionSpeed}s ease-in-out")
       .css('backgroundColor', overlayColor)
+      .css('position', 'absolute')
+      .css('height', '100%')
+      .css('width', '100%')
     
     hoverEl.bind 'mouseleave', (el) ->
       angular.element(el.currentTarget)
@@ -27,4 +31,3 @@ App.directive "overlay", ->
     hoverEl.bind 'mouseover', (el) ->
       angular.element(el.currentTarget)
         .css('backgroundColor', hoverColor)
-        
