@@ -1,19 +1,6 @@
-grid
-  grid-block
-    .info
-      .site-name {{site.name}}
-      .role {{site.role}}
-      .date-range {{site.dateRange}}
-
-  grid-block
-    .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
-
-  grid-block
-    ng-include(src="'templates/tech_box.html'")
-
-  grid-block(last-block="true")
-    a.fancybox(rel="Eat The Web", href="/images/eat_the_web_1_1000w.png")
-      img(ng-src="/images/eat_the_web_1_1000w.png")
-    figcaption
-      .title The DOM Mapper.
-      .description Data attributes can be mapped to DOM nodes on this page.
+fluid-block
+  a.fancybox(rel="Eat The Web", href="/images/eat_the_web_1_1000w.png")
+    img(ng-src="/images/eat_the_web_1_1000w.png")
+  figcaption
+    .title The DOM Mapper.
+    .description Data attributes can be mapped to DOM nodes on this page.

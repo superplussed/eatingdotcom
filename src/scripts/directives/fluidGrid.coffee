@@ -116,4 +116,11 @@ App.directive "fluidBlock", ($timeout) ->
     $rootScope.$on "resizeWindow", ->
       $scope.resize()
 
+
+app.directive "fluidBlockInclude", ->
+  replace: true
+  restrict: "A"
+  templateUrl: (element, attr) ->
+    attr.pfInclude
+
     

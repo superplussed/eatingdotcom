@@ -2,7 +2,7 @@
 
 LIVERELOAD_PORT = 35729
 SERVER_PORT = 9000
-OFFLINE_MODE = false
+OFFLINE_MODE = true
 
 _ = require('underscore')
 lrSnippet = require("connect-livereload")(port: LIVERELOAD_PORT)

@@ -1,2 +1,15 @@
 #site
-  ng-include(src="'templates/' + site.nameUnderscore + '/screenshots.html'")
+  fluid-grid
+    fluid-block
+      .info
+        .site-name {{site.name}}
+        .role {{site.role}}
+        .date-range {{site.dateRange}}
+
+    fluid-block
+      .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+          
+    fluid-block
+      ng-include(src="'templates/tech_box.html'")
+
+    ng-include(src="'templates/' + site.nameUnderscore + '/screenshots.html'")
