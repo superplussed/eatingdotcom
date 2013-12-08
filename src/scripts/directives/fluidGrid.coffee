@@ -43,11 +43,9 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
       block.columnIndex = columnIndex
       $scope.columns[columnIndex] = [] unless $scope.columns[columnIndex]
       $scope.columns[columnIndex].push(block)
-      
+
     $scope
 
-    # $rootScope.$on "resizeWindow", ->
-    #   $scope.resizeGrid()
 
 
 #-------------------------------------------------
@@ -55,7 +53,7 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
 #-------------------------------------------------
 
 
-App.directive "fluidColumn", ($timeout) ->
+App.directive "fluidColumn", ($timeout, $rootScope) ->
   require: "^fluidGrid"
   restrict: "EA"
   scope: 
@@ -64,9 +62,12 @@ App.directive "fluidColumn", ($timeout) ->
   compile: (cElement, cAttr, transclude) ->
     (scope, iElement, iAttrs, gridCtrl) ->
 
-      iElement
-        .css("width", gridCtrl.blockWidth())
-        .css("display", "inline-block")
+      scope.resize= ->
+        iElement.css("width", gridCtrl.blockWidth())
+    
+      scope.resize()
+
+      iElement.css("display", "inline-block")
 
       if scope.column[0].columnIndex != gridCtrl.numCols() - 1
         iElement.css("margin-right", gridCtrl.blockMargin)
@@ -75,6 +76,11 @@ App.directive "fluidColumn", ($timeout) ->
         angular.forEach collection, (block) ->
           transclude block.scope, (clone) ->
             iElement.append block.el
+
+  controller: ($scope, $rootScope) ->
+    $rootScope.$on "resizeWindow", ->
+      $scope.resize()
+
 
 
 #-------------------------------------------------
@@ -93,13 +99,22 @@ App.directive "fluidBlock", ($timeout) ->
   link: (scope, element, attrs, gridCtrl) ->
     element.css("margin-bottom", gridCtrl.blockMargin)
     
+    scope.resize = ->
+      element.css("height", gridCtrl.fixedHeight())
+
+    scope.resize()
+
     if gridCtrl.fixedHeight()
       element
-        .css("height", gridCtrl.fixedHeight())
         .css("width", "100%")
         .css("display", "inline-block")
 
     gridCtrl.addBlock
       scope: scope
       el: element
+
+  controller: ($scope, $rootScope) ->
+    $rootScope.$on "resizeWindow", ->
+      $scope.resize()
+
     
