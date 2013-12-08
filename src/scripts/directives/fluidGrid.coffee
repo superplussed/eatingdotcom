@@ -15,7 +15,7 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
 
   template: """
     <div class='fluid-grid' style='width:100%;display:inline-block;'>
-      <fluid-column ng-repeat='column in columns' blocks='column.blocks'></fluid-column>
+      <fluid-column ng-repeat='column in columns' column='column'></fluid-column>
       <div ng-transclude></div>
     </div>
   """
@@ -40,15 +40,15 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
 
     $scope.initializeColumnArray = ->
       $scope.columns = []
-      for i in [0..numCols() - 1]
-        $scope.columns[i] = {num: i + 1, blocks: []}
 
     $scope.initializeColumnArray()  
 
     @addBlock = (block) ->
       $scope.blocks.push block
-      column = ($scope.blocks.length % numCols())
-      $scope.columns[column].blocks.push(block)
+      column = ($scope.blocks.length % (numCols()))
+      $scope.columns[column] = [] unless $scope.columns[column]
+      $scope.columns[column].push(block)
+      console.log('column', column, 'blocks', $scope.columns[column])
       
 
     # $scope.addBlocksToColumnArray = ->
@@ -87,7 +87,7 @@ App.directive "fluidColumn", ($timeout) ->
   require: "^fluidGrid"
   restrict: "EA"
   scope: 
-    blocks: "="
+    column: "="
   # template: """
   #   <div class='fluid-column' 
   #     style='
@@ -103,17 +103,19 @@ App.directive "fluidColumn", ($timeout) ->
   #     </div>
   #   </div>
   # """
-  template: """
-    <div class='fluid-column'>
-      <div ng-repeat='block in blocks'>
-        {{block.id}}
-      </div>
-    </div>
-  """
 
-  link: (scope, element, attrs, gridCtrl) ->
-    scope.$watch 'attrs.fluid-column'
+  compile: (cElement, cAttr, transclude) ->
+    (scope, iElement, iAttrs, gridCtrl) ->
+      scope.$watchCollection 'column', (collection) ->        
+        angular.forEach collection, (block) ->
+          transclude block.scope, (clone) ->
+            iElement.append block.el
+            
+      
 
+  # controller: ($scope) ->
+  #   $scope.$watch $scope.column, (newCol) ->
+  #     debugger
 
 
 #-------------------------------------------------
@@ -123,29 +125,19 @@ App.directive "fluidColumn", ($timeout) ->
 App.directive "fluidBlock", ($timeout) ->
   require: "^fluidGrid"
   restrict: "EA"
-  transclude: 'element'
+  transclude: true
 
-  # template: """
-  #   <div class='fluid-block' 
-  #     style='
-  #       width: 100%;
-  #       height: 100%; 
-  #       display:inline-block',
-  #     ng-style="{
-  #       height: gridCtrl.fixedHeight(),
-  #       margin-bottom: gridCtrl.blockMargin
-  #     }"
-  #   >
-  #     <div ng-transclude></div>
-  #   </div>
-  # """
+  template: """
+    <div class='fluid-block'>
+      <div ng-transclude></div>
+    </div>
+  """
 
   compile: (cElement, cAttrs, transclude) ->
     (scope, iElement, iAttrs, gridCtrl) ->
       gridCtrl.addBlock
-        id: scope.$id
         scope: scope
-        element: iElement
+        el: iElement
     
 
     # $timeout( ->
