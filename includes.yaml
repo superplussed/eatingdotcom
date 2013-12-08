@@ -35,6 +35,7 @@ dev:
     - 'app'
     - 'directives/fluidGrid'
     - 'directives/thumbnail'
+    - 'directives/overlay'
     - 'controllers/AppCtrl'
     - 'services/siteCollectionService'
   scss:
