@@ -36,8 +36,8 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
     $scope.initializeColumnArray()  
 
     $scope.addBlock = (block) ->
-      $scope.blocks.push block
       columnIndex = $scope.blocks.length % $scope.numCols()
+      $scope.blocks.push block
       block.columnIndex = columnIndex
       $scope.columns[columnIndex] = [] unless $scope.columns[columnIndex]
       $scope.columns[columnIndex].push(block)
