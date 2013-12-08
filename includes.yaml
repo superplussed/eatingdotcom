@@ -2,6 +2,7 @@
 components: 
   js: 
     - 'components/fancybox/source/jquery.fancybox.pack'
+    - 'components/angular-bindonce/bindonce'
   css: 
     - 'components/fancybox/source/jquery.fancybox'
 

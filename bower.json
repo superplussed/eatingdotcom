@@ -7,5 +7,8 @@
     "lodash": "~2.4.1",
     "angular-ui-router": "angular-ui/ui-router#0.2.0",
     "angular": "1.2.4"
+  },
+  "dependencies": {
+    "angular-bindonce": "~0.2.2"
   }
 }

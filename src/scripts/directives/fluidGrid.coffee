@@ -106,7 +106,10 @@ App.directive "fluidBlock", ($timeout) ->
     
     scope.resize = ->
       if scope.aspectRatio?
-        element.css("height", gridCtrl.blockHeight(scope.aspectRatio))
+        height = gridCtrl.blockHeight(scope.aspectRatio)
+      else
+        height = element.css('height')
+      element.css("height", height)
 
     scope.resize()
 
@@ -115,6 +118,5 @@ App.directive "fluidBlock", ($timeout) ->
       el: element
 
   controller: ($scope, $rootScope) ->
-    if $scope.aspectRatio?
-      $rootScope.$on "resizeWindow", ->
-        $scope.resize()
+    $rootScope.$on "resizeWindow", ->
+      $scope.resize()

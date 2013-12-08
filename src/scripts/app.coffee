@@ -3,7 +3,8 @@ angular.module('App.config', [])
 
 window.App = angular.module("App", [
   "ui.router",
-  "App.config"
+  "App.config",
+  "pasvaz.bindonce"
 ])
 
 
