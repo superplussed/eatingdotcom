@@ -118,6 +118,8 @@ App.directive "fluidBlock", ($timeout) ->
       #   height = element.css('height')
       # element.css("height", height)
 
+    scope.resize()
+
     gridCtrl.addBlock
       scope: scope
       el: element
