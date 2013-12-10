@@ -2,7 +2,7 @@
 components: 
   js: 
     - 'components/fancybox/source/jquery.fancybox.pack'
-    - 'components/angular-bindonce/bindonce'
+    - 'components/zoomerang/zoomerang'
   css: 
     - 'components/fancybox/source/jquery.fancybox'
 
@@ -42,6 +42,7 @@ dev:
   scss:
     - 'app'
     - 'thumbnail'
+    - 'screenshot'
     - 'grid'
     - 'header'
     - 'tech-box'

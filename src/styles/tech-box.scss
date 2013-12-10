@@ -2,7 +2,9 @@
 
 $line-height: 24px;
 .tech-box {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Monaco, "Lucida Console", monospace;
   color: $black;
   width: 100%;
   figcaption {
@@ -13,12 +15,10 @@ $line-height: 24px;
     background: white;
     .tech-type {
       li {
-        display: inline-block;
-        margin: 0 5px 5px 0;
-        padding: 5px;
-        color: white;
-        font-weight: bold;
-        font-size: 16px;
+       display: inline-block;
+       margin: 0 2px 2px 0;
+       padding: 5px 10px;
+       color: white;
       }
       .text {
         line-height: $line-height;

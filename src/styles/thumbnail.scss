@@ -8,32 +8,31 @@
   img {
     width: 100%;
   }
-
-  .info {
-    position: relative;
-    top: 5px;
-    left: 5px;
-    color: white;
-    pointer-events: none;
-    .site-name {
-      font-weight: bold;
-      font-size: 32px;
-      line-height: 32px;
-    }
-    .role {
-      font-size: 20px;
-      line-height: 20px;
-    }
-    .date-range {
-      color: #C0BDBD;
-      font-size: 18px;
-      line-height: 18px;
-      font-style: italic;
-    }
-
-    .site-name, .role {
-      color: white;
-    }
-  }
 }
 
+.site-page .info {
+  background: black;
+}
+.info {
+  color: white;
+  pointer-events: none;
+  .site-name {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 32px;
+  }
+  .role {
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .date-range {
+    color: #C0BDBD;
+    font-size: 18px;
+    line-height: 18px;
+    font-style: italic;
+  }
+
+  .site-name, .role {
+    color: white;
+  }
+}
