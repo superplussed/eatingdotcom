@@ -1,3 +1,5 @@
+#append directive to fluid-grid, will it 
+
 #-------------------------------------------------
 # FLUID-GRID
 #-------------------------------------------------
@@ -75,6 +77,11 @@ App.directive "fluidColumn", ($timeout, $rootScope) ->
       scope.$watchCollection 'column', (collection) ->        
         angular.forEach collection, (block) ->
           iElement.append(block.el)
+        scope.resize()
+        $timeout (el) ->
+          angular.forEach scope.column, (block) ->
+            block.scope.resize()
+        , 1000
 
   controller: ($scope, $rootScope) ->
     $rootScope.$on "resizeWindow", ->
@@ -107,11 +114,9 @@ App.directive "fluidBlock", ($timeout) ->
     scope.resize = ->
       if scope.aspectRatio?
         height = gridCtrl.blockHeight(scope.aspectRatio)
-      else
-        height = element.css('height')
-      element.css("height", height)
-
-    scope.resize()
+      # else
+      #   height = element.css('height')
+      # element.css("height", height)
 
     gridCtrl.addBlock
       scope: scope
