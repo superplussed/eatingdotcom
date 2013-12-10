@@ -11,8 +11,11 @@
 }
 
 .site-page .info {
-  background: black;
+  background: $black;
   padding: 5px 0 15px 0;
+}
+.overlay .info {
+  margin: 5px;
 }
 .info {
   color: white;

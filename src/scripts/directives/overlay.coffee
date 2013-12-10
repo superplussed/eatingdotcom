@@ -3,7 +3,7 @@ App.directive "overlay", ->
 
   link: (scope, element, attrs) ->
 
-    overlayColor = attrs.overlayColor|| "rgba(0, 0, 0, 0.7)"
+    overlayColor = attrs.overlayColor|| "rgba(0, 0, 0, 0.75)"
     hoverColor = attrs.hoverColor || "rgba(0, 0, 0, 1)"
     transitionSpeed = attrs.transitionSpeed || 0.3
     defaultOpacity = attrs.defaultOpacity || 0.7
