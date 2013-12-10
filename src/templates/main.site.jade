@@ -5,11 +5,8 @@
         .site-name {{site.name}}
         .role {{site.role}}
         .date-range {{site.dateRange}}
-
-    fluid-block
-      .detail(ng-include="'templates/' + site.nameUnderscore + '/article.html'")
+      .detail
+        ng-include(src="'templates/' + site.nameUnderscore + '/article.html'")
+        ng-include(src="'templates/tech_box.html'")
           
-    fluid-block
-      ng-include(src="'templates/tech_box.html'")
-
     ng-include(src="'templates/' + site.nameUnderscore + '/screenshots.html'")

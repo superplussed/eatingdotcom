@@ -1,41 +1,40 @@
 @import "globals";
 
 $line-height: 24px;
+
+.frontend { background: #16BDBC; }
+.backend { background: #0D8887; }
+.ops { background: #055656; }
+
 .tech-box {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   font-family: Monaco, "Lucida Console", monospace;
   color: $black;
   width: 100%;
+  margin-bottom: 10px;
   figcaption {
     margin-top: 0!important;
   }
-  .tech-box-inner {
-    padding: 10px;
-    background: white;
-    .tech-type {
-      li {
-       display: inline-block;
-       margin: 0 2px 2px 0;
-       padding: 5px 10px;
-       color: white;
-      }
-      .text {
-        line-height: $line-height;
-      }
-      .indicator {
-        display: block;
-        float: left;
-        height: $line-height;
-        width: 8px;
-        margin-right: 5px;
-      }
+  .tech-type {
+    li {
+     display: inline-block;
+     margin: 0 2px 2px 0;
+     padding: 2px 10px;
+     color: white;
+    }
+    .text {
+      line-height: $line-height;
+    }
+    .indicator {
+      display: block;
+      float: left;
+      height: $line-height;
+      width: 8px;
+      margin-right: 5px;
     }
   }
 
-  .backend { background: $color1; }
-  .frontend { background: $color2; }
-  .ops { background: $color3; }
   .key {
     display: inline-block;
     width: 12px;

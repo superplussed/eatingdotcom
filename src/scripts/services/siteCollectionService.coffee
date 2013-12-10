@@ -4,6 +4,15 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       name: "3rd Ward"
       dateRange: "Sept 2012 - Sept 2013"
       tech: [
+        name: "jQuery"
+        type: "frontend"
+      ,
+        name: "AngularJS"
+        type: "frontend"
+      ,
+        name: "Sass"
+        type: "frontend"
+      ,
         name: "Ruby on Rails"
         type: "backend"
       ,
@@ -19,15 +28,6 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
         name: "HAML"
         type: "backend"
       ,
-        name: "jQuery"
-        type: "frontend"
-      ,
-        name: "AngularJS"
-        type: "frontend"
-      ,
-        name: "Sass"
-        type: "frontend"
-      ,
         name: "Amazon Web Services"
         type: "ops"
       ]
@@ -36,18 +36,6 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       name: "Eat The Web"
       dateRange: "Sept 2013 - Present"
       tech: [
-        name: "Node.js"
-        type: "backend"
-      ,
-        name: "Sails"
-        type: "backend"
-      ,
-        name: "MongoDB"
-        type: "backend"
-      ,
-        name: "Ruby"
-        type: "backend"
-      ,
         name: "Angular.js"
         type: "frontend"
       ,
@@ -60,6 +48,18 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
         name: "Sass"
         type: "frontend"
       ,
+        name: "Node.js"
+        type: "backend"
+      ,
+        name: "Sails"
+        type: "backend"
+      ,
+        name: "MongoDB"
+        type: "backend"
+      ,
+        name: "Ruby"
+        type: "backend"
+      ,
         name: "Grunt"
         type: "ops"
       ]
@@ -69,6 +69,21 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       dateRange: "2011-2012"
       role: 'Project Creator'
       tech: [
+        name: "Knockout.js"
+        type: "frontend"
+      ,
+        name: "jQuery"
+        type: "frontend"
+      ,
+        name: "D3.js"
+        type: "frontend"
+      ,
+        name: "SVG"
+        type: "frontend"
+      ,
+        name: "Sass"
+        type: "frontend"
+      ,
         name: "Ruby"
         type: "backend"
       ,
@@ -92,21 +107,6 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       ,
         name: "HAML"
         type: "backend"
-      ,
-        name: "Knockout.js"
-        type: "frontend"
-      ,
-        name: "jQuery"
-        type: "frontend"
-      ,
-        name: "D3.js"
-        type: "frontend"
-      ,
-        name: "SVG"
-        type: "frontend"
-      ,
-        name: "Sass"
-        type: "frontend"
       ]
     ,
       name: "Dropchart"
@@ -144,15 +144,6 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       description: "Xpert Sports was fantasy football league management software."
       role: 'Sole Founder, Developer & Designer'
       tech: [
-        name: "PHP"
-        type: "backend"
-      ,
-        name: "MySQL"
-        type: "backend"
-      ,
-        name: "Postgres"
-        type: "backend"
-      ,
         name: "Javascript"
         type: "frontend"
       ,
@@ -164,6 +155,15 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       ,
         name: "CSS"
         type: "frontend"
+      ,
+        name: "PHP"
+        type: "backend"
+      ,
+        name: "MySQL"
+        type: "backend"
+      ,
+        name: "Postgres"
+        type: "backend"
       ]
     ]
     active: {}

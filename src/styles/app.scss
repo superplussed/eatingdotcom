@@ -76,9 +76,12 @@ body {
     .detail {
       background: #F1F1F1;
       padding: 0 10px;
-      font-size: 18px;
-      line-height: 22px;
+      font-size: 20px;
+      line-height: 26px;
       overflow: hidden;
+      ul {
+        margin-top: 10px;
+      }
     }
     a {
       text-transform: none;
@@ -108,10 +111,6 @@ body {
       }
     }
   }
-}
-
-.block-small .role {
-  font-size: 18px;
 }
 
 .typekit-badge {

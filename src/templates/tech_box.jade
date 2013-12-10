@@ -1,16 +1,4 @@
 .tech-box
-  .tech-box-inner
-    ul.tech-type
-      li(ng-repeat='t in site.tech', class='{{t.type}}')
-        {{t.name}}
-  //- figcaption
-  //-   .title Technologies used.
-  //-   .legend(ng-if="siteCollection.hasTechType(site, 'backend')")
-  //-     .key.backend
-  //-     .text Server-side
-  //-   .legend(ng-if="siteCollection.hasTechType(site, 'frontend')")
-  //-     .key.frontend
-  //-     .text Client-side
-  //-   .legend(ng-if="siteCollection.hasTechType(site, 'ops')")
-  //-     .key.ops
-  //-     .text Sys Ops
+  ul.tech-type
+    li(ng-repeat='t in site.tech', class='{{t.type}}')
+      {{t.name}}
