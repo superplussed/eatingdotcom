@@ -17,17 +17,26 @@
 #social-links-wrapper
   #social-links
     a.social-link.row2.col1.block(href="mailto:jeremy@superplussed.com")
-      i.icon-envelope
+      i.fa.fa-envelope
 
     a.social-link.row3.col1.block(href="https://github.com/superplussed")
-      i.icon-github-alt
+      i.fa.fa-github-alt
 
     a.social-link.row3.col2.block(href="https://twitter.com/eat_the_dot_com")
-      i.icon-twitter
+      i.fa.fa-twitter
 
 #site-nav-wrapper
   nav
-    a#work.row1.nav-link(href="/") WORK
-    a#blog.row2.nav-link(href="/") BLOG
-    a#about.row3.nav-link(href="/") ABOUT
+    a.row1.nav-link(
+      ng-class="{active: state.includes('work')}",
+      ui-sref="work"
+    ) WORK
+    a.row2.nav-link(
+      ng-class="{active: state.includes('blog')}",
+      ui-sref="blog"
+    ) BLOG
+    a.row3.nav-link(
+      ng-class="{active: state.includes('about')}",
+      ui-sref="about"
+    ) ABOUT
 

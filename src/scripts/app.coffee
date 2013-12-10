@@ -16,6 +16,14 @@ App.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider
     .otherwise(default_page)
 
   $stateProvider
+    .state "about",
+      url: "/about"
+      templateUrl: 'templates/about.html'
+
+    .state "blog",
+      url: "/blog"
+      templateUrl: 'templates/blog.html'
+
     .state "work",
       url: "/"
       templateUrl: 'templates/work.html'

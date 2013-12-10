@@ -3,13 +3,13 @@ nav(ng-show="!state.is('work')")
   a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
 
 div(ng-if="state.is('work')")
-  fluid-grid#main-grid
+  fluid-grid.content
     fluid-block(
       aspect-ratio="0.67",
       ng-repeat="site in siteCollection.list"
     )
       a(
-        ng-href="#/{{site.nameUnderscore}}",
+        ui-sref="work.site({site_id: site.nameUnderscore})",
         thumbnail="{src: '/images/{{site.nameUnderscore}}_primary.png'}",
         overlay="true"
       )
