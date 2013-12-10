@@ -22,6 +22,12 @@ a {
   color: $black;
 }
 
+h5 {
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+}
+
 figcaption, footer, a, img, section, ul, li, menu, menu-item, div, h1, h2, h3 {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -35,6 +41,16 @@ button{
   border:hidden;
   cursor:pointer;
   outline:none;
+}
+
+figcaption {
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  background: #F1F1F1;
+  p {
+    margin: 0;
+  }
 }
 
 body {
@@ -58,7 +74,7 @@ body {
     min-width: 400px;
     
     .detail {
-      background: #CCC;
+      background: #F1F1F1;
       padding: 0 10px;
       font-size: 18px;
       line-height: 22px;

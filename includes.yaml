@@ -42,7 +42,6 @@ dev:
   scss:
     - 'app'
     - 'thumbnail'
-    - 'screenshot'
     - 'grid'
     - 'header'
     - 'tech-box'

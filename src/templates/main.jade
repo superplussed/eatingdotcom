@@ -10,8 +10,7 @@ div(ng-if="state.is('main')")
     )
       a(
         ng-href="#/{{site.nameUnderscore}}",
-        thumbnail="/images/{{site.nameUnderscore}}_primary.png",
-        thumbnail-bg="true",
+        thumbnail="{src: '/images/{{site.nameUnderscore}}_primary.png'}",
         overlay="true"
       )
         .info
