@@ -116,7 +116,7 @@ App.directive "fluidBlock", ($timeout) ->
         height = gridCtrl.blockHeight(scope.aspectRatio)
       # else
       #   height = element.css('height')
-      # element.css("height", height)
+      element.css("height", height)
 
     scope.resize()
 
