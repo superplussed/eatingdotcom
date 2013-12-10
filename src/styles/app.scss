@@ -9,6 +9,68 @@
   vertical-align: top;
 }
 
+html, body {
+  height: 100%;
+}
+
+body {
+  display: table;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  background: #FFF;
+  margin: 0;
+  padding: 0;
+  font-family: $default-font;
+  font-size: 24px;
+  color: $black;
+  #app {
+    display: table-row;
+    height: 100%;
+    width: 100%;
+    .column {
+      display: table-cell;
+      height: 100%;
+    }
+
+    .column-left, .column-right {
+      width: 5%;
+      background: #EEE;
+    }
+
+    .column-center {
+      width: 90%;
+      padding: 50px;
+      max-width: 960px;
+      main {
+        border-top: 2px solid #333;
+        width: 100%;
+        .content {
+          height: 100%;
+          margin: 30px 0;
+        }
+        nav {
+          display: block;
+          height: 55px;
+          padding: 10px 0;
+          margin-bottom: 30px;
+          border-bottom: 2px solid #333;
+          a {
+            display: inline-block;
+            color: $black;
+          }
+          .prev {
+            float: left;
+          }
+          .next {
+            float: right;
+          }
+        }
+      }
+    }
+
+  }
+}
+
 ul, li, h1, h2, h3, h4, h5  {
   margin: 0;
   padding: 0;
@@ -34,6 +96,10 @@ figcaption, footer, a, img, section, ul, li, menu, menu-item, div, h1, h2, h3 {
   box-sizing: border-box;
 }
 
+a {
+  text-transform: none;
+}
+
 button{
   &::-moz-focus-inner {
     border: 0;
@@ -52,68 +118,15 @@ figcaption {
     margin: 0;
   }
 }
-
-html,body {
-  height:100%;
-}
-
-body {
-  display: flex;
-  flex-direction: row;
-  -webkit-font-smoothing: antialiased;
-  margin: 0;
-  padding: 0;
-  font-family: $default-font;
-  background: #EEEEEE;
-  font-size: 24px;
-  color: $black;
-
-  #app {
-    display: inline-block;
-    padding: 50px 100px;
-    width: 1120px;
-    background: #fff;
-    height: 100%;
-    margin: 0 auto;
-    min-width: 400px;
     
-    .detail {
-      background: #F1F1F1;
-      padding: 0 10px;
-      font-size: 20px;
-      line-height: 26px;
-      overflow: hidden;
-      ul {
-        margin-top: 10px;
-      }
-    }
-    a {
-      text-transform: none;
-    }
-  }
-
-  main {
-    border-top: 2px solid #333;
-    .content {
-      margin: 30px 0;
-    }
-    nav {
-      display: block;
-      height: 55px;
-      padding: 10px 0;
-      margin-bottom: 30px;
-      border-bottom: 2px solid #333;
-      a {
-        display: inline-block;
-        color: $black;
-      }
-      .prev {
-        float: left;
-      }
-      .next {
-        float: right;
-      }
-    }
+.detail {
+  background: #F1F1F1;
+  padding: 0 10px;
+  font-size: 20px;
+  line-height: 26px;
+  overflow: hidden;
+  ul {
+    margin-top: 10px;
   }
 }
 

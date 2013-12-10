@@ -2,8 +2,8 @@ nav(ng-show="!state.is('work')")
   a.prev(ng-href="#/{{siteCollection.prevProject()}}") Previous Project
   a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
 
-div(ng-if="state.is('work')")
-  fluid-grid.content
+.content(ng-if="state.is('work')")
+  fluid-grid
     fluid-block(
       aspect-ratio="0.67",
       ng-repeat="site in siteCollection.list"
