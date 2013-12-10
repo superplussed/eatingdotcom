@@ -1,8 +1,8 @@
-nav(ng-show="!state.is('main')")
+nav(ng-show="!state.is('work')")
   a.prev(ng-href="#/{{siteCollection.prevProject()}}") Previous Project
   a.next(ng-href="#/{{siteCollection.nextProject()}}") Next Project
 
-div(ng-if="state.is('main')")
+div(ng-if="state.is('work')")
   fluid-grid#main-grid
     fluid-block(
       aspect-ratio="0.67",

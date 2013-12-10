@@ -16,13 +16,13 @@ App.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider
     .otherwise(default_page)
 
   $stateProvider
-    .state "main",
+    .state "work",
       url: "/"
-      templateUrl: 'templates/main.html'
+      templateUrl: 'templates/work.html'
 
-    .state "main.site",
+    .state "work.site",
       url: "{site_id}"
-      templateUrl: 'templates/main.site.html'
+      templateUrl: 'templates/work.site.html'
       controller: ($scope, $stateParams, SiteCollectionService) ->
         $scope.site = SiteCollectionService.siteFromName($stateParams.site_id)
         SiteCollectionService.setActive($scope.site)

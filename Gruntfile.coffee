@@ -216,13 +216,13 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "src"
-          src: ["templates/main.site.jade"]
+          src: ["templates/work.site.jade"]
           dest: "dev"
           ext: ".site.html"
         ,
           expand: true
           cwd: "src"
-          src: ["templates/**/*.jade", "!templates/main.site.jade"]
+          src: ["templates/**/*.jade", "!templates/work.site.jade"]
           dest: "dev"
           ext: ".html"
         ,
@@ -239,14 +239,14 @@ module.exports = (grunt) ->
             jsFiles: prodJsFiles
         files: [
           cwd: "src"
-          src: ["templates/**/*.jade", "!templates/main.site.jade"]
+          src: ["templates/**/*.jade", "!templates/work.site.jade"]
           dest: ".tmp"
           expand: true,
           ext: ".html"
         ,
           expand: true
           cwd: "src"
-          src: ["templates/main.site.jade"]
+          src: ["templates/work.site.jade"]
           dest: ".tmp"
           ext: ".site.html"
         ,
