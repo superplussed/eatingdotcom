@@ -34,8 +34,13 @@ App.directive "thumbnail", ->
 
     if scope.args.zoomConfig or scope.args.zoom
       element
-        .css("pointer", "cursor")
-      Zoomerang.config(scope.args.zoomConfig) if scope.args.zoomConfig
-      Zoomerang.listen(zoomEl?[0] or element[0])
+        .css("cursor", "pointer")
+        .css("display", "inline-block")
+
+      Zoomerang.config
+        maxWidth: 800
+        maxHeight: 800
+
+      Zoomerang.listen(element.find("img")[0])
 
 
