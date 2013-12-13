@@ -34,8 +34,10 @@ App.directive "thumbnail", ->
 
     if scope.args.zoomConfig or scope.args.zoom
       element
+        .addClass("zoomable")
         .css("cursor", "pointer")
         .css("display", "inline-block")
+      element.append("<div class='icon-bg'><i class='fa fa-search-plus fa-lg'></i></div>")
 
       Zoomerang.config
         maxWidth: 800

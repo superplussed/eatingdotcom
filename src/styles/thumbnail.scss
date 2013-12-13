@@ -1,6 +1,29 @@
 @import "globals";
+@import "bourbon/addons/triangle";
+@import "bourbon/addons/prefixer";
+@import "bourbon/css3/transition";
 
+.icon-bg {
+  @include transition (all 0.2s ease-in-out);
+  @include triangle(60px, $black, 'up-right');
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  i {
+    position: absolute;
+    top: -57px;
+    right: 0px;
+    color: white;
+    opacity: 0.5;
+  }
+}
+
+.zoomable:hover .icon-bg {
+  opacity: 1;
+}
 .thumbnail {
+  position: relative;
   a {
     text-decoration: none;
   }
