@@ -3,7 +3,7 @@ App.controller("AppCtrl", ['$window', '$state', '$stateParams', 'SiteCollectionS
   $rootScope.siteCollection.initialize()
   $rootScope.state = $state
   $rootScope.params = $stateParams
-  $rootScope.offlineMode = false
+  $rootScope.offlineMode = true
 
   $window.onresize = ->
     $rootScope.$broadcast "resizeWindow"
