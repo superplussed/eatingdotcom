@@ -13,6 +13,10 @@ html, body {
   height: 100%;
 }
 
+img {
+  @include transition (all 0.5s ease-in-out);
+}
+
 body {
   display: table;
   width: 100%;
@@ -69,10 +73,6 @@ body {
     }
 
   }
-}
-
-img {
-  background: black url('/images/spiffygif_42_42.gif') no-repeat;
 }
 
 ul, li, h1, h2, h3, h4, h5  {
@@ -144,4 +144,17 @@ figcaption {
 
 .wf-active .flash-protect {
   visibility: visible;
+}
+
+.loading {
+  background: black; 
+}
+
+.loading:before {
+  content: "Loading";
+  color: white;
+}
+
+.hide {
+  opacity: 0;
 }

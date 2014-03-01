@@ -7,6 +7,7 @@
 # maxWidth - max element width when zoomed-in. default: 300
 # maxHeight - max element height when zoomed-in. default: 300
 # deepCopy - whether to copy innerHTML. If target element has complicated inner structure you might need this to make it work. default: false
+# addToDom - will add an img tag to parent element
 
 App.directive "thumbnail", ->
   restrict: "A"
@@ -17,10 +18,13 @@ App.directive "thumbnail", ->
     $scope.args = $scope.$eval($scope.thumbnail)
 
   link: (scope, element, attrs) ->
-    element.addClass("thumbnail")
+    element.addClass("thumbnail loading")
     if scope.args.addToDom? && scope.args.addToDom
-      element.append("<img src='#{scope.args.src}'>")
+      element.append("<img src='#{scope.args.src}' style='opacity: 0'>")
       imgEl = element.find("img").first()
+      imgEl.bind 'load', ->
+        imgEl.css("opacity", 1)
+        element.removeClass("loading")
     else
       element
         .css('width', '100%')
