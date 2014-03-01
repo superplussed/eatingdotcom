@@ -10,7 +10,7 @@ nav(ng-show="!state.is('work')")
     )
       a(
         ui-sref="work.site({site_id: site.nameUnderscore})",
-        thumbnail="{src: '/images/{{site.nameUnderscore}}_primary.png'}",
+        thumbnail="{src: '/images/primary_{{site.nameUnderscore}}.png'}",
         overlay="true"
       )
         .info

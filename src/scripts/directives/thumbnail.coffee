@@ -18,8 +18,9 @@ App.directive "thumbnail", ->
     $scope.args = $scope.$eval($scope.thumbnail)
 
   link: (scope, element, attrs) ->
-    element.addClass("thumbnail loading")
+    element.addClass("thumbnail")
     if scope.args.addToDom? && scope.args.addToDom
+      element.addClass("loading")
       element.append("<img src='#{scope.args.src}' style='opacity: 0'>")
       imgEl = element.find("img").first()
       imgEl.bind 'load', ->
