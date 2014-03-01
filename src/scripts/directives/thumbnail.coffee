@@ -24,7 +24,6 @@ App.directive "thumbnail", ->
       imgEl = element.find("img").first()
       imgEl.bind 'load', ->
         imgEl.css("opacity", 1)
-        element.removeClass("loading")
     else
       element
         .css('width', '100%')
