@@ -1,4 +1,4 @@
-angular.module('App.config', ['rn-lazy'])
+angular.module('App.config', [])
   .constant('siteOffset', 0)
 
 window.App = angular.module("App", [

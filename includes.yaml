@@ -37,7 +37,6 @@ dev:
     - 'directives/fluidGrid'
     - 'directives/thumbnail'
     - 'directives/overlay'
-    - 'directives/rnLazy'
     - 'controllers/AppCtrl'
     - 'services/siteCollectionService'
   scss:
