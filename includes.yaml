@@ -41,6 +41,7 @@ dev:
     - 'services/siteCollectionService'
   scss:
     - 'app'
+    - 'media'
     - 'thumbnail'
     - 'grid'
     - 'blog'
