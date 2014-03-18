@@ -1,4 +1,4 @@
-!!! 5
+doctype html
 html(lang="en")
 
   head
@@ -11,8 +11,9 @@ html(lang="en")
     meta(name='viewport', content='width=device-width')
     link(href="favicon.ico", rel="shortcut icon", type="image/x-icon")
 
-    - each cssFile in cssFiles
-      link(rel='stylesheet', href='#{cssFile}.css')
+    <!-- inject:css -->
+    <!-- any *.css files among your sources will go here as: <link rel="stylesheet" href="FILE"> -->
+    <!-- endinject -->
 
   body(
     ng-app='App', 
@@ -26,5 +27,6 @@ html(lang="en")
         main(ui-view="")
       .column.column-right
 
-    - each jsFile in jsFiles
-      script(src='#{jsFile}.js')
+    <!-- inject:js -->
+    <!-- any *.js files among your sources will go here as: <script src="FILE"></script> -->
+    <!-- endinject -->

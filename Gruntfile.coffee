@@ -85,7 +85,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "src/styles"
-          src: scssFiles
+          src: includes.dev.scss
           dest: "dev/styles"
           ext: ".css"
         ]
@@ -93,7 +93,7 @@ module.exports = (grunt) ->
         files: [
           expand: true,
           cwd: 'src/styles'
-          src: scssFiles
+          src: includes.dev.scss
           dest: '.tmp/styles'
           ext: '.css'
         ]
@@ -140,7 +140,7 @@ module.exports = (grunt) ->
           join: true
           bare: true
         files: [
-          '.tmp/scripts/app.js': coffeeFiles
+          '.tmp/scripts/app.js': includes.dev.coffee
         ]
 
     copy:
@@ -154,13 +154,13 @@ module.exports = (grunt) ->
           expand: true
           flatten: true
           cwd: 'src/'
-          src: componentCssFiles
+          src: includes.dev.css
           dest: '.tmp/styles/'
         ,
           expand: true
           flatten: true
           cwd: 'src/'
-          src: componentJsFiles
+          src: includes.dev.js
           dest: '.tmp/scripts/'
         ,
           expand: true
@@ -209,8 +209,8 @@ module.exports = (grunt) ->
       dev:
         options:
           data:
-            cssFiles: devCssFiles
-            jsFiles: devJsFiles
+            cssFiles: includes.dev.css
+            jsFiles: includes.dev.js
         files: [
           expand: true
           cwd: "src"
@@ -233,8 +233,8 @@ module.exports = (grunt) ->
       prod:
         options:
           data:
-            cssFiles: prodCssFiles
-            jsFiles: prodJsFiles
+            cssFiles: includes.prod.css
+            jsFiles: includes.prod.js
         files: [
           cwd: "src"
           src: ["templates/**/*.jade", "!templates/work.site.jade"]
