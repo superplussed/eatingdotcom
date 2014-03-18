@@ -89,8 +89,6 @@ module.exports = (grunt) ->
           dest: "dev/styles"
           ext: ".css"
         ]
-        # options:
-        #   sourcemap: "true"
       prod:
         files: [
           expand: true,
