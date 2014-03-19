@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var jade = require('gulp-jade');
 var coffee = require('gulp-coffee');
 var inject = require('gulp-inject');
+var clean = require('gulp-clean');
 var refresh = require('gulp-livereload');
 var lr = require('tiny-lr');
 var server = lr();
@@ -20,19 +21,24 @@ function startExpress(dir) {
   app.listen(4000);
 }
 
-gulp.task('bower', function() {
-  bower()
-    .pipe(gulp.dest('dev/lib'))
+gulp.task('clean', function() {
+    gulp.src('dev', {read: false})
+        .pipe(clean({force: true}));
 });
 
-gulp.task("bower-files", function(){
-  gulpBowerFiles();
-})
+// gulp.task('bower', function() {
+//   bower()
+//     .pipe(gulp.dest('dev/lib'))
+// });
+
+// gulp.task("bower-files", function(){
+//   gulpBowerFiles();
+// })
 
 gulp.task('build-js', function() {
   gulp.src(['src/scripts/**/*.coffee'])
     .pipe(coffee())
-    .pipe(gulp.dest('build'))
+    .pipe(gulp.dest('dev/scripts'))
     .pipe(refresh(server))
 })
 
@@ -40,14 +46,14 @@ gulp.task('build-css', function() {
   gulp.src(['src/styles/*.scss'])
     .pipe(sass())
     // .pipe(minifyCSS())
-    .pipe(gulp.dest('build'))
+    .pipe(gulp.dest('dev/styles'))
     .pipe(refresh(server))
 })
 
 gulp.task('build-html', function() {
   gulp.src('dev/index.html')
-    .pipe(inject(gulp.src('build/**/*.css'), {
-      ignorePath: '/build/',
+    .pipe(inject(gulp.src(['dev/**/*.js'], ['dev/**/*.js']), {
+      ignorePath: '/dev/',
       addRootSlash: false
     }))
     .pipe(gulp.dest("./dev"));
@@ -57,7 +63,7 @@ gulp.task('jade', function() {
   gulp.src(["src/**/*.jade", "!src/components/"])
     .pipe(jade())
     .pipe(embedlr())
-    .pipe(gulp.dest('build/'))
+    .pipe(gulp.dest('dev/'))
     .pipe(refresh(server));
 })
 
@@ -89,20 +95,22 @@ gulp.task('lr-server', function() {
 // "lib/zoomerang/zoomerang.js",
 // "dev/scripts/**/*.js"
 
+gulp.task('build', ['jade', 'build-js', 'build-css', 'build-html']);
+
 gulp.task('default', function() {
-  startExpress('dev');
+  // startExpress('dev');
 
-  gulp.run('lr-server', 'bower', 'copy', 'jade', 'build-js', 'build-css', 'build-html');
+  gulp.run('copy', 'jade', 'build-js', 'build-css', 'build-html');
 
-  gulp.watch('app/src/**', function(event) {
-    gulp.run('scripts');
-  })
+  // gulp.watch('app/src/**', function(event) {
+  //   gulp.run('scripts');
+  // })
 
-  gulp.watch('app/css/**', function(event) {
-    gulp.run('styles');
-  })
+  // gulp.watch('app/css/**', function(event) {
+  //   gulp.run('styles');
+  // })
 
-  gulp.watch('app/**/*.html', function(event) {
-    gulp.run('html');
-  })
+  // gulp.watch('app/**/*.html', function(event) {
+  //   gulp.run('html');
+  // })
 })
