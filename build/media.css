@@ -1,0 +1,11 @@
+@media only screen and (max-width: 399px) {
+  #site-nav-wrapper {
+    display: none; }
+  body #app .column-center {
+    width: 100%;
+    padding: 30px 10px; }
+    body #app .column-center main nav {
+      padding: 10px 0; }
+      body #app .column-center main nav .prev, body #app .column-center main nav .next {
+        font-size: 18px;
+        line-height: 30px; } }

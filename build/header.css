@@ -1,0 +1,128 @@
+header {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 145px; }
+  header .nav-link, header .social-link, header .the, header .com, header .eat, header .ing {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out; }
+  header .dot {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out; }
+  header .block {
+    display: block;
+    height: 38px;
+    width: 42px;
+    border-radius: 3px; }
+  header .row1, header .row2, header .row3 {
+    position: absolute; }
+  header .row1 {
+    top: 0; }
+  header .row2 {
+    top: 39px; }
+  header .row3 {
+    top: 78px; }
+  header .col1 {
+    left: 0; }
+  header .col2 {
+    left: 43px; }
+  header #rendered-logo-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0; }
+    header #rendered-logo-wrapper #rendered-logo {
+      font-family: "tablet-gothic", Helvetica Neue, arial;
+      display: block;
+      width: 90px;
+      height: 120px; }
+      header #rendered-logo-wrapper #rendered-logo .eat, header #rendered-logo-wrapper #rendered-logo .ing, header #rendered-logo-wrapper #rendered-logo .the, header #rendered-logo-wrapper #rendered-logo .com {
+        pointer-events: none; }
+      header #rendered-logo-wrapper #rendered-logo .the, header #rendered-logo-wrapper #rendered-logo .com {
+        font-family: "tablet-gothic-semi-condensed", Helvetica Neue, arial; }
+      header #rendered-logo-wrapper #rendered-logo .eat, header #rendered-logo-wrapper #rendered-logo .ing, header #rendered-logo-wrapper #rendered-logo .the, header #rendered-logo-wrapper #rendered-logo .dot, header #rendered-logo-wrapper #rendered-logo .com {
+        position: absolute;
+        color: #353535;
+        font-weight: 800; }
+      header #rendered-logo-wrapper #rendered-logo .eat {
+        top: 0;
+        font-size: 50px;
+        line-height: 30px; }
+        header #rendered-logo-wrapper #rendered-logo .eat.e {
+          left: -3px; }
+        header #rendered-logo-wrapper #rendered-logo .eat.a {
+          left: 27px; }
+        header #rendered-logo-wrapper #rendered-logo .eat.t {
+          left: 57px; }
+      header #rendered-logo-wrapper #rendered-logo .ing {
+        top: 39px;
+        font-size: 50px;
+        line-height: 30px; }
+        header #rendered-logo-wrapper #rendered-logo .ing.i {
+          left: -2px; }
+        header #rendered-logo-wrapper #rendered-logo .ing.n {
+          left: 17px; }
+        header #rendered-logo-wrapper #rendered-logo .ing.g {
+          left: 53px; }
+      header #rendered-logo-wrapper #rendered-logo .the {
+        top: 79px;
+        font-size: 25px;
+        line-height: 15px;
+        color: #7D7D7D; }
+        header #rendered-logo-wrapper #rendered-logo .the.t {
+          left: 44px; }
+        header #rendered-logo-wrapper #rendered-logo .the.h {
+          left: 58px; }
+        header #rendered-logo-wrapper #rendered-logo .the.e {
+          left: 75px; }
+      header #rendered-logo-wrapper #rendered-logo .dot {
+        top: 78px;
+        background: #FB3E3E; }
+      header #rendered-logo-wrapper #rendered-logo .com {
+        color: #45BEBD;
+        top: 100px;
+        font-size: 22px;
+        line-height: 14px; }
+        header #rendered-logo-wrapper #rendered-logo .com.c {
+          left: 44px; }
+        header #rendered-logo-wrapper #rendered-logo .com.o {
+          left: 56px; }
+        header #rendered-logo-wrapper #rendered-logo .com.m {
+          left: 69px; }
+  header #social-links-wrapper {
+    position: absolute;
+    top: 0;
+    left: 90px; }
+    header #social-links-wrapper a {
+      color: #7D7D7D;
+      text-decoration: none;
+      text-align: center; }
+    header #social-links-wrapper #social-links {
+      position: relative; }
+      header #social-links-wrapper #social-links .social-link i {
+        font-size: 18px;
+        line-height: 40px; }
+      header #social-links-wrapper #social-links .social-link:hover {
+        background: #333;
+        color: #E0E0E0; }
+      header #social-links-wrapper #social-links .block {
+        background: #E0E0E0; }
+  header #site-nav-wrapper {
+    font-family: "tablet-gothic-semi-condensed", Helvetica Neue, arial;
+    position: absolute;
+    top: 0;
+    right: 100px; }
+    header #site-nav-wrapper nav {
+      position: relative; }
+      header #site-nav-wrapper nav a {
+        text-decoration: none; }
+      header #site-nav-wrapper nav .nav-link {
+        color: #7D7D7D;
+        height: 38px;
+        padding: 0 10px;
+        background: #E0E0E0;
+        width: 100px; }
+      header #site-nav-wrapper nav .nav-link:hover, header #site-nav-wrapper nav .nav-link.active {
+        background: #333;
+        color: #E0E0E0; }

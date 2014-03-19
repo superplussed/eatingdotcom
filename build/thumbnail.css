@@ -1,0 +1,53 @@
+.icon-bg {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  height: 0;
+  width: 0;
+  border-top: 60px solid #121212;
+  border-left: 60px solid transparent;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  right: 0px; }
+  .icon-bg i {
+    position: absolute;
+    top: -57px;
+    right: 0px;
+    color: white;
+    opacity: 0.5; }
+
+.zoomable:hover .icon-bg {
+  opacity: 1; }
+
+.thumbnail {
+  position: relative; }
+  .thumbnail a {
+    text-decoration: none; }
+  .thumbnail img {
+    width: 100%; }
+
+.site-page .info {
+  background: #121212;
+  padding: 5px 0 15px 0; }
+
+.overlay .info {
+  margin: 5px; }
+
+.info {
+  color: white;
+  pointer-events: none; }
+  .info .site-name {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 32px; }
+  .info .role {
+    font-size: 20px;
+    line-height: 20px; }
+  .info .date-range {
+    color: #C0BDBD;
+    font-size: 18px;
+    line-height: 18px;
+    font-style: italic; }
+  .info .site-name, .info .role {
+    color: white; }
