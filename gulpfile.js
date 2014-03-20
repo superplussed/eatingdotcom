@@ -59,7 +59,7 @@ gulp.task('concat-js', function() {
 gulp.task('concat-css', function() {
   return gulp.src(bowerIncludes["css"])
     .pipe(concat('vendor.css'))
-    .pipe(gulp.dest('dev/vendor'))
+    .pipe(gulp.dest('dev/styles'))
 })
 
 gulp.task('inject-js', function() {
@@ -79,7 +79,7 @@ gulp.task('inject-js', function() {
 
 
 gulp.task('sass', function() {
-  return gulp.src(paths.src.sass)
+  return gulp.src('src/styles/**/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('dev/styles'))
 })
@@ -88,11 +88,13 @@ gulp.task('inject-css', function() {
   return gulp.src('dev/index.html')
     .pipe(inject(gulp.src('dev/styles/vendor.css'), {
       ignorePath: paths.dev,
-      addRootSlash: false
+      addRootSlash: false,
+      starttag: '<!-- inject:vendor:{{ext}} -->'
     }))
     .pipe(inject(gulp.src('dev/**/*.css'), {
       ignorePath: paths.dev,
-      addRootSlash: false
+      addRootSlash: false,
+      starttag: '<!-- inject:{{ext}} -->'
     }))
     .pipe(gulp.dest(paths.dev));
 })
@@ -124,8 +126,9 @@ gulp.task('watch', function() {
 gulp.task('build', function(callback) {
   runSequence(
     'clean',
-    ['copy', 'jade', 'coffee', 'concat-js'],
+    ['copy', 'jade', 'coffee', 'concat-js', 'sass', 'concat-css'],
     'inject-js',
+    'inject-css',
     callback
   );
 });
