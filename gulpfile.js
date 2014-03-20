@@ -43,7 +43,7 @@ gulp.task('coffee', function() {
 gulp.task('concat-js', function() {
   gulp.src(bowerIncludes["js"])
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('dev/vendor'))
+    .pipe(gulp.dest('dev/scripts'))
 })
 
 gulp.task('concat-css', function() {
@@ -54,12 +54,12 @@ gulp.task('concat-css', function() {
 
 gulp.task('inject-js', function() {
   gulp.src('dev/index.html')
-    .pipe(inject(gulp.src('dev/vendor/vendor.js'), {
+    .pipe(inject(gulp.src('dev/scripts/vendor.js'), {
       ignorePath: '/dev/',
       addRootSlash: false,
       starttag: '<!-- inject:vendor:{{ext}} -->'
     }))
-    .pipe(inject(gulp.src('dev/scripts/**/*.js'), {
+    .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), {
       ignorePath: '/dev/',
       addRootSlash: false,
       starttag: '<!-- inject:{{ext}} -->'
@@ -67,19 +67,6 @@ gulp.task('inject-js', function() {
     .pipe(gulp.dest("./dev"));
 })
 
-// gulp.task('inject-js', function() {
-//   gulp.src('dev/index.html')
-//     .pipe(inject('dev/vendor/vendor.js', {
-//       ignorePath: '/dev/',
-//       addRootSlash: false
-//       // starttag: '<!-- inject:vendor:js -->'
-//     }))
-//     // .pipe(inject('dev/scripts/**/*.js', {
-//     //   ignorePath: '/dev/',
-//     //   addRootSlash: false
-//     // }))
-//     .pipe(gulp.dest("./dev"));
-// })
 
 gulp.task('sass', function() {
   gulp.src(['src/styles/**/*.scss'])
