@@ -16,10 +16,21 @@ var gulp = require('gulp'),
   yaml = require('js-yaml'),
   es = require('event-stream'),
   fs = require('fs'),
+  runSequence = require('run-sequence');
   server = lr();
 
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
+
+var paths = {
+  dev: 'dev',
+  source: {
+    coffee: ['src/scripts/**/*.coffee'],
+    sass: ['src/styles/**/*.sass'],
+    jade: ['src/**/*.jade'],
+    static: ['src/favicon.ico', 'src/robots.txt', 'src/images']
+  }
+};
 
 function startExpress(dir) {
   var express = require('express');
@@ -29,38 +40,37 @@ function startExpress(dir) {
 }
 
 gulp.task('clean', function() {
-  gulp.src('dev', {read: false})
+  return gulp.src('dev', {read: false})
     .pipe(clean({force: true}));
 })
 
 gulp.task('coffee', function() {
-  gulp.src(['src/scripts/**/*.coffee'])
+  return gulp.src(paths.source.coffee)
     .pipe(coffee())
     .pipe(gulp.dest('dev/scripts'))
-    .pipe(refresh(server))
 })
 
 gulp.task('concat-js', function() {
-  gulp.src(bowerIncludes["js"])
+  return gulp.src(bowerIncludes["js"])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('dev/scripts'))
 })
 
 gulp.task('concat-css', function() {
-  gulp.src(bowerIncludes["css"])
+  return gulp.src(bowerIncludes["css"])
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest('dev/vendor'))
 })
 
 gulp.task('inject-js', function() {
-  gulp.src('dev/index.html')
+  return gulp.src('dev/index.html')
     .pipe(inject(gulp.src('dev/scripts/vendor.js'), {
-      ignorePath: '/dev/',
+      ignorePath: paths.dev,
       addRootSlash: false,
       starttag: '<!-- inject:vendor:{{ext}} -->'
     }))
     .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), {
-      ignorePath: '/dev/',
+      ignorePath: paths.dev,
       addRootSlash: false,
       starttag: '<!-- inject:{{ext}} -->'
     }))
@@ -69,40 +79,34 @@ gulp.task('inject-js', function() {
 
 
 gulp.task('sass', function() {
-  gulp.src(['src/styles/**/*.scss'])
+  return gulp.src(paths.src.sass)
     .pipe(sass())
     .pipe(gulp.dest('dev/styles'))
-    .pipe(refresh(server))  
 })
 
 gulp.task('inject-css', function() {
-  gulp.src('dev/index.html')
+  return gulp.src('dev/index.html')
     .pipe(inject(gulp.src('dev/styles/vendor.css'), {
-      ignorePath: '/dev/',
+      ignorePath: paths.dev,
       addRootSlash: false
     }))
     .pipe(inject(gulp.src('dev/**/*.css'), {
-      ignorePath: '/dev/',
+      ignorePath: paths.dev,
       addRootSlash: false
     }))
-    .pipe(gulp.dest("dev"));
+    .pipe(gulp.dest(paths.dev));
 })
 
 gulp.task('jade', function() {
-  gulp.src(["src/**/*.jade", "!src/components/"])
+  return gulp.src(paths.source.jade)
     .pipe(jade())
     .pipe(embedlr())
-    .pipe(gulp.dest('dev/'))
-    .pipe(refresh(server));
+    .pipe(gulp.dest(paths.dev))
 })
 
 gulp.task('copy', function() {
-  gulp.src(['src/favicon.ico', 'src/robots.txt'])
-    .pipe(gulp.dest('dev/'))
-    .pipe(refresh(server))
-  gulp.src('src/images/*')
-    .pipe(gulp.dest('dev/images/'))
-    .pipe(refresh(server))
+  return gulp.src(paths.source.static)
+    .pipe(gulp.dest(paths.dev))
 })
 
 gulp.task('lr-server', function() {
@@ -111,24 +115,23 @@ gulp.task('lr-server', function() {
   });
 })
 
-gulp.task('build-js', ['coffee', 'concat-js', 'inject-js']);
-gulp.task('build-css', ['sass', 'concat-css', 'inject-css']);
-gulp.task('build', ['jade', 'build-js', 'build-css']);
+gulp.task('watch', function() {
+  gulp.watch(paths.source.coffee, ['coffee']);
+  gulp.watch(paths.source.jade, ['jade']);
+  gulp.watch(paths.source.sass, ['sass']);
+})
+
+gulp.task('build', function(callback) {
+  runSequence(
+    'clean',
+    ['copy', 'jade', 'coffee', 'concat-js'],
+    'inject-js',
+    callback
+  );
+});
 
 gulp.task('default', function() {
-  // startExpress('dev');
-
-  // gulp.run('copy', 'build');
-
-  // gulp.watch('app/src/**', function(event) {
-  //   gulp.run('scripts');
-  // })
-
-  // gulp.watch('app/css/**', function(event) {
-  //   gulp.run('styles');
-  // })
-
-  // gulp.watch('app/**/*.html', function(event) {
-  //   gulp.run('html');
-  // })
+  startExpress('dev');
+  gulp.run('build');
+  gulp.run('watch');
 })
