@@ -1,20 +1,22 @@
-var gulp = require('gulp');
-var open = require("gulp-open");
-var util = require('gulp-util');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var jade = require('gulp-jade');
-var coffee = require('gulp-coffee');
-var inject = require('gulp-inject');
-var clean = require('gulp-clean');
-var refresh = require('gulp-livereload');
-var lr = require('tiny-lr');
-var minifyCSS = require('gulp-minify-css');
-var embedlr = require('gulp-embedlr');
-var open = require("gulp-open");
-var yaml = require('js-yaml');
-var fs = require('fs');
-var server = lr();
+var gulp = require('gulp'),
+  open = require("gulp-open"),
+  util = require('gulp-util'),
+  concat = require('gulp-concat'),
+  sass = require('gulp-sass'),
+  jade = require('gulp-jade'),
+  coffee = require('gulp-coffee'),
+  inject = require('gulp-inject'),
+  clean = require('gulp-clean'),
+  refresh = require('gulp-livereload'),
+  lr = require('tiny-lr'),
+  order = require("gulp-order"),
+  minifyCSS = require('gulp-minify-css'),
+  embedlr = require('gulp-embedlr'),
+  open = require("gulp-open"),
+  yaml = require('js-yaml'),
+  es = require('event-stream'),
+  fs = require('fs'),
+  server = lr();
 
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
@@ -26,12 +28,10 @@ function startExpress(dir) {
   app.listen(4000);
 }
 
-var includes = open("./bower-includes.yml");
-
 gulp.task('clean', function() {
   gulp.src('dev', {read: false})
     .pipe(clean({force: true}));
-});
+})
 
 gulp.task('coffee', function() {
   gulp.src(['src/scripts/**/*.coffee'])
@@ -43,17 +43,43 @@ gulp.task('coffee', function() {
 gulp.task('concat-js', function() {
   gulp.src(bowerIncludes["js"])
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('dev/scripts/'))
+    .pipe(gulp.dest('dev/vendor'))
+})
+
+gulp.task('concat-css', function() {
+  gulp.src(bowerIncludes["css"])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('dev/vendor'))
 })
 
 gulp.task('inject-js', function() {
   gulp.src('dev/index.html')
+    .pipe(inject(gulp.src('dev/vendor/vendor.js'), {
+      ignorePath: '/dev/',
+      addRootSlash: false,
+      starttag: '<!-- inject:vendor:{{ext}} -->'
+    }))
     .pipe(inject(gulp.src('dev/**/*.js'), {
       ignorePath: '/dev/',
-      addRootSlash: false
+      addRootSlash: false,
+      starttag: '<!-- inject:{{ext}} -->'
     }))
     .pipe(gulp.dest("./dev"));
 })
+
+// gulp.task('inject-js', function() {
+//   gulp.src('dev/index.html')
+//     .pipe(inject('dev/vendor/vendor.js', {
+//       ignorePath: '/dev/',
+//       addRootSlash: false
+//       // starttag: '<!-- inject:vendor:js -->'
+//     }))
+//     // .pipe(inject('dev/scripts/**/*.js', {
+//     //   ignorePath: '/dev/',
+//     //   addRootSlash: false
+//     // }))
+//     .pipe(gulp.dest("./dev"));
+// })
 
 gulp.task('sass', function() {
   gulp.src(['src/styles/**/*.scss'])
@@ -64,11 +90,15 @@ gulp.task('sass', function() {
 
 gulp.task('inject-css', function() {
   gulp.src('dev/index.html')
+    .pipe(inject(gulp.src('dev/styles/vendor.css'), {
+      ignorePath: '/dev/',
+      addRootSlash: false
+    }))
     .pipe(inject(gulp.src('dev/**/*.css'), {
       ignorePath: '/dev/',
       addRootSlash: false
     }))
-    .pipe(gulp.dest("./dev"));
+    .pipe(gulp.dest("dev"));
 })
 
 gulp.task('jade', function() {
