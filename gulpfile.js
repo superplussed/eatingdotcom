@@ -59,7 +59,7 @@ gulp.task('inject-js', function() {
       addRootSlash: false,
       starttag: '<!-- inject:vendor:{{ext}} -->'
     }))
-    .pipe(inject(gulp.src('dev/**/*.js'), {
+    .pipe(inject(gulp.src('dev/scripts/**/*.js'), {
       ignorePath: '/dev/',
       addRootSlash: false,
       starttag: '<!-- inject:{{ext}} -->'
