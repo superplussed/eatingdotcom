@@ -50,9 +50,12 @@
     "gulp-bower-files": "~0.1.12",
     "vinyl-fs": "~0.1.2",
     "gulp-bower": "0.0.3",
-    "gulp-clean": "~0.2.4"
+    "gulp-clean": "~0.2.4",
+    "node-yaml-config": "0.0.2",
+    "js-yaml": "~3.0.2"
   },
   "dependencies": {
-    "grunt-open": "~0.2.2"
+    "grunt-open": "~0.2.2",
+    "gulp-open": "~0.2.8"
   }
 }

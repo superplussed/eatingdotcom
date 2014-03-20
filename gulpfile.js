@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var open = require("gulp-open");
 var util = require('gulp-util');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
@@ -11,8 +12,12 @@ var lr = require('tiny-lr');
 var minifyCSS = require('gulp-minify-css');
 var embedlr = require('gulp-embedlr');
 var open = require("gulp-open");
-var bower = require('gulp-bower');
+var yaml = require('js-yaml');
+var fs = require('fs');
 var server = lr();
+
+var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
+var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 
 function startExpress(dir) {
   var express = require('express');
@@ -21,22 +26,27 @@ function startExpress(dir) {
   app.listen(4000);
 }
 
+var includes = open("./bower-includes.yml");
+
 gulp.task('clean', function() {
   gulp.src('dev', {read: false})
     .pipe(clean({force: true}));
 });
 
-gulp.task('bower', function() {
-  bower()
-    .pipe(gulp.dest('dev/lib'))
-});
-
-gulp.task('build-js', function() {
+gulp.task('coffee', function() {
   gulp.src(['src/scripts/**/*.coffee'])
     .pipe(coffee())
     .pipe(gulp.dest('dev/scripts'))
     .pipe(refresh(server))
+})
 
+gulp.task('concat-js', function() {
+  gulp.src(bowerIncludes["js"])
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest('dev/scripts/'))
+})
+
+gulp.task('inject-js', function() {
   gulp.src('dev/index.html')
     .pipe(inject(gulp.src('dev/**/*.js'), {
       ignorePath: '/dev/',
@@ -45,12 +55,14 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest("./dev"));
 })
 
-gulp.task('build-css', function() {
+gulp.task('sass', function() {
   gulp.src(['src/styles/**/*.scss'])
     .pipe(sass())
     .pipe(gulp.dest('dev/styles'))
-    .pipe(refresh(server))
+    .pipe(refresh(server))  
+})
 
+gulp.task('inject-css', function() {
   gulp.src('dev/index.html')
     .pipe(inject(gulp.src('dev/**/*.css'), {
       ignorePath: '/dev/',
@@ -82,29 +94,24 @@ gulp.task('lr-server', function() {
   });
 })
 
-// "dev/lib/lodash/dist/lodash.min.js",
-// "dev/lib/jquery/jquery.min.js",
-// "dev/lib/fancybox/source/jquery.fancybox.pack.js",
-// "dev/lib/angular/angular.min.js",
-// "dev/lib/angular-ui-router/release/angular-ui-router.js",
-// "dev/lib/zoomerang/zoomerang.js",
-
+gulp.task('build-js', ['coffee', 'concat-js', 'inject-js']);
+gulp.task('build-css', ['sass', 'concat-css', 'inject-css']);
 gulp.task('build', ['jade', 'build-js', 'build-css']);
 
 gulp.task('default', function() {
-  startExpress('dev');
+  // startExpress('dev');
 
-  gulp.run('copy', 'build');
+  // gulp.run('copy', 'build');
 
-  gulp.watch('app/src/**', function(event) {
-    gulp.run('scripts');
-  })
+  // gulp.watch('app/src/**', function(event) {
+  //   gulp.run('scripts');
+  // })
 
-  gulp.watch('app/css/**', function(event) {
-    gulp.run('styles');
-  })
+  // gulp.watch('app/css/**', function(event) {
+  //   gulp.run('styles');
+  // })
 
-  gulp.watch('app/**/*.html', function(event) {
-    gulp.run('html');
-  })
+  // gulp.watch('app/**/*.html', function(event) {
+  //   gulp.run('html');
+  // })
 })
