@@ -10,8 +10,7 @@
     "font-awesome": "~4.0.3",
     "normalize-css": "~3.0.0",
     "zoomerang": "~0.1.7",
-    "webfontloader": "~1.5.2"
+    "webfontloader-min": "~1.5.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

@@ -16,21 +16,18 @@ var gulp = require('gulp'),
   yaml = require('js-yaml'),
   es = require('event-stream'),
   fs = require('fs'),
-  runSequence = require('run-sequence');
-  server = lr();
-
-var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
-var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
-
-var paths = {
-  dev: 'dev',
-  source: {
-    coffee: ['src/scripts/**/*.coffee'],
-    sass: ['src/styles/**/*.sass'],
-    jade: ['src/**/*.jade'],
-    static: ['src/favicon.ico', 'src/robots.txt', 'src/images']
-  }
-};
+  runSequence = require('run-sequence'),
+  server = lr(),
+  secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8')),
+  bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8')),
+  paths = {
+    dev: 'dev',
+    source: {
+      coffee: ['src/scripts/**/*.coffee'],
+      sass: ['src/styles/**/*.sass'],
+      jade: ['src/**/*.jade']
+    }
+  };
 
 function startExpress(dir) {
   var express = require('express');
@@ -107,8 +104,10 @@ gulp.task('jade', function() {
 })
 
 gulp.task('copy', function() {
-  return gulp.src(paths.source.static)
+  gulp.src(['src/favicon.ico', 'src/robots.txt'])
     .pipe(gulp.dest(paths.dev))
+  gulp.src(['src/images/**/*'])
+    .pipe(gulp.dest("dev/images/"))
 })
 
 gulp.task('lr-server', function() {
