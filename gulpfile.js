@@ -7,7 +7,7 @@ var gulp = require('gulp'),
   coffee = require('gulp-coffee'),
   inject = require('gulp-inject'),
   clean = require('gulp-clean'),
-  refresh = require('gulp-livereload'),
+  livereload = require('gulp-livereload'),
   lr = require('tiny-lr'),
   order = require("gulp-order"),
   minifyCSS = require('gulp-minify-css'),
@@ -45,6 +45,7 @@ gulp.task('clean', function() {
 gulp.task('coffee', function() {
   return gulp.src(paths.source.coffee)
     .pipe(coffee())
+    .pipe(livereload(server))
     .pipe(gulp.dest('dev/scripts'))
 })
 
@@ -60,7 +61,7 @@ gulp.task('concat-css', function() {
     .pipe(gulp.dest('dev/styles'))
 })
 
-gulp.task('inject-js', function() {
+gulp.task('inject', function() {
   return gulp.src('dev/index.html')
     .pipe(inject(gulp.src('dev/scripts/vendor.js'), {
       ignorePath: paths.dev,
@@ -68,6 +69,16 @@ gulp.task('inject-js', function() {
       starttag: '<!-- inject:vendor:{{ext}} -->'
     }))
     .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), {
+      ignorePath: paths.dev,
+      addRootSlash: false,
+      starttag: '<!-- inject:{{ext}} -->'
+    }))
+    .pipe(inject(gulp.src('dev/styles/vendor.css'), {
+      ignorePath: paths.dev,
+      addRootSlash: false,
+      starttag: '<!-- inject:vendor:{{ext}} -->'
+    }))
+    .pipe(inject(gulp.src('dev/**/*.css'), {
       ignorePath: paths.dev,
       addRootSlash: false,
       starttag: '<!-- inject:{{ext}} -->'
@@ -80,21 +91,6 @@ gulp.task('sass', function() {
   return gulp.src('src/styles/**/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('dev/styles'))
-})
-
-gulp.task('inject-css', function() {
-  return gulp.src('dev/index.html')
-    .pipe(inject(gulp.src('dev/styles/vendor.css'), {
-      ignorePath: paths.dev,
-      addRootSlash: false,
-      starttag: '<!-- inject:vendor:{{ext}} -->'
-    }))
-    .pipe(inject(gulp.src('dev/**/*.css'), {
-      ignorePath: paths.dev,
-      addRootSlash: false,
-      starttag: '<!-- inject:{{ext}} -->'
-    }))
-    .pipe(gulp.dest(paths.dev));
 })
 
 gulp.task('jade', function() {
@@ -111,40 +107,24 @@ gulp.task('copy', function() {
     .pipe(gulp.dest("dev/images/"))
 })
 
-gulp.task('lr-server', function() {
-  server.listen(35729, function(err) {
-    if(err) return console.log(err);
-  });
-})
-
 gulp.task('watch', function() {
-  gulp.watch(paths.source.coffee, ['coffee']);
-  gulp.watch(paths.source.jade, ['compile-html']);
-  gulp.watch(paths.source.sass, ['sass']);
+  server.listen(35729, function(err) {
+    gulp.watch(paths.source.coffee, ['coffee']);
+    gulp.watch(paths.source.jade, ['compile-html']);
+    gulp.watch(paths.source.sass, ['sass']);
+  })
 })
 
 gulp.task('build', function(callback) {
-  runSequence(
-    'clean',
-    ['copy', 'jade', 'coffee', 'concat-js', 'sass', 'concat-css'],
-    'inject-js',
-    'inject-css',
-    callback
-  );
+  runSequence('clean', ['copy', 'jade', 'coffee', 'concat-js', 'sass', 'concat-css'], 'inject', callback);
 });
 
 gulp.task('compile-html', function(callback) {
-  runSequence(
-    'jade',
-    'inject-js',
-    'inject-css',
-    callback
-  );
+  runSequence('jade', 'inject', callback);
 })
 
 gulp.task('default', function() {
   startExpress('dev');
-  gulp.run('lr-server')
   gulp.run('build');
   gulp.run('watch');
 })
