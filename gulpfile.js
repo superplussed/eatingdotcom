@@ -32,6 +32,7 @@ var gulp = require('gulp'),
 function startExpress(dir) {
   var express = require('express');
   var app = express();
+  app.use(require('connect-livereload')());
   app.use(express.static(__dirname + '/' + dir));
   app.listen(4000);
 }
@@ -118,7 +119,7 @@ gulp.task('lr-server', function() {
 
 gulp.task('watch', function() {
   gulp.watch(paths.source.coffee, ['coffee']);
-  gulp.watch(paths.source.jade, ['jade']);
+  gulp.watch(paths.source.jade, ['compile-html']);
   gulp.watch(paths.source.sass, ['sass']);
 })
 
@@ -132,8 +133,18 @@ gulp.task('build', function(callback) {
   );
 });
 
+gulp.task('compile-html', function(callback) {
+  runSequence(
+    'jade',
+    'inject-js',
+    'inject-css',
+    callback
+  );
+})
+
 gulp.task('default', function() {
   startExpress('dev');
+  gulp.run('lr-server')
   gulp.run('build');
   gulp.run('watch');
 })
