@@ -142,17 +142,6 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('open', function() {
-  return gulp.src("dev/index.html")
-    .pipe(open("", {url: "http://0.0.0.0:3000"}));
-});
-
-gulp.task('watch', function() {
-  gulp.watch('src/scripts/**/*.coffee', ['scripts']);
-  gulp.watch('src/styles/**/*.scss', ['styles']);
-  gulp.watch('src/**/*.jade', ['jade']);
-});
-
 gulp.task('bower-styles', function(callback) {
   runSequence('bower-styles-collect', 'bower-styles-inject', callback);
 })
@@ -169,7 +158,15 @@ gulp.task('scripts', function(callback) {
   runSequence('scripts-collect', 'scripts-inject', callback);
 })
 
-gulp.task("default", function(callback) {
-  runSequence('clean', 'markup', 'styles', 'scripts', 'bower-styles', 'bower-scripts', callback);
+gulp.task("build", function(callback) {
+  runSequence('markup', 'styles', 'scripts', 'bower-styles', 'bower-scripts', callback);
+})
+
+gulp.task("default", ["clean", "webserver", "livereload", "build"], function() {
+  gulp.watch('src/scripts/**/*', ['scripts']);
+  gulp.watch('src/styles/**/*', ['styles']);
+  gulp.watch('src/*.html', ['html']);
+  gulp.src("dev/index.html")
+    .pipe(open("", {url: "http://0.0.0.0:3000"}));
 })
   
