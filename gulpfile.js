@@ -16,11 +16,13 @@ var gulp = require('gulp'),
   yaml = require('js-yaml'),
   es = require('event-stream'),
   fs = require('fs'),
-  runSequence = require('run-sequence'),
-  server = lr(),
-  secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8')),
-  bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8')),
-  paths = {
+  runSequence = require('run-sequence');
+
+var server = lr();
+var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
+var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
+
+var  paths = {
     dev: 'dev',
     source: {
       coffee: ['src/scripts/**/*.coffee'],
