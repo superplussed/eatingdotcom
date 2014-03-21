@@ -4,6 +4,7 @@ var args = require('yargs').argv;
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
+var inject = require('gulp-inject');
 var sass = require('gulp-sass');
 var jade = require('gulp-jade');
 var refresh = require('gulp-livereload');
@@ -61,6 +62,13 @@ gulp.task('scripts', function() {
     .pipe(gulpIf(isProduction, concat('app.js')))
     .on('error', gutil.log)
     .pipe(gulp.dest('dev/scripts'))
+    .pipe(gulp.src('dev/index.html'))
+    .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), {
+      ignorePath: "/dev",
+      addRootSlash: false,
+      starttag: '<!-- inject:{{ext}} -->'
+    }))
+    .pipe(gulp.dest("./dev"))
     .pipe(refresh(server));
 });
 
@@ -71,6 +79,13 @@ gulp.task('styles', function() {
     .on('error', gutil.log)
     .pipe(gulpIf(isProduction, concat('app.css')))
     .pipe(gulp.dest('dev/styles'))
+    .pipe(gulp.src('dev/index.html'))
+    .pipe(inject(gulp.src(['dev/styles/**/*.css', '!dev/styles/vendor.css']), {
+      ignorePath: "/dev",
+      addRootSlash: false,
+      starttag: '<!-- inject:{{ext}} -->'
+    }))
+    .pipe(gulp.dest("./dev"))
     .pipe(refresh(server));
 });
 
