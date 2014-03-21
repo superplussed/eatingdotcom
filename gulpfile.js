@@ -1,132 +1,85 @@
-var gulp = require('gulp'),
-  open = require("gulp-open"),
-  util = require('gulp-util'),
-  concat = require('gulp-concat'),
-  sass = require('gulp-sass'),
-  jade = require('gulp-jade'),
-  coffee = require('gulp-coffee'),
-  inject = require('gulp-inject'),
-  clean = require('gulp-clean'),
-  livereload = require('gulp-livereload'),
-  lr = require('tiny-lr'),
-  order = require("gulp-order"),
-  minifyCSS = require('gulp-minify-css'),
-  embedlr = require('gulp-embedlr'),
-  open = require("gulp-open"),
-  yaml = require('js-yaml'),
-  es = require('event-stream'),
-  fs = require('fs'),
-  runSequence = require('run-sequence');
+var app, base, concat, connect, directory, gulp, gutil, hostname, http, lr, open, path, refresh, sass, server, imagemin, cache, minifyCSS, clean;
+
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var concat = require('gulp-concat');
+var sass = require('gulp-sass');
+var refresh = require('gulp-livereload');
+var open = require('gulp-open');
+var connect = require('connect');
+var http = require('http');
+var path = require('path');
+var lr = require('tiny-lr');
+var imagemin = require('gulp-imagemin');
+var cache = require('gulp-cache');
+var minifyCSS = require('gulp-minify-css');
+var clean = require('gulp-clean');
+var coffee = require('gulp-coffee');
+var embedlr = require('gulp-embedlr');
 
 var server = lr();
-var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
-var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 
-var  paths = {
-    dev: 'dev',
-    source: {
-      coffee: ['src/scripts/**/*.coffee'],
-      sass: ['src/styles/**/*.sass'],
-      jade: ['src/**/*.jade']
-    }
-  };
-
-function startExpress(dir) {
-  var express = require('express');
-  var app = express();
-  app.use(require('connect-livereload')());
-  app.use(express.static(__dirname + '/' + dir));
-  app.listen(4000);
-}
-
-gulp.task('clean', function() {
-  return gulp.src('dev', {read: false})
-    .pipe(clean({force: true}));
-})
-
-gulp.task('coffee', function() {
-  return gulp.src(paths.source.coffee)
-    .pipe(coffee())
-    .pipe(livereload(server))
-    .pipe(gulp.dest('dev/scripts'))
-})
-
-gulp.task('concat-js', function() {
-  return gulp.src(bowerIncludes["js"])
-    .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('dev/scripts'))
-})
-
-gulp.task('concat-css', function() {
-  return gulp.src(bowerIncludes["css"])
-    .pipe(concat('vendor.css'))
-    .pipe(gulp.dest('dev/styles'))
-})
-
-gulp.task('inject', function() {
-  return gulp.src('dev/index.html')
-    .pipe(inject(gulp.src('dev/scripts/vendor.js'), {
-      ignorePath: paths.dev,
-      addRootSlash: false,
-      starttag: '<!-- inject:vendor:{{ext}} -->'
-    }))
-    .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), {
-      ignorePath: paths.dev,
-      addRootSlash: false,
-      starttag: '<!-- inject:{{ext}} -->'
-    }))
-    .pipe(inject(gulp.src('dev/styles/vendor.css'), {
-      ignorePath: paths.dev,
-      addRootSlash: false,
-      starttag: '<!-- inject:vendor:{{ext}} -->'
-    }))
-    .pipe(inject(gulp.src('dev/**/*.css'), {
-      ignorePath: paths.dev,
-      addRootSlash: false,
-      starttag: '<!-- inject:{{ext}} -->'
-    }))
-    .pipe(gulp.dest("./dev"));
-})
-
-
-gulp.task('sass', function() {
-  return gulp.src('src/styles/**/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('dev/styles'))
-})
-
-gulp.task('jade', function() {
-  return gulp.src(paths.source.jade)
-    .pipe(jade())
-    .pipe(embedlr())
-    .pipe(gulp.dest(paths.dev))
-})
-
-gulp.task('copy', function() {
-  gulp.src(['src/favicon.ico', 'src/robots.txt'])
-    .pipe(gulp.dest(paths.dev))
-  gulp.src(['src/images/**/*'])
-    .pipe(gulp.dest("dev/images/"))
-})
-
-gulp.task('watch', function() {
-  server.listen(35729, function(err) {
-    gulp.watch(paths.source.coffee, ['coffee']);
-    gulp.watch(paths.source.jade, ['compile-html']);
-    gulp.watch(paths.source.sass, ['sass']);
-  })
-})
-
-gulp.task('build', function(callback) {
-  runSequence('clean', ['copy', 'jade', 'coffee', 'concat-js', 'sass', 'concat-css'], 'inject', callback);
+gulp.task('webserver', function() {
+  var port = 3000;
+  hostname = null;
+  base = path.resolve('dev');
+  directory = path.resolve('dev');
+  app = connect().use(connect["static"](base)).use(connect.directory(directory));
+  http.createServer(app).listen(port, hostname);
 });
 
-gulp.task('compile-html', function(callback) {
-  runSequence('jade', 'inject', callback);
-})
+gulp.task('livereload', function() {
+  server.listen(35729, function(err) {
+    if (err != null) {
+      return console.log(err);
+    }
+  });
+});
 
-gulp.task('default', function() {
-  startExpress('dev');
-  gulp.run('build');
-  gulp.run('watch');
-})
+gulp.task('images-deploy', function() {
+  gulp.src(['src/images/*.jpg', 'src/images/*.png'])
+    .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
+    .pipe(gulp.dest('dev/images'));
+  gulp.src('src/images/*.svg')
+    .pipe(gulp.dest('dev/images'));
+});
+
+gulp.task('scripts', function() { 
+  return gulp.src('src/scripts/**/*.coffee')
+    .pipe(coffee())
+    .pipe(concat('app.js'))
+    .on('error', gutil.log)
+    .pipe(gulp.dest('dev/scripts'))
+    .pipe(refresh(server));
+});
+
+
+gulp.task('styles', function() {
+  return gulp.src('src/styles/**/*.scss')
+    .pipe(sass())
+    .on('error', gutil.log)
+    .pipe(concat('styles.css'))
+    .pipe(gulp.dest('dev/styles'))
+    .pipe(refresh(server));
+});
+
+gulp.task('html', function() {
+  return gulp.src('src/index.html')
+    .on('error', gutil.log)
+    .pipe(embedlr())
+    .pipe(gulp.dest('dev'))
+    .pipe(refresh(server));
+});
+
+gulp.task('clean', function() {
+  return gulp.src(['dev/*'], {read: false})
+    .pipe(clean());
+});
+
+gulp.task('default', ['clean', 'webserver', 'livereload', 'scripts', 'styles', 'html'], function() {
+    gulp.watch('src/scripts/**/*', ['scripts']);
+    gulp.watch('src/styles/**/*', ['styles']);
+    gulp.watch('src/*.html', ['html']);
+    gulp.src("dev/index.html")
+      .pipe(open("", {url: "http://0.0.0.0:3000"}));
+});
