@@ -159,13 +159,13 @@ gulp.task('scripts', function(callback) {
 })
 
 gulp.task("build", function(callback) {
-  runSequence('markup', 'styles', 'scripts', 'bower-styles', 'bower-scripts', callback);
+  runSequence('images', 'markup', 'styles', 'scripts', 'bower-styles', 'bower-scripts', callback);
 })
 
 gulp.task("default", ["clean", "webserver", "livereload", "build"], function() {
   gulp.watch('src/scripts/**/*', ['scripts']);
   gulp.watch('src/styles/**/*', ['styles']);
-  gulp.watch('src/*.html', ['html']);
+  gulp.watch('src/**/*.jade', ['markup']);
   gulp.src("dev/index.html")
     .pipe(open("", {url: "http://0.0.0.0:3000"}));
 })
