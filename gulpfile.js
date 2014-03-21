@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
+var jade = require('gulp-jade');
 var refresh = require('gulp-livereload');
 var open = require('gulp-open');
 var connect = require('connect');
@@ -17,8 +18,8 @@ var minifyCSS = require('gulp-minify-css');
 var clean = require('gulp-clean');
 var coffee = require('gulp-coffee');
 var embedlr = require('gulp-embedlr');
-var runSequence = require('run-sequence');
 var gulpIf = require('gulp-if');
+
 var isProduction = args.type === 'production';
 
 if (isProduction) {
@@ -57,7 +58,7 @@ gulp.task('images', function() {
 gulp.task('scripts', function() { 
   return gulp.src('src/scripts/**/*.coffee')
     .pipe(coffee())
-    .pipe(concat('app.js'))
+    .pipe(gulpIf(isProduction, concat('app.js')))
     .on('error', gutil.log)
     .pipe(gulp.dest('dev/scripts'))
     .pipe(refresh(server));
@@ -68,35 +69,31 @@ gulp.task('styles', function() {
   return gulp.src('src/styles/**/*.scss')
     .pipe(sass())
     .on('error', gutil.log)
-    .pipe(concat('styles.css'))
+    .pipe(gulpIf(isProduction, concat('app.css')))
     .pipe(gulp.dest('dev/styles'))
     .pipe(refresh(server));
 });
 
-gulp.task('html', function() {
-  return gulp.src('src/index.html')
+gulp.task('markup', function() {
+  return gulp.src('src/**/*.jade')
     .on('error', gutil.log)
+    .pipe(jade())
     .pipe(embedlr())
     .pipe(gulp.dest('dev'))
     .pipe(refresh(server));
 });
-
-gulp.task('watch', function() {
-  gulp.watch('src/scripts/**/*', ['scripts']);
-  gulp.watch('src/styles/**/*', ['styles']);
-  gulp.watch('src/*.html', ['html']);
-})
 
 gulp.task('clean', function() {
   return gulp.src(['dev/*'], {read: false})
     .pipe(clean());
 });
 
-gulp.task('open', function() {
+gulp.task("default", ["clean", "webserver", "livereload", "images", "scripts", "styles", "markup"], function() {
+  gulp.watch('src/scripts/**/*', ['scripts']);
+  gulp.watch('src/styles/**/*', ['styles']);
+  gulp.watch('src/*.html', ['html']);
   gulp.src("dev/index.html")
     .pipe(open("", {url: "http://0.0.0.0:3000"}));
+
 })
 
-gulp.task("default", function(callback) {
-  runSequence("clean", "webserver", "livereload", "images", "scripts", "styles", "html", "watch", "open", callback);
-});
