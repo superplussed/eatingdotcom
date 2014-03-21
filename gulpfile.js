@@ -1,3 +1,6 @@
+// src: ['templates/**/*.html', 'templates/*.html'],
+// dest: '.tmp/scripts/templates.js'
+
 var args = require('yargs').argv,
   gulp = require('gulp'),
   gutil = require('gulp-util'),
@@ -102,11 +105,11 @@ gulp.task('markup', function() {
 });
 
 gulp.task('templates', function () {
-  gulp.src('src/templates/**/*.jade')
+  gulp.src(['src/templates/*.jade', 'src/templates/**/*.jade'])
     .pipe(jade())
     .pipe(gulp.dest('src/templates/'))
 
-  gulp.src('src/templates/**/*.html')
+  gulp.src(['src/templates/*.html', 'src/templates/**/*.html'])
     .pipe(templateCache())
     .pipe(gulp.dest('dev/scripts'));
 });
