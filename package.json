@@ -61,7 +61,8 @@
     "connect": "~2.14.3",
     "gulp-if": "0.0.5",
     "yargs": "~1.2.1",
-    "merge": "~1.1.2"
+    "merge": "~1.1.2",
+    "multipipe": "0.0.2"
   },
   "dependencies": {}
 }

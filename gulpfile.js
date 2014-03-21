@@ -20,7 +20,8 @@ var args = require('yargs').argv,
   embedlr = require('gulp-embedlr'),
   gulpIf = require('gulp-if'),
   yaml = require('js-yaml'),
-  fs = require('fs');
+  fs = require('fs'),
+  pipe = require('multipipe');
 
 var isProduction = args.type === 'production';
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
@@ -93,12 +94,21 @@ gulp.task('scripts', function() {
     .pipe(refresh(server));
 });
 
-gulp.task('markup', function() {
-  return gulp.src('src/**/*.jade')
+gulp.task('templates', function() {
+  return gulp.src('src/index.jade')
     .pipe(jade())
     .pipe(embedlr())
     .on('error', gutil.log)
     .pipe(gulp.dest('dev'))
+    .pipe(refresh(server));
+});
+
+gulp.task('markup', function() {
+  return gulp.src('src/templates/**/*.jade')
+    .pipe(jade())
+    .pipe(embedlr())
+    .on('error', gutil.log)
+    .pipe(gulp.dest('dev/templates'))
     .pipe(refresh(server));
 });
 
@@ -107,7 +117,7 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('default', ['clean', 'webserver', 'livereload', 'markup', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
+gulp.task('default', ['clean', 'webserver', 'livereload', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
   gulp.watch('src/scripts/**/*', ['scripts']);
   gulp.watch('src/styles/**/*', ['styles']);
   gulp.watch('src/**/*.jade', ['markup']);
