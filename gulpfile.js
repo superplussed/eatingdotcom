@@ -1,5 +1,6 @@
 var app, base, concat, connect, directory, gulp, gutil, hostname, http, lr, open, path, refresh, sass, server, imagemin, cache, minifyCSS, clean;
 
+var args = require('yargs').argv;
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
@@ -16,6 +17,15 @@ var minifyCSS = require('gulp-minify-css');
 var clean = require('gulp-clean');
 var coffee = require('gulp-coffee');
 var embedlr = require('gulp-embedlr');
+var runSequence = require('run-sequence');
+var gulpIf = require('gulp-if');
+var isProduction = args.type === 'production';
+
+if (isProduction) {
+  destFolder = "dev"
+} else {
+  destFolder = "prod"
+}
 
 var server = lr();
 
@@ -36,16 +46,9 @@ gulp.task('livereload', function() {
   });
 });
 
-gulp.task('images-deploy', function() {
-  gulp.src(['src/images/*.jpg', 'src/images/*.png'])
-    .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
-    .pipe(gulp.dest('dev/images'));
-  gulp.src('src/images/*.svg')
-    .pipe(gulp.dest('dev/images'));
-});
-
 gulp.task('images', function() {
   gulp.src(['src/images/*.jpg', 'src/images/*.png'])
+    .pipe(gulpIf(isProduction, imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest('dev/images'));
   gulp.src('src/images/*.svg')
     .pipe(gulp.dest('dev/images'));
@@ -78,15 +81,22 @@ gulp.task('html', function() {
     .pipe(refresh(server));
 });
 
+gulp.task('watch', function() {
+  gulp.watch('src/scripts/**/*', ['scripts']);
+  gulp.watch('src/styles/**/*', ['styles']);
+  gulp.watch('src/*.html', ['html']);
+})
+
 gulp.task('clean', function() {
   return gulp.src(['dev/*'], {read: false})
     .pipe(clean());
 });
 
-gulp.task('default', ['clean', 'webserver', 'livereload', 'images', 'scripts', 'styles', 'html'], function() {
-    gulp.watch('src/scripts/**/*', ['scripts']);
-    gulp.watch('src/styles/**/*', ['styles']);
-    gulp.watch('src/*.html', ['html']);
-    gulp.src("dev/index.html")
-      .pipe(open("", {url: "http://0.0.0.0:3000"}));
+gulp.task('open', function() {
+  gulp.src("dev/index.html")
+    .pipe(open("", {url: "http://0.0.0.0:3000"}));
+})
+
+gulp.task("default", function(callback) {
+  runSequence("clean", "webserver", "livereload", "images", "scripts", "styles", "html", "watch", "open", callback);
 });
