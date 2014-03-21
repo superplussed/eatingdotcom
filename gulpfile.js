@@ -21,7 +21,7 @@ var args = require('yargs').argv,
   gulpIf = require('gulp-if'),
   yaml = require('js-yaml'),
   fs = require('fs'),
-  pipe = require('multipipe');
+  templateCache = require('gulp-angular-templatecache');
 
 var isProduction = args.type === 'production';
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
@@ -81,7 +81,7 @@ gulp.task('styles', function() {
     .pipe(sass())
     .on('error', gutil.log)
     .pipe(concat('app.css'))
-    .pipe(gulp.dest('dev/styles'))
+    .pipe(gulp.dest('src/styles'))
     .pipe(refresh(server));
 });
 
@@ -94,21 +94,26 @@ gulp.task('scripts', function() {
     .pipe(refresh(server));
 });
 
-gulp.task('templates', function() {
-  return gulp.src('src/index.jade')
+gulp.task('markup', function() {
+  return gulp.src('src/*.jade')
     .pipe(jade())
-    .pipe(embedlr())
-    .on('error', gutil.log)
-    .pipe(gulp.dest('dev'))
+    .pipe(gulp.dest('src'))
     .pipe(refresh(server));
 });
 
-gulp.task('markup', function() {
-  return gulp.src('src/templates/**/*.jade')
+gulp.task('templates', function () {
+  gulp.src('src/templates/**/*.jade')
     .pipe(jade())
-    .pipe(embedlr())
-    .on('error', gutil.log)
-    .pipe(gulp.dest('dev/templates'))
+    .pipe(gulp.dest('src/templates/'))
+
+  gulp.src('src/templates/**/*.html')
+    .pipe(templateCache())
+    .pipe(gulp.dest('dev/scripts'));
+});
+
+gulp.task('copy-html', function() {
+  return gulp.src('src/**/*.html')
+    .pipe(gulp.dest('dev'))
     .pipe(refresh(server));
 });
 
