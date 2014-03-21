@@ -107,9 +107,9 @@ gulp.task('markup', function() {
 gulp.task('templates', function () {
   gulp.src(['src/templates/*.jade', 'src/templates/**/*.jade'])
     .pipe(jade())
-    .pipe(gulp.dest('src/templates/'))
+    .pipe(gulp.dest('dev/templates/'))
 
-  gulp.src(['src/templates/*.html', 'src/templates/**/*.html'])
+  gulp.src(['dev/templates/*.html', 'dev/templates/**/*.html'])
     .pipe(templateCache())
     .pipe(gulp.dest('dev/scripts'));
 });
