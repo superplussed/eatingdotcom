@@ -88,6 +88,11 @@ gulp.task('scripts', function() {
     .pipe(refresh(server));
 });
 
+gulp.task('copy', function() {
+  return gulp.src(['src/favicon.ico', 'src/robots.txt'])
+    .pipe(gulp.dest('dev'))
+});
+
 gulp.task('markup', function() {
   return gulp.src('src/*.jade')
     .pipe(jade())
@@ -104,8 +109,8 @@ gulp.task('templates', function () {
     .pipe(gulp.dest('dev/scripts'));
 });
 
-gulp.task('templates-clean', ['templates-compile'], function() {
-  return gulp.src(['src/templates/**/*.html'], {read: false})
+gulp.task('templates-clean', function() {
+  return gulp.src(['src/**/*.html'], {read: false})
     .pipe(clean());
 })
 
@@ -114,7 +119,7 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('default', ['clean', 'webserver', 'livereload', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
+gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
   gulp.watch('src/scripts/**/*', ['scripts']);
   gulp.watch('src/styles/**/*', ['styles']);
   gulp.watch('src/**/*.jade', ['markup']);
