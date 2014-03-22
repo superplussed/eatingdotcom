@@ -84,7 +84,7 @@ gulp.task('styles', function() {
     .pipe(sass())
     .on('error', gutil.log)
     .pipe(concat('app.css'))
-    .pipe(gulp.dest('src/styles'))
+    .pipe(gulp.dest('dev/styles'))
     .pipe(refresh(server));
 });
 
@@ -100,25 +100,25 @@ gulp.task('scripts', function() {
 gulp.task('markup', function() {
   return gulp.src('src/*.jade')
     .pipe(jade())
-    .pipe(gulp.dest('src'))
+    .pipe(gulp.dest('dev'))
     .pipe(refresh(server));
 });
 
 gulp.task('templates', function () {
-  gulp.src(['src/templates/*.jade', 'src/templates/**/*.jade'])
+  return gulp.src(['src/templates/*.jade', 'src/templates/**/*.jade'])
     .pipe(jade())
-    .pipe(gulp.dest('dev/templates/'))
-
-  gulp.src(['dev/templates/*.html', 'dev/templates/**/*.html'])
+    .pipe(gulp.dest('src/templates/'))
+    .pipe(gulp.src(['src/templates/*.html', 'src/templates/**/*.html']))
     .pipe(templateCache())
     .pipe(gulp.dest('dev/scripts'));
 });
 
-gulp.task('copy-html', function() {
-  return gulp.src('src/**/*.html')
-    .pipe(gulp.dest('dev'))
-    .pipe(refresh(server));
-});
+gulp.task('templates-clean', ['templates-compile'], function() {
+  return gulp.src(['src/templates/**/*.html'], {read: false})
+    .pipe(clean());
+})
+
+// gulp.task('templates', ['templates-compile', 'templates-clean']);
 
 gulp.task('clean', function() {
   return gulp.src(['dev/*'], {read: false})
