@@ -1,11 +1,7 @@
-// src: ['templates/**/*.html', 'templates/*.html'],
-// dest: '.tmp/scripts/templates.js'
-
 var args = require('yargs').argv,
   gulp = require('gulp'),
   gutil = require('gulp-util'),
   concat = require('gulp-concat'),
-  inject = require('gulp-inject'),
   sass = require('gulp-sass'),
   jade = require('gulp-jade'),
   refresh = require('gulp-livereload'),
@@ -30,11 +26,6 @@ var isProduction = args.type === 'production';
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 var server = lr();
-
-var injectVars = {
-  ignorePath: "dev/",
-  addRootSlash: false
-}
 
 if (isProduction) {
   var destFolder = "dev"
