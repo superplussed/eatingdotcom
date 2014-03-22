@@ -20,7 +20,7 @@ var args = require('yargs').argv,
   gulpIf = require('gulp-if'),
   yaml = require('js-yaml'),
   fs = require('fs'),
-  templateCache = require('gulp-angular-templatecache');
+  templateCache = require('gulp-ng-html2js');
 
 var isProduction = args.type === 'production';
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
@@ -100,7 +100,7 @@ gulp.task('templates', function () {
     .pipe(jade())
     .pipe(gulp.dest('src/templates/'))
     .pipe(gulp.src(['src/templates/*.html', 'src/templates/**/*.html']))
-    .pipe(templateCache())
+    .pipe(templateCache({moduleName: "App"}))
     .pipe(gulp.dest('dev/scripts'));
 });
 
