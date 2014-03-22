@@ -217,6 +217,7 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
 
     toUnderscore: (str) ->
       str.replace(/\s/g,'_').toLowerCase()
+      
     screenshotArray:(name, num) ->
       _.map([1..num], (n) -> "#{self.toUnderscore(name)}_#{n}_1000w.png")
 
