@@ -109,8 +109,6 @@ gulp.task('templates-clean', ['templates-compile'], function() {
     .pipe(clean());
 })
 
-// gulp.task('templates', ['templates-compile', 'templates-clean']);
-
 gulp.task('clean', function() {
   return gulp.src(['dev/*'], {read: false})
     .pipe(clean());
