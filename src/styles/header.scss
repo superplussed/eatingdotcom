@@ -178,6 +178,7 @@ header {
     float: right;
     text-align: right;
     a {
+      @include transition (all 0.2s ease-in-out);
       border-radius: 3px;
       padding: 3px 10px 0 10px;
       margin: 0 5px;
@@ -187,8 +188,11 @@ header {
     a:last-child {
       margin: 0 0 0 5px;
     }
+    a:hover {
+      background: #D7D704;
+    }
     .active {
-      border-bottom: 3px solid black;
+      border-bottom: 2px solid black;
     }
   }
 }
