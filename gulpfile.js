@@ -27,12 +27,6 @@ var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 var server = lr();
 
-if (isProduction) {
-  var destFolder = "dev"
-} else {
-  var destFolder = "prod"
-}
-
 gulp.task('webserver', function() {
   var port = 3000;
   var hostname = null;
@@ -106,7 +100,8 @@ gulp.task('templates', function () {
     .pipe(gulp.dest('src/templates/'))
     .pipe(gulp.src(['src/templates/*.html', 'src/templates/**/*.html']))
     .pipe(templateCache({module: "App", root: "templates"}))
-    .pipe(gulp.dest('dev/scripts'));
+    .pipe(gulp.dest('dev/scripts'))
+    .pipe(refresh(server));
 });
 
 gulp.task('templates-clean', function() {
@@ -122,7 +117,7 @@ gulp.task('clean', function() {
 gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
   gulp.watch('src/scripts/**/*', ['scripts']);
   gulp.watch('src/styles/**/*', ['styles']);
-  gulp.watch('src/**/*.jade', ['markup']);
+  gulp.watch('src/**/*.jade', ['markup', 'templates']);
   gulp.src("dev/index.html")
     .pipe(open("", {url: "http://0.0.0.0:3000"}));
 })

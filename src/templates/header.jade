@@ -27,16 +27,17 @@
 
 #site-nav-wrapper
   nav
-    a.row1.nav-link(
+    a(
       ng-class="{active: state.includes('work')}",
       ui-sref="work"
-    ) WORK
-    a.row2.nav-link(
+    ) Selected Work 
+    | and 
+    a(
       ng-class="{active: state.includes('blog')}",
       ui-sref="blog"
-    ) BLOG
-    a.row3.nav-link(
+    ) a Blog
+    | from
+    a(
       ng-class="{active: state.includes('about')}",
       ui-sref="about"
-    ) ABOUT
-
+    ) Jeremy Smith

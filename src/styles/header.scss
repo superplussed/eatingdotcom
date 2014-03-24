@@ -172,27 +172,11 @@ header {
     }
   }
 
-  #site-nav-wrapper {
-    font-family: $header-secondary;
+  nav {
     position: absolute;
-    top: 0;
-    right: 100px;
-    nav {
-      position: relative;
-      a {
-        text-decoration: none;
-      }
-      .nav-link {
-        color: $medium-gray;
-        height: $block-height;
-        padding: 0 10px;
-        background: $light-gray;
-        width: 100px;
-      }
-      .nav-link:hover, .nav-link.active {
-        background: $dark-gray;
-        color: $light-gray;
-      }
-    }
+    left: 100px;
+    top: 88px;
+    width: 400px;
+    font-size: 24px;
   }
 }
