@@ -173,10 +173,22 @@ header {
   }
 
   nav {
-    position: absolute;
-    left: 100px;
-    top: 88px;
-    width: 400px;
     font-size: 24px;
+    margin-top: 82px;
+    float: right;
+    text-align: right;
+    a {
+      border-radius: 3px;
+      padding: 3px 10px 0 10px;
+      margin: 0 5px;
+      background: rgb(238, 238, 4);
+      text-decoration: none;
+    }
+    a:last-child {
+      margin: 0 0 0 5px;
+    }
+    .active {
+      border-bottom: 3px solid black;
+    }
   }
 }
