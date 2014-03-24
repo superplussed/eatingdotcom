@@ -101,8 +101,6 @@ gulp.task('templates', function () {
   return gulp.src(['src/templates/*.jade', 'src/templates/**/*.jade'])
     .pipe(changed('./dev/templates/', { extension: '.html' }))
     .pipe(jade())
-    .pipe(gulp.dest('src/templates/'))
-    .pipe(gulp.src(['src/templates/*.html', 'src/templates/**/*.html']))
     .pipe(templateCache({module: "App", root: "templates"}))
     .pipe(gulp.dest('dev/scripts'))
     .pipe(refresh(server));
@@ -122,7 +120,7 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'markup', 'tem
   gulp.watch('src/scripts/**/*', ['scripts']);
   gulp.watch('src/styles/**/*', ['styles']);
   gulp.watch('src/*.jade', ['markup']);
-  gulp.watch('src/templates/**/*.jade', ['templates', 'markup']);
+  gulp.watch('src/templates/**/*.jade', ['templates']);
   gulp.src("dev/index.html")
     .pipe(open("", {url: "http://0.0.0.0:3000"}));
 })
