@@ -6,6 +6,7 @@ var args = require('yargs').argv,
   jade = require('gulp-jade'),
   refresh = require('gulp-livereload'),
   open = require('gulp-open'),
+  changed = require('gulp-changed'),
   connect = require('connect'),
   http = require('http'),
   path = require('path'),
@@ -88,8 +89,10 @@ gulp.task('copy', function() {
 });
 
 gulp.task('markup', function() {
-  return gulp.src('src/*.jade')
+  return gulp.src('src/index.jade')
+    .pipe(changed('./dev/', { extension: '.html' }))
     .pipe(jade())
+    .pipe(embedlr())
     .pipe(gulp.dest('dev'))
     .pipe(refresh(server));
 });
@@ -101,7 +104,6 @@ gulp.task('templates', function () {
     .pipe(gulp.src(['src/templates/*.html', 'src/templates/**/*.html']))
     .pipe(templateCache({module: "App", root: "templates"}))
     .pipe(gulp.dest('dev/scripts'))
-    .pipe(refresh(server));
 });
 
 gulp.task('templates-clean', function() {
@@ -115,9 +117,10 @@ gulp.task('clean', function() {
 });
 
 gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
-  gulp.watch('src/scripts/**/*', ['scripts']);
-  gulp.watch('src/styles/**/*', ['styles']);
-  gulp.watch('src/**/*.jade', ['markup', 'templates']);
+  // gulp.watch('src/scripts/**/*', ['scripts']);
+  // gulp.watch('src/styles/**/*', ['styles']);
+  gulp.watch('src/index.jade', ['markup']);
+  // gulp.watch('src/templates/**/*.jade', ['templates', 'markup']);
   gulp.src("dev/index.html")
     .pipe(open("", {url: "http://0.0.0.0:3000"}));
 })

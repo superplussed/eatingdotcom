@@ -27,16 +27,17 @@
 
 #site-nav-wrapper
   nav
+    | The
     a(
       ng-class="{active: state.includes('work')}",
       ui-sref="work"
-    ) Selected Work 
+    ) Work 
     | and 
     a(
       ng-class="{active: state.includes('blog')}",
       ui-sref="blog"
-    ) a Blog
-    | from
+    ) Blog
+    | of
     a(
       ng-class="{active: state.includes('about')}",
       ui-sref="about"
