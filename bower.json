@@ -13,5 +13,6 @@
     "webfontloader-min": "~1.5.1",
     "angular-disqus": "~1.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

@@ -173,7 +173,7 @@ header {
     text-align: right;
     a {
       @include transition (all 0.2s ease-in-out);
-      padding: 1px 10px 0 10px;
+      padding: 2px 10px 0 10px;
       margin: 0 5px;
       background: $black;
       text-decoration: none;
@@ -183,7 +183,8 @@ header {
       margin: 0 0 0 5px;
     }
     a:hover, .active {
-      background: #B18115;
+      background: #F8FA1A;
+      color: black;
     }
   }
 }

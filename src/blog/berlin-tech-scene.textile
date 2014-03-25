@@ -1,0 +1,37 @@
+My father was the kind of man who dressed up to buy a new car. Partially because he was a good looking guy who enjoyed flaunting it, but also because he was an immigrant who came from a culture where you wore a suit for important events. And buying a car was an important event. Of course, as an immigrant teenager, I was doing my best to assimilate. It was bad enough that my mother packed sardines in my lunch. Having my parents show up at school functions dressed to the nines, while other parents wore stylin’ Jordache jeans and super-cool Ocean Pacific windbreakers would drive me into a panic as I started dreading the beat-down coming from the other kids the day after.
+
+<pre data-lang='Ruby'>
+<code class='language-ruby'>
+  str =~ /^(?:foo)$/
+  str =~ %r{foo|bar|buz$}
+  str =~ %r!foo|bar$!
+  str =~ %r[foo|bar$]
+  str =~ %r(\(foo|bar\)$)
+</code>
+</pre>
+
+And so we found ourselves driving to the car dealership on a Saturday afternoon in April. The Fury, which had served us well, did not have another Philadelphia winter inside it. For this particular important occasion Dad decided on a sharkskin suit that shimmered from brown to olive, a dark yellow shirt, and solid black tie. He accessorized with a Marlboro dangling from his lips. I came along, in an ill-fitting leisure suit my mother the seamstress made, to perform translation services. As immigrant children do.
+
+At the lot my father made a beeline to the brand new top-of-the-line Dodge St. Regis R-body with a straight six engine and a whopping 12 mpg in the city. It was ridiculously beyond our budget. The salesman wandering in our direction had no way of knowing this of course. He saw a dapper man in a sharkskin suit who was ready to buy a car.
+
+Twenty minutes later we are test driving the St. Regis through the Philadelphia suburbs. It handled delightfully, for a boat on land. I sat in the back while the salesman described the various amenities and options available. I’d then translate and add, “Dad, we can’t afford this.” To which he’d reply, “Shut up. Ask him if the seats are heated.”
+
+As we pulled back into the lot the salesman’s pitch got progressively stronger to the point where my father, now completely enamored with the car, finally had to admit that it was completely beyond our budget. And of course I was the one who had to deliver the message.
+
+There are two things I’ll never forget from the following interaction. The first was the look of embarrassment on my father’s face as he realized he needed to tell the salesman he couldn’t afford the car, which, in my father’s eyes was akin to failing as a provider. The second was the salesman’s reply.
+
+“Why didn’t you tell me what you could afford?”
+
+Buying design, like buying a car, is a financial transaction. At some point money will come up. In fact, one of the first questions we ask prospective clients is about their budget. This question tends to make people nervous. I’ve had clients flat out refuse to tell me, with the explanation that if they disclose that information I’ll just tell them that’s what the work will cost.
+
+That’s partially true.
+
+I’ll tell you what you can get for that amount. Then we can talk about whether you actually need that much design or not. But most of all, what that number tells me is how to guide you toward the appropriate solution for you, and to stay away from solutions that are outside of your price range.
+
+Not everyone knows what their budget is. And that’s ok. It just means we’ll discuss a few options. Some below your price range, some above. It’ll take a little longer.
+
+But if you know what your budget is; let us know. It’ll save us all from having to look at everything on the lot.
+
+My Dad ended up going home with a Volaré station wagon that Saturday afternoon. It made my mother very happy. And five years later, after it had run its course, he tossed me the keys.
+
+Six months after that, I crashed it into a tree. I walked away without a bruise. It was a solid car.

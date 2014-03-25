@@ -1,3 +1,4 @@
 #blog-entry
-  article("ng-include"="'blog/' + params.blog_id + '.html'")
+  h1 {{blog_entry.title}}
+  article("ng-include"="'blog/' + blog_entry.template + '.html'", onload='templateLoaded()') 
   

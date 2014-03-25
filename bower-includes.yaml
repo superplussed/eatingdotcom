@@ -8,7 +8,13 @@ js:
   - bower_components/zoomerang/zoomerang.js
   - bower_components/webfontloader-min/webfont.js
   - bower_components/angular-disqus/angular-disqus.min.js
+  - bower_components/prism/prism.js
+  - bower_components/prism/components/prism-javascript.js
+  - bower_components/prism/components/prism-ruby.js
+  - bower_components/prism/components/prism-css.js
+  - bower_components/prism/components/prism-coffeescript.js
 
 css:
   - bower_components/fancybox/source/jquery.fancybox.css
   - bower_components/normalize-css/normalize.css
+  - bower_components/prism/themes/prism-twilight.css

@@ -7,7 +7,7 @@ var args = require('yargs').argv,
   refresh = require('gulp-livereload'),
   open = require('gulp-open'),
   changed = require('gulp-changed'),
-  markdown = require('gulp-markdown'),
+  textile = require('gulp-textile'),
   connect = require('connect'),
   http = require('http'),
   path = require('path'),
@@ -56,7 +56,7 @@ gulp.task('images', function() {
 
 gulp.task('blog', function() {
   return gulp.src("src/blog/*")
-    .pipe(markdown())
+    .pipe(textile())
     .pipe(templateCache({filename: 'blog_entries.js', module: "App", root: "blog"}))
     .pipe(gulp.dest('dev/scripts'))
     .pipe(refresh(server));

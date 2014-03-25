@@ -23,13 +23,16 @@ App.config ($disqusProvider, $httpProvider, $stateProvider, $urlRouterProvider, 
     .state "blog",
       url: "/blog"
       templateUrl: 'templates/blog.html'
+      controller: ($scope) ->
+        $scope.templateLoaded = ->
+          Prism.highlightAll()
 
     .state "blog.entry",
       url: "/{blog_id}"
       templateUrl: 'templates/blog.entry.html'
-      controller: ($scope) ->
-        debugger
-
+      controller: ($scope, BlogService) ->
+        $scope.blog_entry = _.where(BlogService.list, {template: $scope.params.blog_id})[0]
+      
     .state "work",
       url: "/"
       templateUrl: 'templates/work.html'

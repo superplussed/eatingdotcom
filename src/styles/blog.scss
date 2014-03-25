@@ -1,4 +1,17 @@
+@import "globals";
+
 #blog {
+  pre {
+    font-size: 18px;
+    padding: 0 20px;
+  }
+  h1 {
+    font-family: $header;
+  }
+  article {
+    font-size: 22px;
+    line-height: 36px;
+  }
   i {
     line-height: 40px;
     font-size: 28px;

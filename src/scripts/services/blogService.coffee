@@ -2,9 +2,9 @@ App.factory "BlogService", ["$http", "$location", ($http, $location) ->
 
   BlogService = 
     list: [
-      template: "berlin-vs-new-york"
+      template: "berlin-tech-scene"
       date: "04-01-2013"
-      title: "Berlin vs New York"
+      title: "Berlin Tech Scene"
     ]
 
   self = BlogService
