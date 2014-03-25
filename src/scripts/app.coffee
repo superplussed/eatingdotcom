@@ -9,7 +9,8 @@ App.config ($disqusProvider, $httpProvider, $stateProvider, $urlRouterProvider, 
   
   default_page = "/"
   $locationProvider.hashPrefix('!')
-  $disqusProvider.setShortName = "eatingdotcom"
+
+  window.disqus_shortname = "eatingdotcom"
 
   $urlRouterProvider
     .when("", default_page)
@@ -31,6 +32,7 @@ App.config ($disqusProvider, $httpProvider, $stateProvider, $urlRouterProvider, 
       url: "/{blog_id}"
       templateUrl: 'templates/blog.entry.html'
       controller: ($scope, BlogService) ->
+        $scope.disqus_id = $scope.params.blog_id
         $scope.blog_entry = _.where(BlogService.list, {template: $scope.params.blog_id})[0]
       
     .state "work",
