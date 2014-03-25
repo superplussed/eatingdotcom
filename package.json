@@ -45,7 +45,8 @@
     "merge": "~1.1.2",
     "gulp-ng-html2js": "~0.1.6",
     "gulp-angular-templatecache": "~1.1.1",
-    "gulp-changed": "~0.2.1"
+    "gulp-changed": "~0.2.1",
+    "gulp-markdown": "~0.1.2"
   },
   "dependencies": {}
 }

@@ -1,15 +1,15 @@
-angular.module('App.config', [])
-  .constant('siteOffset', 0)
+angular.module('App.config', ['ngDisqus'])
 
 window.App = angular.module("App", [
   "ui.router",
   "App.config"
 ])
 
-
-App.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) ->
+App.config ($disqusProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) ->
   
   default_page = "/"
+  $locationProvider.hashPrefix('!')
+  $disqusProvider.setShortName = "eatingdotcom"
 
   $urlRouterProvider
     .when("", default_page)

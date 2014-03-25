@@ -7,6 +7,7 @@ var args = require('yargs').argv,
   refresh = require('gulp-livereload'),
   open = require('gulp-open'),
   changed = require('gulp-changed'),
+  markdown = require('gulp-markdown'),
   connect = require('connect'),
   http = require('http'),
   path = require('path'),
@@ -53,13 +54,21 @@ gulp.task('images', function() {
     .pipe(gulp.dest('dev/images'));
 });
 
-gulp.task('bower-styles', function(cb) {
+gulp.task('blog', function() {
+  return gulp.src("src/blog/*")
+    .pipe(markdown())
+    .pipe(templateCache({filename: 'blog.js', module: "App", root: "blog"}))
+    .pipe(gulp.dest('dev/scripts'))
+    .pipe(refresh(server));
+})
+
+gulp.task('bower-styles', function() {
   return gulp.src(bowerIncludes["css"])
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest('dev/styles'))
 })
 
-gulp.task('bower-scripts', function(cb) {
+gulp.task('bower-scripts', function() {
   return gulp.src(bowerIncludes["js"])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('dev/scripts'))
@@ -116,7 +125,8 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
+gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
+  gulp.watch('src/blog/**/*', ['blog']);
   gulp.watch('src/scripts/**/*', ['scripts']);
   gulp.watch('src/styles/**/*', ['styles']);
   gulp.watch('src/*.jade', ['markup']);
