@@ -8,8 +8,6 @@ window.App = angular.module("App", [
 
 
 App.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) ->
-
-  $locationProvider.html5Mode(true);
   
   default_page = "/"
 

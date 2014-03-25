@@ -1,6 +1,6 @@
 nav(ng-show="!state.is('work')")
-  a.prev(href="/{{siteCollection.prevProject()}}") Previous Project
-  a.next(href="/{{siteCollection.nextProject()}}") Next Project
+  a.prev(href="/#/{{siteCollection.prevProject()}}") Previous Project
+  a.next(href="/#/{{siteCollection.nextProject()}}") Next Project
 
 .content(ng-if="state.is('work')")
   fluid-grid

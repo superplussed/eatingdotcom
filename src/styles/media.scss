@@ -1,15 +1,42 @@
 @media only screen and (max-width : 799px) {
   
-  nav {
-    margin-top: 20px!important;
-    float: left!important;
+  // nav {
+  //   text-align: left!important;
+  //   font-size: 16px!important;
+  // }
+
+  #about {
+    font-size: 20px;
   }
  
 
 }
 
+@media only screen and (max-width : 599px) {
+  
+  // nav {
+  //   margin-top: 20px!important;
+  //   float: left!important;
+  //   text-align: left!important;
+  //   font-size: 20px!important;
+  // }
+  
+  #about {
+    font-size: 18px;
+  }
+}
+
 @media only screen and (max-width : 399px) {
   
+  nav {
+    text-align: left!important;
+    font-size: 16px!important;
+  }
+
+  #about {
+    font-size: 14px;
+  }
+
   #site-nav-wrapper {
     display: none;
   }

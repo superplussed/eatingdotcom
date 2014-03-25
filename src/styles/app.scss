@@ -20,8 +20,9 @@ img {
 body {
   display: table;
   width: 100%;
+  max-width: 960px;
   -webkit-font-smoothing: antialiased;
-  background: white;
+  background: #EEE;
   margin: 0;
   padding: 0;
   font-family: $default-font;
@@ -42,6 +43,7 @@ body {
     }
 
     .column-center {
+      background: white;
       width: 90%;
       padding: 50px;
       max-width: 960px;
