@@ -1,5 +1,6 @@
-App.controller("AppCtrl", ['$window', '$state', '$stateParams', 'SiteCollectionService', '$rootScope', '$scope', ($window, $state, $stateParams, SiteCollectionService, $rootScope, $scope) ->
+App.controller("AppCtrl", ['$window', '$state', '$stateParams', 'SiteCollectionService', '$rootScope', '$scope', 'BlogService', ($window, $state, $stateParams, SiteCollectionService, $rootScope, $scope, BlogService) ->
   $rootScope.siteCollection = SiteCollectionService
+  $rootScope.blogService = BlogService
   $rootScope.siteCollection.initialize()
   $rootScope.state = $state
   $rootScope.params = $stateParams

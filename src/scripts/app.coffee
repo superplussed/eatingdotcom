@@ -24,6 +24,12 @@ App.config ($disqusProvider, $httpProvider, $stateProvider, $urlRouterProvider, 
       url: "/blog"
       templateUrl: 'templates/blog.html'
 
+    .state "blog.entry",
+      url: "/{blog_id}"
+      templateUrl: 'templates/blog.entry.html'
+      controller: ($scope) ->
+        debugger
+
     .state "work",
       url: "/"
       templateUrl: 'templates/work.html'

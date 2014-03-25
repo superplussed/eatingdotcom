@@ -1,4 +1,6 @@
-#blog.content
-  h3
-    i.fa.fa-exclamation-triangle
-    | Coming soon, promise.
+#blog-entries(ng-if="state.is('blog')")
+  .blog-preview("ng-repeat"="entry in blogService.list")
+    a(ui-sref="blog.entry({ blog_id: entry.template })") {{entry.template}}
+    article("ng-include"="'blog/' + entry.template + '.html'")
+  
+#blog-entry(ui-view="")

@@ -57,7 +57,7 @@ gulp.task('images', function() {
 gulp.task('blog', function() {
   return gulp.src("src/blog/*")
     .pipe(markdown())
-    .pipe(templateCache({filename: 'blog.js', module: "App", root: "blog"}))
+    .pipe(templateCache({filename: 'blog_entries.js', module: "App", root: "blog"}))
     .pipe(gulp.dest('dev/scripts'))
     .pipe(refresh(server));
 })
