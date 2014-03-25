@@ -1,157 +1,126 @@
-var gulp = require('gulp'),
-  open = require("gulp-open"),
-  util = require('gulp-util'),
+var args = require('yargs').argv,
+  gulp = require('gulp'),
+  gutil = require('gulp-util'),
   concat = require('gulp-concat'),
   sass = require('gulp-sass'),
   jade = require('gulp-jade'),
-  coffee = require('gulp-coffee'),
-  inject = require('gulp-inject'),
-  clean = require('gulp-clean'),
-  livereload = require('gulp-livereload'),
+  refresh = require('gulp-livereload'),
+  open = require('gulp-open'),
+  changed = require('gulp-changed'),
+  connect = require('connect'),
+  http = require('http'),
+  path = require('path'),
   lr = require('tiny-lr'),
-  order = require("gulp-order"),
+  merge = require('merge'),
+  imagemin = require('gulp-imagemin'),
+  cache = require('gulp-cache'),
   minifyCSS = require('gulp-minify-css'),
-  open = require("gulp-open"),
+  clean = require('gulp-clean'),
+  coffee = require('gulp-coffee'),
+  embedlr = require('gulp-embedlr'),
+  gulpIf = require('gulp-if'),
   yaml = require('js-yaml'),
-  es = require('event-stream'),
   fs = require('fs'),
-  runSequence = require('run-sequence');
+  templateCache = require('gulp-angular-templatecache');
 
-var server = lr();
+var isProduction = args.type === 'production';
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
-
-var paths = {
-  source: {
-    coffee: ['src/scripts/**/*.coffee'],
-    sass: ['src/styles/**/*.sass'],
-    jade: ['src/**/*.jade']
-  }
-};
-
-var injectOptions = {
-  ignorePath: "dev/",
-  addRootSlash: false
-}
-
+var server = lr();
 
 gulp.task('webserver', function() {
   var port = 3000;
-  hostname = null;
-  base = path.resolve('app');
-  directory = path.resolve('app');
-  app = connect().use(connect["static"](base)).use(connect.directory(directory));
+  var hostname = null;
+  var base = path.resolve('dev');
+  var directory = path.resolve('dev');
+  var app = connect().use(connect["static"](base)).use(connect.directory(directory));
   http.createServer(app).listen(port, hostname);
 });
 
 gulp.task('livereload', function() {
   server.listen(35729, function(err) {
     if (err != null) {
-        return console.log(err);
+      return console.log(err);
     }
   });
 });
 
-gulp.task('clean', function() {
-  return gulp.src('dev', {read: false})
-    .pipe(clean({force: true}));
-})
+gulp.task('images', function() {
+  gulp.src(['src/images/*.jpg', 'src/images/*.png'])
+    .pipe(gulpIf(isProduction, imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+    .pipe(gulp.dest('dev/images'));
+  gulp.src('src/images/*.svg')
+    .pipe(gulp.dest('dev/images'));
+});
 
-gulp.task('styles', function() {
-  return gulp.src(paths.source.coffee)
-    .pipe(coffee())
-    .pipe(gulp.dest('dev/scripts'))
-    .pipe(inject(gulp.src('dev/**/*.css'), 
-      injectOptions.merge({starttag: '<!-- inject:{{ext}} -->'})
-    ))
-})
-
-gulp.task('scripts', function() {
-  return gulp.src(paths.source.coffee)
-    .pipe(coffee())
-    .pipe(gulp.dest('dev/scripts'))
-    .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), 
-      injectOptions.merge({starttag: '<!-- inject:{{ext}} -->'})
-    ))
-})
-
-gulp.task('coffee', function() {
-  return gulp.src(paths.source.coffee)
-    .pipe(coffee())
-    .pipe(gulp.dest('dev/scripts'))
-})
-
-gulp.task('concat-js', function() {
-  return gulp.src(bowerIncludes["js"])
-    .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('dev/scripts'))
-    .pipe(inject(gulp.src('dev/scripts/vendor.js'), 
-      injectOptions.merge({starttag: '<!-- inject:vendor:{{ext}} -->'})
-    ))
-    .pipe(gulp.dest("./dev"));
-})
-
-gulp.task('concat-css', function() {
+gulp.task('bower-styles', function(cb) {
   return gulp.src(bowerIncludes["css"])
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest('dev/styles'))
-    .pipe(inject(gulp.src('dev/styles/vendor.css'), 
-      injectOptions.merge({starttag: '<!-- inject:vendor:{{ext}} -->'})
-    ))
-    .pipe(gulp.dest("./dev"));
 })
 
-// gulp.task('inject', function() {
-//   var options = {
-//     ignorePath: "dev/",
-//     addRootSlash: false
-//   }
-//   return gulp.src('dev/index.html')
-//     .pipe(inject(gulp.src('dev/scripts/vendor.js'), 
-//       options.merge({starttag: '<!-- inject:vendor:{{ext}} -->'})
-//     ))
-//     .pipe(inject(gulp.src(['dev/scripts/**/*.js', '!dev/scripts/vendor.js']), 
-//       options.merge({starttag: '<!-- inject:{{ext}} -->'})
-//     ))
-//     .pipe(inject(gulp.src('dev/styles/vendor.css'), 
-//       options.merge({starttag: '<!-- inject:vendor:{{ext}} -->'})
-//     ))
-//     .pipe(inject(gulp.src('dev/**/*.css'), 
-//       options.merge({starttag: '<!-- inject:{{ext}} -->'})
-//     ))
-//     .pipe(gulp.dest("./dev"));
-// })
+gulp.task('bower-scripts', function(cb) {
+  return gulp.src(bowerIncludes["js"])
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest('dev/scripts'))
+})
 
-
-gulp.task('sass', function() {
+gulp.task('styles', function() {
   return gulp.src('src/styles/**/*.scss')
     .pipe(sass())
+    .on('error', gutil.log)
+    .pipe(concat('app.css'))
     .pipe(gulp.dest('dev/styles'))
-})
+    .pipe(refresh(server));
+});
 
-gulp.task('jade', function() {
-  return gulp.src(paths.source.jade)
-    .pipe(jade())
-    .pipe(gulp.dest("dev/"))
-})
+gulp.task('scripts', function() { 
+  return gulp.src('src/scripts/**/*.coffee')
+    .pipe(coffee())
+    .pipe(concat('app.js'))
+    .on('error', gutil.log)
+    .pipe(gulp.dest('dev/scripts'))
+    .pipe(refresh(server));
+});
 
 gulp.task('copy', function() {
-  gulp.src(['src/favicon.ico', 'src/robots.txt'])
-    .pipe(gulp.dest("dev/"))
-  gulp.src(['src/images/**/*'])
-    .pipe(gulp.dest("dev/images/"))
-})
-
-gulp.task('build', function(callback) {
-  runSequence('clean', ['copy', 'jade', 'coffee', 'concat-js', 'sass', 'concat-css'], 'inject', callback);
+  return gulp.src(['src/favicon.ico', 'src/robots.txt'])
+    .pipe(gulp.dest('dev'))
 });
 
-gulp.task('compile-html', function(callback) {
-  runSequence('jade', 'inject', callback);
-})
-
-gulp.task('default', ['webserver', 'livereload', 'compile-html', 'scripts', 'styles'], function() {
-  gulp.watch(paths.source.coffee, ['scripts']);
-  gulp.watch(paths.source.sass, ['styles']);
+gulp.task('markup', function() {
+  return gulp.src('src/*.jade')
+    .pipe(changed('./dev/', { extension: '.html' }))
+    .pipe(jade())
+    .pipe(embedlr())
+    .pipe(gulp.dest('dev'))
+    .pipe(refresh(server));
 });
 
+gulp.task('templates', function () {
+  return gulp.src(['src/templates/*.jade', 'src/templates/**/*.jade'])
+    .pipe(changed('./dev/templates/', { extension: '.html' }))
+    .pipe(jade())
+    .pipe(templateCache({module: "App", root: "templates"}))
+    .pipe(gulp.dest('dev/scripts'))
+    .pipe(refresh(server));
+});
+
+gulp.task('templates-clean', function() {
+  return gulp.src(['src/**/*.html'], {read: false})
+    .pipe(clean());
+})
+
+gulp.task('clean', function() {
+  return gulp.src(['dev/*'], {read: false})
+    .pipe(clean());
+});
+
+gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
+  gulp.watch('src/scripts/**/*', ['scripts']);
+  gulp.watch('src/styles/**/*', ['styles']);
+  gulp.watch('src/*.jade', ['markup']);
+  gulp.watch('src/templates/**/*.jade', ['templates']);
+  gulp.src("dev/index.html")
+    .pipe(open("", {url: "http://0.0.0.0:3000"}));
+})

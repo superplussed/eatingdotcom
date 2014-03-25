@@ -8,7 +8,7 @@ window.App = angular.module("App", [
 
 
 App.config ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) ->
-
+  
   default_page = "/"
 
   $urlRouterProvider

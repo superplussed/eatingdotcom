@@ -25,18 +25,19 @@
     a.social-link.row3.col2.block(href="https://twitter.com/eat_the_dot_com")
       i.fa.fa-twitter
 
-#site-nav-wrapper
-  nav
-    a.row1.nav-link(
-      ng-class="{active: state.includes('work')}",
-      ui-sref="work"
-    ) WORK
-    a.row2.nav-link(
-      ng-class="{active: state.includes('blog')}",
-      ui-sref="blog"
-    ) BLOG
-    a.row3.nav-link(
-      ng-class="{active: state.includes('about')}",
-      ui-sref="about"
-    ) ABOUT
-
+nav.right
+  | The
+  a(
+    ng-class="{active: state.includes('work')}",
+    ui-sref="work"
+  ) Work
+  | and
+  a(
+    ng-class="{active: state.includes('blog')}",
+    ui-sref="blog"
+  ) Blog
+  | of
+  a(
+    ng-class="{active: state.includes('about')}",
+    ui-sref="about"
+  ) Jeremy Smith
