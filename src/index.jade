@@ -19,13 +19,10 @@ html(lang="en")
     ng-controller='AppCtrl',
     ng-class="{'flash-protect': !offlineMode}"
   )
-    #app
-      .column.column-left
-      .column.column-center
+    #container
+      #app
         header(ng-include="'templates/header.html'")
         main(ui-view="")
-      .column.column-right
-
 
     script(src="scripts/vendor.js")
     script(src="scripts/app.js")

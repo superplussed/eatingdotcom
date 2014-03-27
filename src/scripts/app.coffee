@@ -9,7 +9,6 @@ App.config ($disqusProvider, $httpProvider, $stateProvider, $urlRouterProvider, 
   
   default_page = "/"
   $locationProvider.hashPrefix('!')
-
   window.disqus_shortname = "eatingdotcom"
 
   $urlRouterProvider
