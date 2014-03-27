@@ -4,7 +4,8 @@
     display: inline-block;
     width: 100%;
   }
-  nav {
+  header nav {
+    width: 100%;
     margin-top: 20px!important;
     float: left!important;
     text-align: left!important;
@@ -19,8 +20,23 @@
 
 @media only screen and (max-width : 599px) {
   
-  nav {
-    font-size: 16px!important;
+  header nav {
+    a {
+      width: 100%;
+      display: inline-block;
+      margin: 5px 0 0 0!important;
+    }
+    .joiner {
+      display: none;
+    }
+  }
+
+  main nav {
+    padding: 10px 0;
+    line-height: 30px;
+    .project {
+      display: none;
+    }
   }
   
   #about {
@@ -28,38 +44,9 @@
   }
 }
 
-@media only screen and (max-width : 399px) {
-  
-  // nav {
-  //   text-align: left!important;
-  //   font-size: 16px!important;
-  // }
+@media only screen and (max-width : 499px) {
 
-  #about {
-    font-size: 14px;
-  }
-
-  #site-nav-wrapper {
-    display: none;
-  }
-
-  body {
-    #app {
-      .column-center {
-        width: 100%;
-        padding: 30px 10px;
-        main {
-          nav {
-             padding: 10px 0;
-             .prev, .next {
-               font-size: 18px;
-               line-height: 30px;
-             }
-           }
-        } 
-      }
-    }
-  }
+ 
  
 
 }
