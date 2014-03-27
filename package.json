@@ -47,7 +47,9 @@
     "gulp-angular-templatecache": "~1.1.1",
     "gulp-changed": "~0.2.1",
     "gulp-markdown": "~0.1.2",
-    "gulp-textile": "0.0.1"
+    "gulp-textile": "0.0.1",
+    "gulp-run-sequence": "~0.3.2",
+    "gulp-ngmin": "~0.1.2"
   },
   "dependencies": {}
 }

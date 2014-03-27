@@ -20,6 +20,8 @@ var args = require('yargs').argv,
   coffee = require('gulp-coffee'),
   embedlr = require('gulp-embedlr'),
   gulpIf = require('gulp-if'),
+  ngmin = require('gulp-ngmin'),
+  runSequence = require('gulp-run-sequence'),
   yaml = require('js-yaml'),
   fs = require('fs'),
   templateCache = require('gulp-angular-templatecache');
@@ -52,7 +54,7 @@ gulp.task('livereload', function() {
 
 gulp.task('images', function() {
   gulp.src(['src/images/*.jpg', 'src/images/*.png'])
-    .pipe(gulpIf(isProduction, imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+    // .pipe(gulpIf(isProduction, imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest(envFolder() + '/images'));
   gulp.src('src/images/*.svg')
     .pipe(gulp.dest(envFolder() + '/images'));
@@ -91,6 +93,7 @@ gulp.task('scripts', function() {
   return gulp.src('src/scripts/**/*.coffee')
     .pipe(coffee())
     .pipe(concat('app.js'))
+    // .pipe(gulpIf(isProduction, ngmin()))
     .on('error', gutil.log)
     .pipe(gulp.dest(envFolder() + '/scripts'))
     .pipe(refresh(server));
@@ -141,5 +144,5 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
 
 gulp.task('build', function() {
   isProduction = true;
-  gulp.runSequence([""])
+  runSequence(['clean', 'webserver', 'livereload', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles']);
 })
