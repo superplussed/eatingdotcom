@@ -1,9 +1,14 @@
 @media only screen and (max-width : 799px) {
   
-  // nav {
-  //   text-align: left!important;
-  //   font-size: 16px!important;
-  // }
+  #header-left {
+    display: inline-block;
+    width: 100%;
+  }
+  nav {
+    margin-top: 20px!important;
+    float: left!important;
+    text-align: left!important;
+  }
 
   #about {
     font-size: 20px;
@@ -14,12 +19,9 @@
 
 @media only screen and (max-width : 599px) {
   
-  // nav {
-  //   margin-top: 20px!important;
-  //   float: left!important;
-  //   text-align: left!important;
-  //   font-size: 20px!important;
-  // }
+  nav {
+    font-size: 16px!important;
+  }
   
   #about {
     font-size: 18px;
@@ -27,6 +29,11 @@
 }
 
 @media only screen and (max-width : 399px) {
+  
+  // nav {
+  //   text-align: left!important;
+  //   font-size: 16px!important;
+  // }
 
   #about {
     font-size: 14px;
