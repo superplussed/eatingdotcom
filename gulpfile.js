@@ -69,6 +69,12 @@ gulp.task('blog', function() {
     .pipe(refresh(server));
 })
 
+gulp.task('deploy-styles', function() {
+  return gulp.src(["dev/styles/vendor.css", "dev/styles/app.css"])
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest(envFolder()))
+})
+
 gulp.task('bower-styles', function() {
   return gulp.src(bowerIncludes["css"])
     .pipe(concat('vendor.css'))
@@ -86,7 +92,8 @@ gulp.task('styles', function() {
     .pipe(sass())
     .on('error', gutil.log)
     .pipe(concat('app.css'))
-    .pipe(gulp.dest(envFolder() + '/styles'))
+    .pipe(gulpIf(!isProduction, gulp.dest(envFolder() + '/styles')))
+    .pipe(gulpIf(isProduction, gulp.dest(envFolder())))
     .pipe(refresh(server));
 });
 
@@ -153,5 +160,5 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
 
 gulp.task('deploy', function() {
   isProduction = true;
-  runSequence(['clean', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles']);
+  runSequence(['clean', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'scripts', 'deploy-styles']);
 })
