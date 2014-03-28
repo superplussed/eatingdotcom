@@ -12,9 +12,11 @@ html(lang="en")
     link(href="favicon.ico", rel="shortcut icon", type="image/x-icon")
     link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", rel="stylesheet", type="text/css")
 
-    if !isProduction
+    if isProduction 
+        link(href="app.css", rel="stylesheet", type="text/css")
+    else
         link(href="styles/vendor.css", rel="stylesheet", type="text/css")
-    link(href="styles/app.css", rel="stylesheet", type="text/css")
+        link(href="styles/app.css", rel="stylesheet", type="text/css")
 
   body(
     ng-app='App', 
@@ -27,11 +29,10 @@ html(lang="en")
         main(ui-view="")
         footer(ng-include="'templates/footer.html'")
 
-    if !isProduction
+    if isProduction 
+        script(src="app.js")
+    else
         script(src="scripts/vendor.js")
-
-    script(src="scripts/app.js")
-
-    if !isProduction
+        script(src="scripts/app.js")
         script(src="scripts/templates.js")
         script(src="scripts/blog_entries.js")

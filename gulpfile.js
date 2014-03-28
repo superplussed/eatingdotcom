@@ -75,6 +75,12 @@ gulp.task('deploy-styles', function() {
     .pipe(gulp.dest(envFolder()))
 })
 
+gulp.task('deploy-scripts', function() {
+  return gulp.src(["dev/scripts/vendor.js", "dev/scripts/app.js", "dev/scripts/templates.js", "dev/scripts/blog_entries.js"])
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(envFolder()))
+})
+
 gulp.task('bower-styles', function() {
   return gulp.src(bowerIncludes["css"])
     .pipe(concat('vendor.css'))
@@ -92,8 +98,7 @@ gulp.task('styles', function() {
     .pipe(sass())
     .on('error', gutil.log)
     .pipe(concat('app.css'))
-    .pipe(gulpIf(!isProduction, gulp.dest(envFolder() + '/styles')))
-    .pipe(gulpIf(isProduction, gulp.dest(envFolder())))
+    .pipe(gulp.dest(envFolder() + '/styles'))
     .pipe(refresh(server));
 });
 
@@ -116,7 +121,9 @@ gulp.task('markup', function() {
   return gulp.src('src/*.jade')
     .pipe(changed(envFolder() + '/', { extension: '.html' }))
     .pipe(jade({
-      isProduction: isProduction
+      data: {
+        isProduction: true
+      }
     }))
     .pipe(embedlr())
     .pipe(gulp.dest(envFolder()))
@@ -160,5 +167,5 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
 
 gulp.task('deploy', function() {
   isProduction = true;
-  runSequence(['clean', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'scripts', 'deploy-styles']);
+  runSequence(['clean', 'webserver', 'livereload', 'copy', 'markup', 'images', 'deploy-scripts', 'deploy-styles']);
 })
