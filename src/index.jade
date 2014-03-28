@@ -11,7 +11,9 @@ html(lang="en")
     meta(name='viewport', content='width=device-width')
     link(href="favicon.ico", rel="shortcut icon", type="image/x-icon")
     link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", rel="stylesheet", type="text/css")
-    link(href="styles/vendor.css", rel="stylesheet", type="text/css")
+
+    if !isProduction
+        link(href="styles/vendor.css", rel="stylesheet", type="text/css")
     link(href="styles/app.css", rel="stylesheet", type="text/css")
 
   body(
@@ -25,7 +27,11 @@ html(lang="en")
         main(ui-view="")
         footer(ng-include="'templates/footer.html'")
 
-    script(src="scripts/vendor.js")
+    if !isProduction
+        script(src="scripts/vendor.js")
+
     script(src="scripts/app.js")
-    script(src="scripts/templates.js")
-    script(src="scripts/blog_entries.js")
+
+    if !isProduction
+        script(src="scripts/templates.js")
+        script(src="scripts/blog_entries.js")

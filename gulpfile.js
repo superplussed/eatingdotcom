@@ -108,7 +108,9 @@ gulp.task('copy', function() {
 gulp.task('markup', function() {
   return gulp.src('src/*.jade')
     .pipe(changed(envFolder() + '/', { extension: '.html' }))
-    .pipe(jade())
+    .pipe(jade({
+      isProduction: isProduction
+    }))
     .pipe(embedlr())
     .pipe(gulp.dest(envFolder()))
     .pipe(refresh(server));
@@ -151,5 +153,5 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
 
 gulp.task('deploy', function() {
   isProduction = true;
-  runSequence(['clean', 'webserver', 'livereload', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles']);
+  runSequence(['clean', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles']);
 })
