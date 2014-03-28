@@ -21,6 +21,7 @@ var args = require('yargs').argv,
   embedlr = require('gulp-embedlr'),
   gulpIf = require('gulp-if'),
   ngmin = require('gulp-ngmin'),
+  s3 = require('gulp-s3'),
   runSequence = require('gulp-run-sequence'),
   yaml = require('js-yaml'),
   fs = require('fs'),
@@ -132,6 +133,11 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
+gulp.task('s3', function() {
+  gulp.src('./prod/**/*', {read: false})
+    .pipe(s3(secret.aws, {}));
+})
+
 gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles'], function() {
   gulp.watch('src/blog/**/*', ['blog']);
   gulp.watch('src/scripts/**/*', ['scripts']);
@@ -142,7 +148,8 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
     .pipe(open("", {url: "http://0.0.0.0:3000"}));
 })
 
-gulp.task('build', function() {
+
+gulp.task('deploy', function() {
   isProduction = true;
   runSequence(['clean', 'webserver', 'livereload', 'copy', 'blog', 'markup', 'templates', 'images', 'bower-scripts', 'bower-styles', 'scripts', 'styles']);
 })
