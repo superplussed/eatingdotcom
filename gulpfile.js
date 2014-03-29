@@ -125,7 +125,7 @@ gulp.task('markup', function() {
         isProduction: isProduction
       }
     }))
-    .pipe(embedlr())
+    .pipe(gulpIf(!isProduction, embedlr()))
     .pipe(gulp.dest(envFolder()))
     .pipe(refresh(server));
 });
