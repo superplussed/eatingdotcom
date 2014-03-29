@@ -50,7 +50,8 @@
     "gulp-textile": "0.0.1",
     "gulp-run-sequence": "~0.3.2",
     "gulp-ngmin": "~0.1.2",
-    "gulp-s3": "~0.1.1"
+    "gulp-s3": "~0.1.1",
+    "gulp-uglify": "~0.2.1"
   },
   "dependencies": {}
 }

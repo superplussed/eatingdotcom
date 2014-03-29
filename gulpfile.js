@@ -7,6 +7,7 @@ var args = require('yargs').argv,
   refresh = require('gulp-livereload'),
   open = require('gulp-open'),
   changed = require('gulp-changed'),
+  uglify = require('gulp-uglify'),
   textile = require('gulp-textile'),
   connect = require('connect'),
   http = require('http'),
@@ -72,13 +73,15 @@ gulp.task('blog', function() {
 gulp.task('deploy-styles', function() {
   return gulp.src(["dev/styles/vendor.css", "dev/styles/app.css"])
     .pipe(concat('app.css'))
-    .pipe(gulp.dest(envFolder()))
+    .pipe(gulp.dest("prod"))
 })
 
 gulp.task('deploy-scripts', function() {
   return gulp.src(["dev/scripts/vendor.js", "dev/scripts/app.js", "dev/scripts/templates.js", "dev/scripts/blog_entries.js"])
+    .pipe(ngmin())
+    .pipe(uglify({mangle: false}))
     .pipe(concat('app.js'))
-    .pipe(gulp.dest(envFolder()))
+    .pipe(gulp.dest("prod"))
 })
 
 gulp.task('bower-styles', function() {
@@ -106,7 +109,6 @@ gulp.task('scripts', function() {
   return gulp.src('src/scripts/**/*.coffee')
     .pipe(coffee())
     .pipe(concat('app.js'))
-    // .pipe(gulpIf(isProduction, ngmin()))
     .on('error', gutil.log)
     .pipe(gulp.dest(envFolder() + '/scripts'))
     .pipe(refresh(server));
