@@ -122,7 +122,7 @@ gulp.task('markup', function() {
     .pipe(changed(envFolder() + '/', { extension: '.html' }))
     .pipe(jade({
       data: {
-        isProduction: true
+        isProduction: isProduction
       }
     }))
     .pipe(embedlr())

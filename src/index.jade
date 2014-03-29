@@ -12,16 +12,15 @@ html(lang="en")
     link(href="favicon.ico", rel="shortcut icon", type="image/x-icon")
     link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", rel="stylesheet", type="text/css")
 
-    if isProduction 
-        link(href="app.css", rel="stylesheet", type="text/css")
+    if isProduction == true
+      link(href="app.css", rel="stylesheet", type="text/css")
     else
-        link(href="styles/vendor.css", rel="stylesheet", type="text/css")
-        link(href="styles/app.css", rel="stylesheet", type="text/css")
+      link(href="styles/vendor.css", rel="stylesheet", type="text/css")
+      link(href="styles/app.css", rel="stylesheet", type="text/css")
 
   body(
     ng-app='App', 
-    ng-controller='AppCtrl',
-    ng-class="{'flash-protect': !offlineMode}"
+    ng-controller='AppCtrl'
   )
     #container
       #app
@@ -29,10 +28,10 @@ html(lang="en")
         main(ui-view="")
         footer(ng-include="'templates/footer.html'")
 
-    if isProduction 
-        script(src="app.js")
+    if isProduction == true
+      script(src="app.js")
     else
-        script(src="scripts/vendor.js")
-        script(src="scripts/app.js")
-        script(src="scripts/templates.js")
-        script(src="scripts/blog_entries.js")
+      script(src="scripts/vendor.js")
+      script(src="scripts/app.js")
+      script(src="scripts/templates.js")
+      script(src="scripts/blog_entries.js")
