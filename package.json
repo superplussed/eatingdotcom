@@ -51,7 +51,9 @@
     "gulp-run-sequence": "~0.3.2",
     "gulp-ngmin": "~0.1.2",
     "gulp-s3": "~0.1.1",
-    "gulp-uglify": "~0.2.1"
+    "gulp-uglify": "~0.2.1",
+    "gulp-awspublish": "0.0.13",
+    "gulp-grunt": "~0.4.1"
   },
   "dependencies": {}
 }

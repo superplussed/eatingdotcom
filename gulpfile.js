@@ -14,6 +14,7 @@ var args = require('yargs').argv,
   path = require('path'),
   lr = require('tiny-lr'),
   merge = require('merge'),
+  awspublish = require('gulp-awspublish'),
   imagemin = require('gulp-imagemin'),
   cache = require('gulp-cache'),
   minifyCSS = require('gulp-minify-css'),
@@ -25,13 +26,16 @@ var args = require('yargs').argv,
   s3 = require('gulp-s3'),
   runSequence = require('gulp-run-sequence'),
   yaml = require('js-yaml'),
-  fs = require('fs'),
+  fs = require('fs')
+  invalidateCloudfront = require('grunt-invalidate-cloudfront'),
   templateCache = require('gulp-angular-templatecache');
 
 var isProduction = false;
 var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 var server = lr();
+
+require('gulp-grunt')(gulp);
 
 var envFolder = function() {
   if (isProduction) { return "prod"; } else { return "dev"; }
@@ -171,3 +175,16 @@ gulp.task('deploy', function() {
   isProduction = true;
   runSequence(['clean', 'webserver', 'livereload', 'copy', 'markup', 'images', 'deploy-scripts', 'deploy-styles']);
 })
+
+gulp.task('publish', function() {
+  var publisher = awspublish.create({ 
+    key: secret.aws.key,  
+    secret: secret.aws.secret, 
+    bucket: secret.aws.bucket 
+  });
+
+  return gulp.src('./prod/**/*')
+    .pipe(publisher.publish())
+    .pipe(publisher.sync())  
+    .pipe(awspublish.reporter());
+});
