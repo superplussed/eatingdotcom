@@ -3,11 +3,21 @@ $list-buffer: 10px;
 #about {
   position: relative;
   font-size: 24px;
-  #me {
-    img {
-      width: 210px;
-      border-radius: 210px;
+  .intro {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 20px;
+    p {
+      display: inline-block;
+      width: 70%;
     }
+  }
+  #me {
+    display: block;
+    width: 115px;
+    border-radius: 210px;
+    float: left;
+    margin-right: 20px;
   }
  ul {
   li {

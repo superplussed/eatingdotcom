@@ -35,8 +35,6 @@ var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 var server = lr();
 
-require('gulp-grunt')(gulp);
-
 var envFolder = function() {
   if (isProduction) { return "prod"; } else { return "dev"; }
 } 
