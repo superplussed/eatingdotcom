@@ -37,7 +37,6 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
         cnt
 
     $scope.blockWidth = -> 
-      console.log("width", $element.width(), "numCols", $scope.numCols())
       Math.floor($element.width()/$scope.numCols()) - ($scope.blockMargin()/$scope.numCols()) - 1
 
     $scope.blockHeight = (aspectRatio) -> 
@@ -122,7 +121,6 @@ App.directive "fluidBlock", ($timeout) ->
     
     scope.resize = ->
       if scope.aspectRatio?
-        console.log("height", gridCtrl.blockHeight(scope.aspectRatio))
         height = gridCtrl.blockHeight(scope.aspectRatio)
       element.css("height", height)
 

@@ -171,6 +171,7 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
 
 
 gulp.task('build-production', function() {
+  envFolder = "prod";
   isProduction = true;
   runSequence(['clean', 'copy', 'markup', 'images', 'deploy-scripts', 'deploy-styles']);
 })

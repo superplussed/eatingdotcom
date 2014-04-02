@@ -75,6 +75,7 @@
 
   #app {
     margin: 0!important;
+    padding: 20px!important;
   }
 
   .role {
@@ -94,7 +95,13 @@
     pointer-events: none;
   }
 
+  #header-left {
+    position: absolute;
+  }
   header nav {
+    margin-top: 7px!important;
+    width: 100%;
+    padding-left: 100px;
     font-size: 20px;
   }
 }
