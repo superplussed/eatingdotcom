@@ -50,10 +50,13 @@
     "gulp-textile": "0.0.1",
     "gulp-run-sequence": "~0.3.2",
     "gulp-ngmin": "~0.1.2",
-    "gulp-s3": "~0.1.1",
+    "gulp-s3": "git+ssh://git@github.com/smysnk/gulp-s3.git",
     "gulp-uglify": "~0.2.1",
     "gulp-awspublish": "0.0.13",
-    "gulp-grunt": "~0.4.1"
+    "gulp-grunt": "~0.4.1",
+    "gulp-rev-all": "~0.1.0",
+    "gulp-gzip": "0.0.5",
+    "gulp-cloudfront": "0.0.5"
   },
   "dependencies": {}
 }

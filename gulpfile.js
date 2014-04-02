@@ -14,8 +14,10 @@ var args = require('yargs').argv,
   path = require('path'),
   lr = require('tiny-lr'),
   merge = require('merge'),
-  awspublish = require('gulp-awspublish'),
+  cloudfront = require('gulp-cloudfront'),
   imagemin = require('gulp-imagemin'),
+  revall = require('gulp-rev-all'),
+  gzip = require("gulp-gzip"),
   cache = require('gulp-cache'),
   minifyCSS = require('gulp-minify-css'),
   clean = require('gulp-clean'),
@@ -27,7 +29,6 @@ var args = require('yargs').argv,
   runSequence = require('gulp-run-sequence'),
   yaml = require('js-yaml'),
   fs = require('fs')
-  invalidateCloudfront = require('grunt-invalidate-cloudfront'),
   templateCache = require('gulp-angular-templatecache');
 
 var isProduction = false;
@@ -169,20 +170,34 @@ gulp.task('default', ['clean', 'webserver', 'livereload', 'copy', 'blog', 'marku
 })
 
 
-gulp.task('deploy', function() {
+gulp.task('build-production', function() {
   isProduction = true;
-  runSequence(['clean', 'webserver', 'livereload', 'copy', 'markup', 'images', 'deploy-scripts', 'deploy-styles']);
+  runSequence(['copy', 'markup', 'images', 'deploy-scripts', 'deploy-styles']);
+})
+
+gulp.task("revision", function() {
+  gulp.src('prod/**/*')
+    .pipe(revall())
+    .pipe(gulp.dest("dist"))
 })
 
 gulp.task('publish', function() {
-  var publisher = awspublish.create({ 
-    key: secret.aws.key,  
-    secret: secret.aws.secret, 
-    bucket: secret.aws.bucket 
-  });
+  gulp.src('prod/**/*')
+    .pipe(revall())
+    .pipe(gzip())
+    .pipe(s3(secret.aws, { gzippedOnly: true }))
+    .pipe(cloudfront(secret.aws))
+})
 
-  return gulp.src('./prod/**/*')
-    .pipe(publisher.publish())
-    .pipe(publisher.sync())  
-    .pipe(awspublish.reporter());
-});
+// gulp.task('publish', function() {
+//   var publisher = awspublish.create({ 
+//     key: secret.aws.key,  
+//     secret: secret.aws.secret, 
+//     bucket: secret.aws.bucket 
+//   });
+
+//   return gulp.src('./prod/**/*')
+//     .pipe(publisher.publish())
+//     .pipe(publisher.sync())  
+//     .pipe(awspublish.reporter());
+// });
