@@ -46,7 +46,40 @@
 
 @media only screen and (max-width : 499px) {
 
- 
- 
+  #social-links-wrapper {
+    display: none!important;
+  }
 
+  .tech-box {
+    font-size: 10px!important;
+  }
+  .detail {
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  #app {
+    margin: 0!important;
+  }
+
+  .role {
+    font-size: 16px!important;
+    margin-top: -5px;
+  }
+
+  .date-range {
+    font-size: 11px!important;
+  }
+
+  .site-name,  {
+    font-size: 20px!important;
+  }
+
+  .site-page {
+    pointer-events: none;
+  }
+
+  header nav {
+    font-size: 20px;
+  }
 }

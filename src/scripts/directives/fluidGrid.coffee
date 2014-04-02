@@ -29,10 +29,19 @@ App.directive "fluidGrid", ($window, $timeout, $rootScope) ->
         
     $scope.numCols = -> 
       cnt = Math.floor($element.width()/$scope.minBlockWidth())
-      if cnt > $scope.maxCols() then $scope.maxCols() else cnt
+      if cnt > $scope.maxCols()
+        $scope.maxCols() 
+      else if cnt < 1
+        1
+      else 
+        cnt
 
-    $scope.blockWidth = -> Math.floor($element.width()/$scope.numCols()) - ($scope.blockMargin()/$scope.numCols()) - 1
-    $scope.blockHeight = (aspectRatio) -> Math.floor($scope.blockWidth() * parseFloat(aspectRatio))
+    $scope.blockWidth = -> 
+      console.log("width", $element.width(), "numCols", $scope.numCols())
+      Math.floor($element.width()/$scope.numCols()) - ($scope.blockMargin()/$scope.numCols()) - 1
+
+    $scope.blockHeight = (aspectRatio) -> 
+      Math.floor($scope.blockWidth() * parseFloat(aspectRatio))
 
     $scope.initializeColumnArray = ->
       $scope.columns = []
@@ -113,9 +122,8 @@ App.directive "fluidBlock", ($timeout) ->
     
     scope.resize = ->
       if scope.aspectRatio?
+        console.log("height", gridCtrl.blockHeight(scope.aspectRatio))
         height = gridCtrl.blockHeight(scope.aspectRatio)
-      # else
-      #   height = element.css('height')
       element.css("height", height)
 
     scope.resize()
