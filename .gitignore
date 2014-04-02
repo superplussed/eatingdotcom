@@ -11,5 +11,6 @@ src/scripts/components
 .DS_STORE
 dev
 prod
+dist
 bower_components
 .secret
