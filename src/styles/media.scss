@@ -50,12 +50,27 @@
     display: none!important;
   }
 
+  #about {
+    font-size: 13px;
+  }
+
   .tech-box {
     font-size: 10px!important;
+  }
+
+  figcaption {
+    font-size: 11px!important;
+    h5 {
+      font-size: 14px!important;
+    }
   }
   .detail {
     font-size: 14px;
     line-height: 17px;
+  }
+
+  #about .intro p {
+    width: 100%!important;
   }
 
   #app {
