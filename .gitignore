@@ -14,3 +14,4 @@ prod
 dist
 bower_components
 .secret
+secret.yaml
