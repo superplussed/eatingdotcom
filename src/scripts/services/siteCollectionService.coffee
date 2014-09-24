@@ -1,6 +1,38 @@
 App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window, $http, $location) ->
   SiteCollectionService =
     list: [
+      name: "Seedlng"
+      dateRange: "July 2014 - Present"
+      tech: [
+        name: "jQuery"
+        type: "frontend"
+      ,
+        name: "React.js"
+        type: "frontend"
+      ,
+        name: "Video.js"
+        type: "frontend"
+      ,
+        name: "Sass"
+        type: "frontend"
+      ,
+        name: "Ruby on Rails"
+        type: "backend"
+      ,
+        name: "PostgreSQL"
+        type: "backend"
+      ,
+        name: "Rspec"
+        type: "backend"
+      ,
+        name: "HAML"
+        type: "backend"
+      ,
+        name: "Amazon Web Services"
+        type: "ops"
+      ]
+      role: 'Project Creator'
+    ,
       name: "3rd Ward"
       dateRange: "Sept 2012 - Sept 2013"
       tech: [
@@ -34,7 +66,7 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
       role: 'CTO, Lead Developer & Designer'
     ,
       name: "Eat The Web"
-      dateRange: "Sept 2013 - Present"
+      dateRange: "Sept 2013 - Jan 2014"
       tech: [
         name: "Angular.js"
         type: "frontend"
@@ -217,7 +249,7 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
 
     toUnderscore: (str) ->
       str.replace(/\s/g,'_').toLowerCase()
-      
+
     screenshotArray:(name, num) ->
       _.map([1..num], (n) -> "#{self.toUnderscore(name)}_#{n}_1000w.png")
 
