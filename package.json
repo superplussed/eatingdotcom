@@ -54,9 +54,9 @@
     "gulp-uglify": "~0.2.1",
     "gulp-awspublish": "0.0.13",
     "gulp-grunt": "~0.4.1",
-    "gulp-rev-all": "~0.1.0",
+    "gulp-rev-all": "~0.6.6",
     "gulp-gzip": "0.0.5",
-    "gulp-cloudfront": "0.0.5"
+    "gulp-cloudfront": "0.0.14"
   },
   "dependencies": {}
 }

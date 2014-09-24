@@ -1,4 +1,4 @@
-// To do: 
+// To do:
 // move index-random.html to index.html
 // combine build steps
 
@@ -19,6 +19,7 @@ var args = require('yargs').argv,
   lr = require('tiny-lr'),
   merge = require('merge'),
   cloudfront = require('gulp-cloudfront'),
+  revall = require('gulp-rev-all'),
   imagemin = require('gulp-imagemin'),
   awspublish = require('gulp-awspublish'),
   cache = require('gulp-cache'),
@@ -39,6 +40,14 @@ var secret = yaml.load(fs.readFileSync(__dirname + '/secret.yaml', 'utf8'));
 var bowerIncludes = yaml.load(fs.readFileSync(__dirname + '/bower-includes.yaml', 'utf8'));
 var server = lr();
 var envFolder = "dev";
+var aws = {
+  "key": secret.aws.key,
+  "secret": secret.aws.secret,
+  "bucket": secret.aws.bucket,
+  "distributionId": secret.aws.distributionId
+};
+var publisher = awspublish.create(aws);
+var headers = {'Cache-Control': 'max-age=315360000, no-transform, public'};
 
 gulp.task('webserver', function() {
   var port = 3000;
@@ -108,7 +117,7 @@ gulp.task('styles', function() {
     .pipe(refresh(server));
 });
 
-gulp.task('scripts', function() { 
+gulp.task('scripts', function() {
   return gulp.src('src/scripts/**/*.coffee')
     .pipe(coffee())
     .pipe(concat('app.js'))
@@ -177,14 +186,12 @@ gulp.task('build-production', function() {
 })
 
 gulp.task('publish', function() {
-  var publisher = awspublish.create({ 
-    key: secret.aws.key,  
-    secret: secret.aws.secret, 
-    bucket: secret.aws.bucket 
-  });
 
   return gulp.src('./prod/**/*')
-    .pipe(publisher.publish())
-    .pipe(publisher.sync())  
-    .pipe(awspublish.reporter());
+    .pipe(revall())
+    .pipe(awspublish.gzip())
+    .pipe(publisher.publish(headers))
+    .pipe(publisher.cache())
+    .pipe(awspublish.reporter())
+    .pipe(cloudfront(aws));
 });
