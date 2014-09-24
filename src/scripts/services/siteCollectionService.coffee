@@ -141,36 +141,6 @@ App.factory "SiteCollectionService", ["$window", "$http", "$location", ($window,
         type: "backend"
       ]
     ,
-      name: "Dropchart"
-      dateRange: "2012"
-      description: "A single page and open source project for creating drop-in charts built for maximum flexibility and minimum fuss."
-      role: 'Project Creator'
-      tech: [
-        name: "Javascript"
-        type: "frontend"
-      ,
-        name: "Knockout.js"
-        type: "frontend"
-      ,
-        name: "jQuery"
-        type: "frontend"
-      ,
-        name: "Require.js"
-        type: "frontend"
-      ,
-        name: "Mocha"
-        type: "frontend"
-      ,
-        name: "SVG"
-        type: "frontend"
-      ,
-        name: "HAML"
-        type: "frontend"
-      ,
-        name: "Deployed to AWS - S3"
-        type: "ops"
-      ]
-    ,
       name: "Xpert Sports"
       dateRange: "2003-2008, Sold in 2007 to Bodog Sports"
       description: "Xpert Sports was fantasy football league management software."
