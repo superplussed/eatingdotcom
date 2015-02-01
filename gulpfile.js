@@ -1,6 +1,6 @@
-// To do:
-// move index-random.html to index.html
-// combine build steps
+// Have to remove prod/ folder
+// run gulp build-production to build it
+// then gulp publish
 
 var args = require('yargs').argv,
   gulp = require('gulp'),
